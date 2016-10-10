@@ -298,6 +298,7 @@
 				
 				$('button').on('click', function() {
 					var user_seq = <%=member_seq %>;
+					var res_seq = $(this).attr('id');
 					$.ajax({
 						url: './checkOk.like',
 						type: 'post',
@@ -308,9 +309,11 @@
 						dataType: 'json',
 						success: function(json) {
 							if(json.flag == 0) {
-								alert("아직 ㄴㄴ")
+								alert("좋아요 했습니다.");
+								document.getElementById(res_seq).style.backgroundColor = "red";
 							} else {
-								alert("이미 ㅇㅇ");
+								alert("좋아요를 해제했습니다.")
+								document.getElementById(res_seq).style.backgroundColor = "#01B0F0";
 							}
 						},
 						error : function(xhr, status, error) {

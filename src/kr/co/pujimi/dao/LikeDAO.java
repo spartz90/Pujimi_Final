@@ -45,8 +45,6 @@ public class LikeDAO {
 		int check = 0;
 		try {
 			conn = this.dataSource.getConnection();
-			// (seq, email, password, nickname, gender, age, admin, point, revenue);
-			// admin = 0 -> user, 1 -> res_manager, 2 -> administartor; 
 			String sql = "select count(*) from like_restaurant where user_seq=? and res_seq=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, resTO.getUser_seq());
@@ -76,5 +74,87 @@ public class LikeDAO {
 			}
 		}
 		return check;
+	}
+
+	public int doLike(ResTO resTO){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		// 좋아요 성공여부를 위한 flag 설정
+		int flag = 1;
+		
+		try {
+			conn = this.dataSource.getConnection();
+			String sql = "insert into like_restaurant values (?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resTO.getUser_seq());
+			pstmt.setInt(2, resTO.getRes_seq());
+			
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				// 정상적으로 동작하면 flag = 0;
+				flag = 0;
+				// 비정상이면 flag = 1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
+	}
+	
+	public int doNotLike(ResTO resTO){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		// 좋아요 성공여부를 위한 flag 설정
+		int flag = 1;
+		
+		try {
+			conn = this.dataSource.getConnection();
+			String sql = "delete from like_restaurant where user_seq = ? and res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resTO.getUser_seq());
+			pstmt.setInt(2, resTO.getRes_seq());
+			
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				// 정상적으로 동작하면 flag = 0;
+				flag = 0;
+				// 비정상이면 flag = 1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
 	}
 }

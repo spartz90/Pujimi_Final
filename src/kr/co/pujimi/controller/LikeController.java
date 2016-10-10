@@ -46,7 +46,7 @@ public class LikeController extends HttpServlet {
 			if (path.equals("/checkOk.like")) {
 				action = new CheckOkAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/member/join.jsp";
+				url = "/WEB-INF/json/check_ok.jsp";
 			} 
 			else if (path.equals("/likeUp.like")) {
 				action = new UserJoinOkAction();
