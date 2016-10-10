@@ -294,7 +294,7 @@
 					jQuery(document).ready(init);
 				})();
 				
-				
+				// 좋아요 기능 //
 				
 				$('button').on('click', function() {
 					var user_seq = <%=member_seq %>;
@@ -308,12 +308,9 @@
 						dataType: 'json',
 						success: function(json) {
 							if(json.flag == 0) {
-								alert("글삭제 성공");
-								$('#d_password').val("");
-								$('#deleteDialog').dialog('close');
-								readServer();
+								alert("아직 ㄴㄴ")
 							} else {
-								alert("글쓰기 실패");
+								alert("이미 ㅇㅇ");
 							}
 						},
 						error : function(xhr, status, error) {
