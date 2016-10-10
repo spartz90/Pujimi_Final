@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+		request.setCharacterEncoding("utf-8");
+
+		String member_seq = request.getParameter("user_seq");
+		String member_admin = request.getParameter("user_admin");
+%>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
     <head>
@@ -23,7 +30,12 @@
     </head>
     <body class="toggled sw-toggled"> <!-- class="toggled sw-toggled" top_side 들어가는 페이지엔 필수! -->
     <div class="gongbak"></div>
-       <div id="top_side"></div>        
+    	<div>
+    		<jsp:include page="../template/top_side.jsp" >
+    		<jsp:param name="user_seq" value="<%=member_seq %>" />
+    		<jsp:param name="user_admin" value="<%=member_admin %>" />
+    		</jsp:include>
+    	</div>            
         <section id="main">
         <!-- 배경색 지정  -->
             <section id="content" style="background-color: white;">
@@ -172,6 +184,7 @@
                          '10000': '10,000원',                         
                          '20000': '20,000원',                         
                          '30000': '30,000원',
+                         '40000': '40,000원',
                          '50000': '50,000원'                         
                        },
                        inputPlaceholder: '충전 금액',
@@ -180,7 +193,7 @@
                        cancelButtonText : '취소',
                        inputValidator : function(value){
                           return new Promise(function(resolve, reject){
-                             if(value == '10000' || value == '20000' || value == '30000' || value == '50000'){                              
+                             if(value == '10000' || value == '20000' || value == '30000' || value == '40000' || value == '50000'){                              
                                 price = value;
                                 resolve();                                  
                              }else{

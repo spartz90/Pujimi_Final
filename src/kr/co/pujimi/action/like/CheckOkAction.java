@@ -4,9 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.core.Action;
-import kr.co.pujimi.dao.CooperateDAO;
 import kr.co.pujimi.dao.LikeDAO;
-import kr.co.pujimi.dto.CooperateDTO;
 import kr.co.pujimi.dto.ResTO;
 
 public class CheckOkAction implements Action {

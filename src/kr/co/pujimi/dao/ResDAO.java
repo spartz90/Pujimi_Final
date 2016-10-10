@@ -246,6 +246,67 @@ public class ResDAO {
 		}
 		return result;
 	}
+	public ArrayList<ResTO> interList(ResTO resTo) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<ResTO> result = new ArrayList<>();
+		
+		try{
+			
+			conn = this.dataSource.getConnection();
+			
+			// DB에서 꺼내올때 날짜 포맷 지정
+			String sql = "select r.res_seq, r.res_name, r.res_addr, r.res_phone, r.res_octime, r.res_content, r.res_photo from restaurant r "
+					+ "where r.res_seq = ANY(select res_seq from like_restaurant where user_seq = ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resTo.getUser_seq());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				ResTO rdto = new ResTO();
+				
+				rdto.setRes_seq(rs.getInt("r.res_seq"));
+				rdto.setRes_name(rs.getString("r.res_name"));
+				rdto.setRes_addr(rs.getString("r.res_addr"));
+				rdto.setRes_phone(rs.getString("r.res_phone"));
+				rdto.setRes_octime(rs.getString("r.res_octime"));
+				rdto.setRes_content(rs.getString("r.res_content"));
+				rdto.setRes_photo(rs.getString("r.res_photo"));
+				
+				result.add(rdto);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return result;
+	}
 	
 	
 	public ResTO ResModify(ResTO rdto) {

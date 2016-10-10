@@ -10,16 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.pujimi.action.restaurant.InterResAction;
-import kr.co.pujimi.action.restaurant.ModifyResInfoAction;
-import kr.co.pujimi.action.restaurant.ModifyResInfoOkAction;
-import kr.co.pujimi.action.restaurant.ResInfoAction;
-import kr.co.pujimi.action.restaurant.ResViewAction;
+import kr.co.pujimi.action.main.MainAction;
 import kr.co.pujimi.core.Action;
 
 
-@WebServlet("*.restaurant")
-public class ResInfoController extends HttpServlet {
+@WebServlet("*.point")
+public class PointController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,31 +36,11 @@ public class ResInfoController extends HttpServlet {
 			String url = "";
 			Action action = null;
 
-			if (path.equals("/res_info.restaurant")) {
-				action = new ResInfoAction();
+			if (path.equals("/charge_point.point")) {
+				action = new MainAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/restaurant/res_info.jsp";
+				url = "/WEB-INF/view/charge/chargePoint.jsp";
 
-			}else if (path.equals("/res_view.restaurant")) {
-				action = new ResViewAction();
-				action.execute(request, response);
-				url = "/WEB-INF/view/restaurant/res_view.jsp";
-				
-			}else if (path.equals("/res_management.restaurant")) {
-				action = new ModifyResInfoAction();
-				action.execute(request, response);
-				url = "/WEB-INF/view/restaurant/res_management.jsp";
-				
-			}else if (path.equals("/res_management_ok.restaurant")) {
-				action = new ModifyResInfoOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/view/restaurant/res_management_ok.jsp";
-				
-			}else if (path.equals("/inter_res.restaurant")) {
-				action = new InterResAction();
-				action.execute(request, response);
-				url = "/WEB-INF/view/restaurant/inter_res.jsp";
-				
 			}else {
 
 			}

@@ -61,7 +61,7 @@
 	        		<li><a href="index.do"><i class="md md-home"></i>Home</a></li>
 					<li><a href="res_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>"><i class="md md-local-restaurant"></i>식당 정보</a></li>
 					<li><a><i class="md md-today"></i>이벤트 캘린더</a></li>
-					<li><a href="charge_point.jsp"><i class="md md-local-atm"></i>포인트 충전</a></li>
+					<li><a href="charge_point.point?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>"><i class="md md-local-atm"></i>포인트 충전</a></li>
 					<%
                     	if(user_admin.equals("-1") || user_admin.equals("0")){
                     %>
@@ -69,7 +69,7 @@
 						<ul>
 							<li><a href="mycoupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">내쿠폰</a></li>
 							<li><a href="mycalendar.html">식단 관리</a></li>
-							<li><a>관심 가게</a></li>
+							<li><a href="inter_res.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">관심 가게</a></li>
 						</ul>
 					</li>
 					<%
@@ -110,7 +110,7 @@
        	 			<li><a href="index.do">Home</a></li>
 					<li><a href="res_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">식당 정보</a></li>
 					<li><a>이벤트 캘린더</a></li>
-					<li><a href="charge_point.jsp">쿠폰 구매</a></li>
+					<li><a href="charge_point.point?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">포인트 충전</a></li>
 					<%
                     	if(user_admin.equals("-1") || user_admin.equals("0")){
                     %>
@@ -120,7 +120,7 @@
        	 			<ul>
 						<li><a href="mycoupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">내쿠폰</a></li>
 						<li><a href="mycalendar.html">식단 관리</a></li>
-						<li><a>관심 가게</a></li>
+						<li><a href="inter_res.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">관심 가게</a></li>
 					<%
                    		}
 						if(user_admin.equals("1")){
@@ -156,7 +156,7 @@
 	  				%>
 	       	 		<li><a href="login.member"> 로그인  </a></li>
 	       	 		<li><a href="join.member"> 회원가입 </a></li>
-	       	 		<li><a href="cooperate.jsp"> 제휴 조르기 </a></li>
+	       	 		<li><a href="cooperate.coop?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>"> 제휴 조르기 </a></li>
 	       	 		<%
 	  					}else{
 	        		%>
