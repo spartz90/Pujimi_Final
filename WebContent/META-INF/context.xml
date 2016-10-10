@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Context>
+	<Resource 
+	name = "jdbc/mysql"
+	auth = "Container"
+	type = "javax.sql.DataSource"
+	driverClassName = "com.mysql.jdbc.Driver"
+	url="jdbc:mysql://tigger90.cafe24.com:3306/tigger90"
+	username = "tigger90"
+	password = "project0930!"
+ 	logintimeout="10" 
+ 	maxactive="20"
+	maxidle="10" 
+	maxwait="5000" />
+</Context>
+
+<!-- 
+<Context>
+	<Resource 
+	name = "jdbc/oracle"
+	auth = "Container"
+	type = "javax.sql.DataSource"
+	driverClassName = "oracle.jdbc.driver.OracleDriver"
+	url = "jdbc:oracle:thin:@localhost:1521:orcl"
+	username = "project"
+	password = "project"
+	maxTotal = "20"
+	maxWaitMillis = "5000" />
+</Context>
+ -->
+
+<!-- url="jdbc:mysql://127.0.0.1:3306/tigger90" -->
+
+
+
+
+
