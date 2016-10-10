@@ -44,7 +44,7 @@
 		result.append("		</ul>");
 		result.append("		<ul class='general_cooperate_detail_follow_click'>");
 		result.append("			<li><a href=''>구  매</a></li>");
-		result.append("			<li><a href=''>좋아요</a></li>");
+		result.append("			<li><button id='"+res_seq+"'>좋아요</button></li>");
 		result.append("		</ul>");
 		result.append("	</div>");
 		result.append("</div>");
@@ -72,6 +72,7 @@
 <!-- CSS -->
 <link href="css/app.min.1_test.css" rel="stylesheet">
 <link href="css/app.min.2_test.css" rel="stylesheet">
+
 
 </head>
 <body class="toggled sw-toggled">
@@ -292,6 +293,60 @@
 					
 					jQuery(document).ready(init);
 				})();
+				
+				
+				
+				$('button').on('click', function() {
+					var user_seq = <%=member_seq %>;
+					$.ajax({
+						url: './checkOk.like',
+						type: 'post',
+						data: {
+							user_seq: user_seq,
+							res_seq: $(this).attr('id'),
+						},
+						dataType: 'json',
+						success: function(json) {
+							if(json.flag == 0) {
+								alert("글삭제 성공");
+								$('#d_password').val("");
+								$('#deleteDialog').dialog('close');
+								readServer();
+							} else {
+								alert("글쓰기 실패");
+							}
+						},
+						error : function(xhr, status, error) {
+							alert('에러:' + status + '\n\n' + error);
+						}
+					})
+				});
+				/*
+				var deleteServer = function() {
+					$.ajax({
+						url: './delete_ok.do',
+						type: 'post',
+						data: {
+							seq: $('#d_seq').val(),
+							password: $('#d_password').val(),
+						},
+						dataType: 'json',
+						success: function(json) {
+							if(json.flag == 0) {
+								alert("글삭제 성공");
+								$('#d_password').val("");
+								$('#deleteDialog').dialog('close');
+								readServer();
+							} else {
+								alert("글쓰기 실패");
+							}
+						},
+						error : function(xhr, status, error) {
+							alert('에러:' + status + '\n\n' + error);
+						}
+					})
+				};*/
+			
 			});
         </script>
 
