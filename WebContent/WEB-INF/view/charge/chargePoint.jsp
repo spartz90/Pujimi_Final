@@ -1,11 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import ="kr.co.pujimi.dto.PaymentTO" %>
+<%@ page import ="java.util.ArrayList" %>
     
 <%
 		request.setCharacterEncoding("utf-8");
 
 		String member_seq = request.getParameter("user_seq");
 		String member_admin = request.getParameter("user_admin");
+		String price = request.getAttribute("price").toString();
+		
+		ArrayList<PaymentTO> lists = (ArrayList)request.getAttribute("pay_lists");	
+		
+		StringBuffer result = new StringBuffer();
+		for(PaymentTO payTo : lists){
+			
+			String pay_date = payTo.getPay_date();
+			int pay_price = payTo.getPay_price();
+			String pay_method = payTo.getPay_method();
+			
+			result.append("<tr>");
+			result.append("<td>" + pay_date + "</td>");
+			result.append("<td>" + pay_price + "</td>");
+			result.append("<td>" + pay_method + "</td>");
+			result.append("</tr>");
+		}		
+		
 %>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -54,16 +74,15 @@
                   <div role="tabpanel">
                      <div class="pm-body clearfix">
                             <ul class="tab-nav tn-justified">
-                                <li class="active"><a href="#home11" aria-controls="home11"
+                                <li class="active"><a aria-controls="home11"
                            role="tab" data-toggle="tab"><h3>충전하기</h3></a></li>
-                        <li><a href="#profile11" aria-controls="profile11"
-                           role="tab" data-toggle="tab"><h3>충전내역</h3></a></li>
+                       <!--  <li><a href="#profile11" aria-controls="profile11" role="tab" data-toggle="tab"><h3>충전내역</h3></a></li> -->
                             </ul>
                         <div class="tab-content">
                            <div role="tabpanel" class="tab-pane active" id="home11">
                               <div style="width: 50%; float: left; border-right: 1px; text-align:center;display:table-cell;vertical-align:middle;">
                                  <h2>사용가능 포인트</h2>
-                                 <h1>100</h1>
+                                 <h1><%=price %></h1>
                               </div>
                               <div style="width: 50%; float: left; border-left: 1px; text-align:center">
                                  <h1><button class="btn bgm-blue btn-lg btn-info" id="sa-charge"><i class="md md-battery-charging-full"></i>충전하기</button></h1> 
@@ -83,6 +102,31 @@
                                                 
                         </div>                                          
                      </div>                  
+                  </div>
+               </div>
+               <div class="card-body card-padding">
+                  <div role="tabpanel">
+                     <div class="pm-body clearfix">
+                            <ul class="tab-nav tn-justified">
+                                <li class="active"><a aria-controls="home11"
+                           role="tab" data-toggle="tab"><h3>충전내역 리스트</h3></a></li>
+                            </ul>
+                     </div> 
+                     <div class="table-responsive">
+		                  <table class="table table-hover">
+                              <thead>
+                                  <tr>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">결제일</th>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">결제금액</th>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">결제수단</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+									<%=result %>
+                              </tbody>
+		                 </table>
+		                </div>
+		           </div>                 
                   </div>
                </div>
             </div></section>
@@ -167,6 +211,7 @@
                
                var price = "value1";
               var method = "value2";
+              var user_seq = <%=member_seq%>
                
                swal({
                     confirmButtonText: '다음 &rarr;',
@@ -259,6 +304,26 @@
                             confirmButtonText: '확인',
                             showCancelButton: false
                           });
+                       $.ajax({
+                    	   url: './chargePointOk.charge',
+                    	   type: 'post',
+                    	   data:{
+                    		   price : price,
+                    		   method : method,
+                    		   user_seq : user_seq
+                    	   },
+                    	   dataType:'json',
+                    	   success: function(json){
+                    		   if(json.flag == 0){
+                    			   setTimeout("location.reload()", 2000);
+                    		   }else{
+                    			   alert("충전에 실패했습니다.");
+                    		   }
+                    	},
+                    		   error : function(xhr, status, error){
+                    			   alert('에러 : ' +status + '\n\n' + error);
+                    		   }
+                       })
                     });                    
                   }, function() {
                     swal.resetDefaults();
