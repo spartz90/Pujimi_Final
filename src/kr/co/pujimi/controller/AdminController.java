@@ -10,13 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.pujimi.action.admin.ModifyOkResManageAction;
+import kr.co.pujimi.action.admin.ModifyResManageAction;
 import kr.co.pujimi.action.admin.ResManageAction;
 import kr.co.pujimi.action.admin.UserManageAction;
-import kr.co.pujimi.action.main.MainAction;
-import kr.co.pujimi.action.member.LoginOkAction;
-import kr.co.pujimi.action.member.LogoutOkAction;
-import kr.co.pujimi.action.member.ManagerJoinOkAction;
-import kr.co.pujimi.action.member.UserJoinOkAction;
 import kr.co.pujimi.core.Action;
 
 
@@ -45,14 +42,26 @@ public class AdminController extends HttpServlet {
 			if (path.equals("/manage_user.admin")) {
 				action = new UserManageAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/admin/manage_user.jsp";
+				/*url = "/WEB-INF/view/admin/manage_user.jsp";*/
+				url = "/WEB-INF/view/admin/manage_user_test.jsp";
 
 			} 
 			else if (path.equals("/manage_rest.admin")) {
 				action = new ResManageAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/admin/manage_rest.jsp";
+				/*url = "/WEB-INF/view/admin/manage_rest.jsp";*/
+				url = "/WEB-INF/view/admin/manage_rest_test.jsp";
 				
+			}
+			else if (path.equals("/modify_manage_rest.admin")) {
+				action = new ModifyResManageAction();
+				action.execute(request, response);
+				url = "/WEB-INF/view/admin/modify_manage_rest.jsp";
+			}
+			else if (path.equals("/modifyOk_manage_rest.admin")) {
+				action = new ModifyOkResManageAction();
+				action.execute(request, response);
+				url = "/WEB-INF/view/admin/modifyOk_manage_rest.jsp";
 			} else {
 
 			}

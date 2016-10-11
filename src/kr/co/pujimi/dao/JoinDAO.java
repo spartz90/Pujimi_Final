@@ -362,6 +362,43 @@ public int userModifyOk(UserTO userTo) {
 	}
 	return flag;
 }
-
-
+	public int checkPrice(int user_seq) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int price = 0;
+	
+		try {
+			
+			conn = this.dataSource.getConnection();
+			String sql = "select user_point from user where user_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_seq);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				price = rs.getInt("user_point");
+			}
+	
+		}catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return price;
+	}
 }

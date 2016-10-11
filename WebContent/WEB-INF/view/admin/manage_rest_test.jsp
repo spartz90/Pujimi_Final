@@ -22,6 +22,43 @@
         <link href="css/app.min.1_test.css" rel="stylesheet">
         <link href="css/app.min.2_test.css" rel="stylesheet">
         
+        <style type="text/css">
+        	
+        	@font-face {
+			  font-family: 'BMHANNA_11yrs';
+			  src: 
+			  		url('../fonts/BMHANNA_11yrs_eot.eot'),
+			  		/* url('../fonts/BMHANNA_11yrs_eot.eot?#iefix') format('embedded-opentype'),
+			  		url('../fonts/BMHANNA_11yrs_ttf.ttf') format('woff'),
+			  		url('../fonts/BMHANNA_11yrs_woff.woff') format('truetype'); */
+			}
+			
+			#btn1 {
+			font-family: 'BMHANNA_11yrs';
+			}
+        
+        	#btn1 {
+			  display: inline-block;
+			  padding: 5px 11px;
+			  font-size: 12px;
+			  cursor: pointer;
+			  text-align: center;
+			  text-decoration: none;
+			  outline: none;
+			  color: #fff;
+			  background-color: #008CBA;
+			  border: none;
+			  border-radius: 10px;
+			}
+			
+			#btn1:hover {background-color: #3DB7CC;}
+			
+			#btn1:active {
+			  background-color: #3DB7CC;
+			  /* box-shadow: 0 3px #666; */
+			  transform: translateY(4px);
+			}
+        </style>
         
 <%
 		request.setCharacterEncoding("utf-8");
@@ -42,7 +79,7 @@
 			String res_phone = resTo.getRes_phone();
 			String res_octime = resTo.getRes_octime();
 			String otime = res_octime.substring(0, 7);
-			String ctime = res_octime.substring(8);
+			String ctime = res_octime.substring(9);
 			String res_contetnt = resTo.getRes_content();
 			int res_point = resTo.getRes_point();
 			int res_revenue = resTo.getRes_revenue();
@@ -60,7 +97,8 @@
 			result.append("<td>" + res_contetnt + "</td>");
 			result.append("<td>" + res_point + "</td>");
 			result.append("<td>" + res_revenue + "</td>");
-			result.append("<td>" + "<button>수정</button>" + "&nbsp;" + "<button>삭제</button>" + "</td>");			
+			result.append("<td>" + "<input type='button' id='btn1' value='수정' onclick='javascript:location.href=\"modify_manage_rest.admin?user_seq="+ user_seq +"&res_seq="+ res_seq + "&user_admin="+ member_admin +"\"'/>" 
+			+ "&nbsp;"+ "&nbsp;" + "<input type='button' id='btn1' value='삭제'/>" + "</td>");
 			result.append("</tr>");
 
 		}
@@ -87,17 +125,18 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>seq</th>
+                                        <th>Seq</th>
                                         <th>Email</th>
-                                        <th>res_seq</th>
-                                        <th>name</th>
-                                        <th>addr</th>
-                                        <th>phone</th>
-                                        <th>otime</th>
-                                        <th>ctime</th>
-                                        <th>contetnt</th>
-                                        <th>point</th>
-                                        <th>revenue</th>
+                                        <th>Res_seq</th>
+                                        <th>Name</th>
+                                        <th>Addr</th>
+                                        <th>Phone</th>
+                                        <th>Otime</th>
+                                        <th>Ctime</th>
+                                        <th>Contetnt</th>
+                                        <th>Point</th>
+                                        <th>Revenue</th>
+                                        <th>Manage</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -164,5 +203,6 @@
         
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>
+        
     </body>
   </html>

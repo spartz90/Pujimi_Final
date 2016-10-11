@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page import ="kr.co.pujimi.dto.ResTO" %>
+<%@ page import ="kr.co.pujimi.dto.UserTO" %>
 <%@ page import ="java.util.ArrayList" %>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Restaurant Management Page</title>
+        <title>User Management Page</title>
     
         <!-- Vendor CSS -->
         <link href="vendors/animate-css/animate.min.css" rel="stylesheet">
@@ -22,6 +22,41 @@
         <link href="css/app.min.1_test.css" rel="stylesheet">
         <link href="css/app.min.2_test.css" rel="stylesheet">
         
+        <style type="text/css">
+	        @font-face {
+			  font-family: 'BMHANNA_11yrs';
+			  src: 
+			  		url('../fonts/BMHANNA_11yrs_eot.eot'),
+			  		/* url('../fonts/BMHANNA_11yrs_eot.eot?#iefix') format('embedded-opentype'),
+			  		url('../fonts/BMHANNA_11yrs_ttf.ttf') format('woff'),
+			  		url('../fonts/BMHANNA_11yrs_woff.woff') format('truetype'); */
+			}
+			
+			#btn1 {
+			font-family: 'BMHANNA_11yrs';
+			}
+        	#btn1 {
+				display: inline-block;
+				padding: 5px 11px;
+				font-size: 12px;
+				cursor: pointer;
+				text-align: center;
+				text-decoration: none;
+				outline: none;
+				color: #fff;
+				background-color: #008CBA;
+				border: none;
+				border-radius: 10px;
+			}
+			
+			#btn1:hover {background-color: #3DB7CC;}
+			
+			#btn1:active {
+			  	background-color: #3DB7CC;
+			  	/* box-shadow: 0 3px #666; */
+			  	transform: translateY(4px);
+			}
+        </style>
         
 <%
 		request.setCharacterEncoding("utf-8");
@@ -29,38 +64,31 @@
 		String member_seq = request.getParameter("user_seq");
 		String member_admin = request.getParameter("user_admin");
 
-		ArrayList<ResTO> lists = (ArrayList)request.getAttribute("res_lists");	
+		ArrayList<UserTO> lists = (ArrayList)request.getAttribute("user_lists");	
 		StringBuffer result = new StringBuffer();
 		
-		for(ResTO resTo : lists){
+		for(UserTO userTo : lists){
+			String user_seq = Integer.toString(userTo.getUser_seq());
+			String user_email = userTo.getUser_email();
+			String user_nickname = userTo.getUser_nickname();
+			String user_gender = "";
+			if(Integer.toString(userTo.getUser_gender()).equals("0")){
+				user_gender = "남자";
+			}else{
+				user_gender = "여자";
+			}
 			
-			int user_seq = resTo.getUser_seq();
-			String user_email = resTo.getUser_email();
-			int res_seq = resTo.getRes_seq();
-			String res_name = resTo.getRes_name();
-			String res_addr = resTo.getRes_addr();
-			String res_phone = resTo.getRes_phone();
-			String res_octime = resTo.getRes_octime();
-			String otime = res_octime.substring(0, 7);
-			String ctime = res_octime.substring(8);
-			String res_contetnt = resTo.getRes_content();
-			int res_point = resTo.getRes_point();
-			int res_revenue = resTo.getRes_revenue();
-			
+			String user_age = userTo.getUser_age();
+			String user_admin = Integer.toString(userTo.getUser_admin());
 			
 			result.append("<tr>");
 			result.append("<td>" + user_seq + "</td>");
 			result.append("<td>" + user_email + "</td>");
-			result.append("<td>" + res_seq + "</td>");
-			result.append("<td>" + res_name + "</td>");
-			result.append("<td>" + res_addr + "</td>");
-			result.append("<td>" + res_phone + "</td>");
-			result.append("<td>" + otime + "</td>");
-			result.append("<td>" + ctime + "</td>");
-			result.append("<td>" + res_contetnt + "</td>");
-			result.append("<td>" + res_point + "</td>");
-			result.append("<td>" + res_revenue + "</td>");
-			result.append("<td>" + "<button>수정</button>" + "&nbsp;" + "<button>삭제</button>" + "</td>");			
+			result.append("<td>" + user_nickname + "</td>");
+			result.append("<td>" + user_gender + "</td>");
+			result.append("<td>" + user_age + "</td>");
+			result.append("<td>" + user_admin + "</td>");
+			result.append("<td>" + "<input type='button' id='btn1' value='수정'/>" + "&nbsp;" + "<input type='button' id='btn1' value='삭제'/>" + "</td>");			
 			result.append("</tr>");
 
 		}
@@ -74,30 +102,26 @@
     		<jsp:param name="user_seq" value="<%=member_seq %>" />
     		<jsp:param name="user_admin" value="<%=member_admin %>" />
     		</jsp:include>
-    	</div>      
+    	</div>    
         <section id="main">
             <section id="content">
                 <div class="container">
 	                  <div class="card">
                         <div class="card-header">
-                            <h2>가맹점 관리 테이블<small>All User' Information List</small></h2>
+                            <h2>유저 관리 테이블<small>All User' Information List</small></h2>
                         </div>
                         
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>seq</th>
+                                        <th>Seq</th>
                                         <th>Email</th>
-                                        <th>res_seq</th>
-                                        <th>name</th>
-                                        <th>addr</th>
-                                        <th>phone</th>
-                                        <th>otime</th>
-                                        <th>ctime</th>
-                                        <th>contetnt</th>
-                                        <th>point</th>
-                                        <th>revenue</th>
+                                        <th>Nickname</th>
+                                        <th>Gender</th>
+                                        <th>Birth</th>
+                                        <th>Admin</th>
+                                        <th>Management</th>
                                     </tr>
                                 </thead>
                                 <tbody>

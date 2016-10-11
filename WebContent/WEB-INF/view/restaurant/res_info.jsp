@@ -44,7 +44,7 @@
 		result.append("		</ul>");
 		result.append("		<ul class='general_cooperate_detail_follow_click'>");
 		result.append("			<li><a href=''>구  매</a></li>");
-		result.append("			<li><button id='"+res_seq+"'>좋아요</button></li>");
+		result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		result.append("		</ul>");
 		result.append("	</div>");
 		result.append("</div>");
@@ -298,22 +298,28 @@
 				
 				$('button').on('click', function() {
 					var user_seq = <%=member_seq %>;
-					var res_seq = $(this).attr('id');
+					var res_seq = $(this).attr('idx');
+					if (user_seq == -1) {
+						alert("로그인이 필요합니다.")
+						return false;
+					}
 					$.ajax({
 						url: './checkOk.like',
 						type: 'post',
 						data: {
 							user_seq: user_seq,
-							res_seq: $(this).attr('id'),
+							res_seq: $(this).attr('idx'),
 						},
 						dataType: 'json',
 						success: function(json) {
 							if(json.flag == 0) {
-								alert("좋아요 했습니다.");
-								document.getElementById(res_seq).style.backgroundColor = "red";
+								//alert("좋아요 했습니다.");
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff0000');
+								$('button[idx="' + res_seq +'"]').css('background-color','#ff0000');
 							} else {
-								alert("좋아요를 해제했습니다.")
-								document.getElementById(res_seq).style.backgroundColor = "#01B0F0";
+								//alert("좋아요를 해제했습니다.")
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#01B0F0');
+								$('button[idx="' + res_seq +'"]').css('background-color','#01B0F0');
 							}
 						},
 						error : function(xhr, status, error) {

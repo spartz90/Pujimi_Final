@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.action.admin.ResManageAction;
 import kr.co.pujimi.action.admin.UserManageAction;
+import kr.co.pujimi.action.charge.ChargeAction;
+import kr.co.pujimi.action.charge.ChargeOkAction;
 import kr.co.pujimi.action.main.MainAction;
 import kr.co.pujimi.action.member.LoginOkAction;
 import kr.co.pujimi.action.member.LogoutOkAction;
@@ -42,16 +44,16 @@ public class ChargeController extends HttpServlet {
 			String url = "";
 			Action action = null;
 
-			if (path.equals("/chargePoint.charge")) {
-				action = new UserManageAction();
+			if (path.equals("/charge_point.charge")) {
+				action = new ChargeAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/admin/manage_user.jsp";
+				url = "/WEB-INF/view/charge/chargePoint.jsp";
 
 			} 
 			else if (path.equals("/chargePointOk.charge")) {
-				action = new ResManageAction();
+				action = new ChargeOkAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/admin/manage_rest.jsp";
+				url = "/WEB-INF/json/charge_ok.jsp";
 				
 			} else {
 

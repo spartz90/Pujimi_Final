@@ -61,7 +61,7 @@
 	        		<li><a href="index.do"><i class="md md-home"></i>Home</a></li>
 					<li><a href="res_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>"><i class="md md-local-restaurant"></i>식당 정보</a></li>
 					<li><a><i class="md md-today"></i>이벤트 캘린더</a></li>
-					<li><a href="charge_point.point?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>"><i class="md md-local-atm"></i>포인트 충전</a></li>
+					<li><a href="charge_point.charge?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>"><i class="md md-local-atm"></i>포인트 충전</a></li>
 					<%
                     	if(user_admin.equals("-1") || user_admin.equals("0")){
                     %>
@@ -110,7 +110,7 @@
        	 			<li><a href="index.do">Home</a></li>
 					<li><a href="res_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">식당 정보</a></li>
 					<li><a>이벤트 캘린더</a></li>
-					<li><a href="charge_point.point?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">포인트 충전</a></li>
+					<li><a href="charge_point.charge?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">포인트 충전</a></li>
 					<%
                     	if(user_admin.equals("-1") || user_admin.equals("0")){
                     %>
