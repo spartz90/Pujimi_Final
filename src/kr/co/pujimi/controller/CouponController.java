@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.co.pujimi.action.coupon.CouponAction;
 import kr.co.pujimi.action.main.MainAction;
 import kr.co.pujimi.core.Action;
 
@@ -40,9 +41,10 @@ public class CouponController extends HttpServlet {
 				action = new MainAction();
 				action.execute(request, response);
 				url = "/WEB-INF/view/coupon/mycoupon.jsp";
-
-			}else {
-
+			}else if (path.equals("/coupon_buy.coupon")) {
+				action = new CouponAction();
+				action.execute(request, response);
+				url = "/WEB-INF/view/coupon/coupon_buy.jsp";	
 			}
 
 			if (!url.equals("")) {

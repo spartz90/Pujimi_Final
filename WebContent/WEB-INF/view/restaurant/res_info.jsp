@@ -43,7 +43,7 @@
 		result.append("			<li>8545 좋아요</li>");
 		result.append("		</ul>");
 		result.append("		<ul class='general_cooperate_detail_follow_click'>");
-		result.append("			<li><a href=''>구  매</a></li>");
+		result.append("			<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "'>구  매</a></li>");
 		result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		result.append("		</ul>");
 		result.append("	</div>");

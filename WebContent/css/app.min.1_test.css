@@ -16827,4 +16827,74 @@ a.ui-button:active,
 		font-family: 'BMHANNA_11yrs';
 	}
 }
+.buy_coupon {
+	width: 100%;
+	background: #ffffff;
+	padding: 20px;
+	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.buy_coupon_info {
+	width: 600px;
+}
+.buy_coupon_info::after {
+	content : "";
+	display : block;
+	clear : both;
+}
+.buy_coupon_info_point {
+	width: 50%;
+	float: left;
+	text-align: right;
+	font-size: 18px;
+}
+.buy_coupon_info_amount {
+	width: 50%;
+	float: left;
+	text-align: right;
+	font-size: 18px;
+}
+.buy_coupon_info_amount > input[type="text"] {
+	width: 25px;
+	line-height: 12px;
+	padding: 3px;
+	text-align: right;
+	border: 1px solid #D5D5D5;
+	float: right;
+	font-size: 12px;
+}
+.buy_coupon_info_amount .amountup {
+	width: 25px;
+	height: 22px;
+	font-size: 15px;
+	font-weight: bolder;
+	background: #ffffff;
+	border: 1px solid #D5D5D5;
+	float: right;
+	margin-left: 5px;
+	font-family: '돋움';
+	padding: 0px;
+}
+.buy_coupon_info_amount .amountdown {
+	width: 25px;
+	height: 22px;
+	font-size: 15px;
+	font-weight: bolder;
+	background: #ffffff;
+	border: 1px solid #D5D5D5;
+	float: right;
+	margin-left: 5px;
+	font-family: '돋움';
+	padding: 0px;
+}
+.cancle_submit > button{
+	background: #01B0F0;
+	border-radius: 3px;
+	text-align: center;
+	display: inline-block;
+	width: 80px;
+	margin: 0px 2px;
+	color: #ffffff;
+	border: none;
+}
 
