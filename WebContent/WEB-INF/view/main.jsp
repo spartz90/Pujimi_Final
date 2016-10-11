@@ -13,6 +13,7 @@
    }else{
 	  user_seq = session.getAttribute("user_seq").toString();
 	  user_admin = session.getAttribute("user_admin").toString();
+	  user_nickname = session.getAttribute("user_nickname").toString();
 	  System.out.println("유저 : " + user_seq + " / 로그인상태");	 
    }
 %>
