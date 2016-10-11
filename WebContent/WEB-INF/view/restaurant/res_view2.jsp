@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="kr.co.pujimi.dto.ResTO" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="kr.co.pujimi.dto.ResTO"%>
+<%@ page import="java.util.ArrayList"%>
 
 <%
-	request.setCharacterEncoding( "utf-8");
-	
-	ResTO resTo	= (ResTO)request.getAttribute("resTo");
+	request.setCharacterEncoding("utf-8");
+
+	ResTO resTo = (ResTO) request.getAttribute("resTo");
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	String res_seq = request.getParameter("res_seq");
-	
+
 	String res_name = resTo.getRes_name();
 	String res_addr = resTo.getRes_addr();
 	String res_phone = resTo.getRes_phone();
@@ -18,12 +18,12 @@
 	String otime = res_octime[0];
 	String ctime = res_octime[1];
 	String res_content = resTo.getRes_content();
-	String res_photo = resTo.getRes_photo();	
+	String res_photo = resTo.getRes_photo();
 	int res_price = resTo.getRes_price();
 	double res_grade = resTo.getRes_grade();
 	int res_sells = resTo.getRes_sells();
 	int res_likes = resTo.getRes_likes();
-			
+
 	/*
 	// 댓글 가져오기 아직 안함
 	ReplyDAO rdao = new ReplyDAO();	
@@ -64,7 +64,6 @@
 		result.append("</div>");
 	}
 	*/
-   	
 %>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -90,47 +89,28 @@
 </head>
 <body class="toggled sw-toggled">
 	<div class="gongbak"></div>
-    	<div>
-    		<jsp:include page="../template/top_side.jsp" >
-    		<jsp:param name="user_seq" value="<%=member_seq %>" />
-    		<jsp:param name="user_admin" value="<%=member_admin %>" />
-    		</jsp:include>
-    	</div>   
+	<div>
+		<jsp:include page="../template/top_side.jsp">
+			<jsp:param name="user_seq" value="<%=member_seq%>" />
+			<jsp:param name="user_admin" value="<%=member_admin%>" />
+		</jsp:include>
+	</div>
 	<section id="main">
 		<!-- 배경색 지정  -->
 		<section id="content">
 			<div class="container">
-			<div class="container container-alt">
-				<div class="block-header">
-				<br/>
-					<h2>
-						제휴점 상세 정보 <small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small>
-					</h2>
+				<div class="col-md-12">
+					<div class="block-header">
+						<br />
+						<h2>
+							제휴점 상세 정보 <small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small>
+						</h2>						
+					</div>
 
-					<ul class="actions">
-						<li><a href=""> <i class="zmdi zmdi-trending-up"></i>
-						</a></li>
-						<li><a href=""> <i class="zmdi zmdi-check-all"></i>
-						</a></li>
-						<li class="dropdown"><a href=""> <i
-								class="zmdi zmdi-more-vert"></i>
-						</a>
-
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li><a href="">Refresh</a></li>
-								<li><a href="">Manage Widgets</a></li>
-								<li><a href="">Widgets Settings</a></li>
-							</ul></li>
-					</ul>
-				</div>
-
-				<div class="container">
 					<div class="card blog-post">
 						<div class="bp-header">
 							<img src="./upload/<%=res_photo%>" alt="" style="width: 100%; height: 60%"> 
-							<a href="" class="bp-title">
-								<h2><%=res_name %></h2> 
-								<small><%=res_content %></small>
+								<a href="" class="bp-title"><h2><%=res_name%></h2> <small><%=res_content%></small>
 							</a>
 						</div>
 
@@ -141,39 +121,41 @@
 
 									<ul class="pv-contact">
 										<br />
-										<li><i class="md md-room"></i> <%=res_addr %></li>
-										<li><i class="md md-phone"></i> <%=res_phone %></li>										
+										<li><i class="md md-room"></i> <%=res_addr%></li>
+										<li><i class="md md-phone"></i> <%=res_phone%></li>
 									</ul>
 									<ul class="pv-contact">
 										<br />
-										<li><i class="md md-schedule"></i> <%=otime %> - <%=ctime %></li>
+										<li><i class="md md-schedule"></i> <%=otime%> - <%=ctime%></li>
 									</ul>
 									<ul class="pv-follow">
-										<li><%=res_price %> 원</li>
-										<li>구매 : <%=res_sells %></li>
-										<li>좋아요 : <%=res_likes %> </li>
+										<li><%=res_price%> 원</li>
+										<li>구매 : <%=res_sells%></li>
+										<li>좋아요 : <%=res_likes%>
+										</li>
 									</ul>
 
-									<a href="" class="pv-follow-btn">구매 하기</a><br /> 
-									<a href="" class="pv-follow-btn">좋아요</a>
+									<a href="" class="pv-follow-btn">구매 하기</a><br /> <a href=""
+										class="pv-follow-btn">좋아요</a>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-md-4 hidden-sm hidden-xs" style="margin-top: 10px;">
+						<div class="col-md-4 hidden-sm hidden-xs"
+							style="margin-top: 10px;">
 							<div class="card rating-list">
 								<div class="listview">
 									<div class="lv-header">
-										<div class="m-t-5">평점 평균 <%=res_grade %></div>
+										<div class="m-t-5">
+											평점 평균
+											<%=res_grade%></div>
 
 										<div class="clearfix"></div>
 
 										<div class="rl-star">
-											<i class="md md-star active"></i> 
-											<i class="md md-star active"></i>
-											<i class="md md-star active"></i>
-											<i class="md md-star"></i> 
-											<i class="md md-star"></i>
+											<i class="md md-star active"></i> <i
+												class="md md-star active"></i> <i class="md md-star active"></i>
+											<i class="md md-star"></i> <i class="md md-star"></i>
 										</div>
 									</div>
 
@@ -261,110 +243,107 @@
 
 													<div class="media-body">
 														<div class="progress">
-															<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100" style="width: 22%"></div>
+															<div class="progress-bar progress-bar-info"
+																role="progressbar" aria-valuenow="22" aria-valuemin="0"
+																aria-valuemax="100" style="width: 22%"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>                      			
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			
 
 
 
-				<div class="container">
-					<div class="col-md-12">
-						<div class="block-header">
-							<h2>
-								후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
-							</h2>
-							<ul class="actions">									
-								<li class="dropdown"><i	class="md md-more-vert"></i>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li><a href="">Refresh</a></li>
-										<li><a href="">Manage Widgets</a></li>
-										<li><a href="">Widgets Settings</a></li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-						<!-- replyOk.reply -->
-						<!-- 히든으로 member_seq, member_admin, res_seq -->
-						<form action="replyOk.reply" method="get" name='user_join_frm'>
-						<input type="hidden" name="user_seq" value="<%=member_seq%>"/>
-						<input type="hidden" name="user_admin" value="<%=member_admin%>"/>
-						<input type="hidden" name="res_seq" value="<%=res_seq%>"/>
-						<input type="hidden" name="res_grade" value="<%=request.getParameter("rating")%>"/>
-						<div class="card w-post">
-							<div class="card-body">
-								<textarea id="re_content" name="re_content" class="wp-text auto-size" placeholder="후기를 작성해주세요." ></textarea>
-								<!-- 버튼 위치 -->
-								<div class="p-5" align="center" style="border-top: 1px solid #F0F0F0;">
-								<br/>
-									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="1">
-                               			<i class="input-helper"></i>1<i class="md md-star"></i>
-                           			</label>
-									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="2">
-                               			<i class="input-helper"></i>2<i class="md md-star"></i>
-                           			</label>
-									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="3">
-                               			<i class="input-helper"></i>3<i class="md md-star"></i>
-                           			</label>
-									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="4">
-                               			<i class="input-helper"></i>4<i class="md md-star"></i>
-                           			</label>
-									<label class="radio radio-inline">
-                              				<input type="radio" name="res_grade" value="5">
-                               			<i class="input-helper"></i>5<i class="md md-star"></i>
-                           			</label>                            				
-                           		</div>								
-								
-								<div class="tab-content p-0">
-									<div class="wp-media tab-pane" id="wpm-image">
-										<p class="f-500 c-black m-b-20">사진 미리보기</p>
-                           
-                           				<div class="fileinput fileinput-new" data-provides="fileinput">
-                               				<div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
-                            					<div>
-                                  					<span class="btn btn-info btn-file">
-                                       				<span class="fileinput-new">사진 선택</span>
-                                       				<span class="fileinput-exists">사진 변경</span>                                        				
-                                       				<input id="re_photo" type="file" name="re_photo">
-                                   				</span>
-                                   					<span class="btn btn-danger fileinput-exists" data-dismiss="fileinput">사진 삭제</span>                                    					
-                               				</div>                                				
-                           				</div>
-                           			</div>
-								</div>
-									<div class="wp-actions clearfix">
-									<div class="wpa-media-list pull-left">
-										<a data-toggle="tab" href="#wpm-image" class="c-amber"> 
-											<i class="md md-collections"></i>
-										</a> 
+
+
+				<div class="block-header">
+					<h2>
+						후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
+					</h2>
+					<ul class="actions">
+						<li class="dropdown"><i class="md md-more-vert"></i>
+							<ul class="dropdown-menu dropdown-menu-right">
+								<li><a href="">Refresh</a></li>
+								<li><a href="">Manage Widgets</a></li>
+								<li><a href="">Widgets Settings</a></li>
+							</ul></li>
+					</ul>
+				</div>
+				<!-- replyOk.reply -->
+				<!-- 히든으로 member_seq, member_admin, res_seq -->
+				<form action="replyOk.reply" method="get" name='user_join_frm'>
+					<input type="hidden" name="user_seq" value="<%=member_seq%>" /> <input
+						type="hidden" name="user_admin" value="<%=member_admin%>" /> <input
+						type="hidden" name="res_seq" value="<%=res_seq%>" />
+					<div class="card w-post">
+						<div class="card-body">
+							<textarea id="re_content" name="re_content"
+								class="wp-text auto-size" placeholder="후기를 작성해주세요."></textarea>
+							<!-- 버튼 위치 -->
+							<div class="p-5" align="center"
+								style="border-top: 1px solid #F0F0F0;">
+								<br /> <label class="radio radio-inline"> <input
+									type="radio" name="inlineRadioOptions" value="1"> <i
+									class="input-helper"></i>1<i class="md md-star"></i>
+								</label> <label class="radio radio-inline"> <input type="radio"
+									name="inlineRadioOptions" value="2"> <i
+									class="input-helper"></i>2<i class="md md-star"></i>
+								</label> <label class="radio radio-inline"> <input type="radio"
+									name="inlineRadioOptions" value="3"> <i
+									class="input-helper"></i>3<i class="md md-star"></i>
+								</label> <label class="radio radio-inline"> <input type="radio"
+									name="inlineRadioOptions" value="4"> <i
+									class="input-helper"></i>4<i class="md md-star"></i>
+								</label> <label class="radio radio-inline"> <input type="radio"
+									name="inlineRadioOptions" value="5"> <i
+									class="input-helper"></i>5<i class="md md-star"></i>
+								</label>
+							</div>
+
+							<div class="tab-content p-0">
+								<div class="wp-media tab-pane" id="wpm-image">
+									<p class="f-500 c-black m-b-20">사진 미리보기</p>
+
+									<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput-preview thumbnail"
+											data-trigger="fileinput"></div>
+										<div>
+											<span class="btn btn-info btn-file"> <span
+												class="fileinput-new">사진 선택</span> <span
+												class="fileinput-exists">사진 변경</span> <input id="re_photo"
+												type="file" name="re_photo">
+											</span> <span class="btn btn-danger fileinput-exists"
+												data-dismiss="fileinput">사진 삭제</span>
+										</div>
 									</div>
-										<button type="submit" class="btn btn-primary btn-sm pull-right">작성</button>
-								</div>
 								</div>
 							</div>
-						</form>
-						
-					<!-- result 들어갈부분 -->
+							<div class="wp-actions clearfix">
+								<div class="wpa-media-list pull-left">
+									<a data-toggle="tab" href="#wpm-image" class="c-amber"> <i
+										class="md md-collections"></i>
+									</a>
+								</div>
+								<button type="submit" class="btn btn-primary btn-sm pull-right">작성</button>
+							</div>
+						</div>
 					</div>
-				</div>
+				</form>
+
+				<!-- result 들어갈부분 -->
 			</div>
+
+
+
 		</section>
 
-		<footer id="footer">
+		<!-- <footer id="footer">
 			Copyright &copy; 2015 Material Admin
 
 			<ul class="f-menu">
@@ -374,7 +353,7 @@
 				<li><a href="">Support</a></li>
 				<li><a href="">Contact</a></li>
 			</ul>
-		</footer>
+		</footer> -->
 
 		<!-- Page Loader -->
 		<!-- 일단 보류 필요한 기능인지 체크해봄 
@@ -459,7 +438,7 @@
 	<script src="js/flot-charts/line-chart.js"></script>
 	<script src="js/charts.js"></script>
 
-	
+
 	<script src="js/functions.js"></script>
 	<script src="js/demo.js"></script>
 </body>

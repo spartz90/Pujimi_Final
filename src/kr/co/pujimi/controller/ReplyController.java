@@ -10,20 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.pujimi.action.admin.ResManageAction;
-import kr.co.pujimi.action.admin.UserManageAction;
-import kr.co.pujimi.action.charge.ChargeAction;
-import kr.co.pujimi.action.charge.ChargeOkAction;
-import kr.co.pujimi.action.main.MainAction;
-import kr.co.pujimi.action.member.LoginOkAction;
-import kr.co.pujimi.action.member.LogoutOkAction;
-import kr.co.pujimi.action.member.ManagerJoinOkAction;
-import kr.co.pujimi.action.member.UserJoinOkAction;
+import kr.co.pujimi.action.restaurant.InterResAction;
+import kr.co.pujimi.action.restaurant.ModifyResInfoAction;
+import kr.co.pujimi.action.restaurant.ModifyResInfoOkAction;
+import kr.co.pujimi.action.restaurant.ResInfoAction;
+import kr.co.pujimi.action.restaurant.ResViewAction;
+import kr.co.pujimi.action.restaurant.WriteReplyOkAction;
 import kr.co.pujimi.core.Action;
 
 
-@WebServlet("*.charge")
-public class ChargeController extends HttpServlet {
+@WebServlet("*.reply")
+public class ReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,18 +41,12 @@ public class ChargeController extends HttpServlet {
 			String url = "";
 			Action action = null;
 
-			if (path.equals("/charge_point.charge")) {
-				action = new ChargeAction();
+			if (path.equals("/replyOk.reply")) {
+				action = new WriteReplyOkAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/charge/chargePoint.jsp";
+				url = "/WEB-INF/view/reply/replyWriteOk.jsp";
 
-			} 
-			else if (path.equals("/chargePointOk.charge")) {
-				action = new ChargeOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/json/charge_ok.jsp";
-				
-			} else {
+			}else {
 
 			}
 

@@ -8,11 +8,40 @@ public class ResTO {
 	private String res_phone;
 	private String res_octime;
 	private String res_content;
+	private int user_seq;
+	private String res_photo;
+	private int res_price;
 	private int res_point;
 	private int res_revenue;
-	private int user_seq;
+	private double res_grade;
+	private int res_sells;
+	private int res_likes;
+	
+	public int getRes_sells() {
+		return res_sells;
+	}
+	public void setRes_sells(int res_sells) {
+		this.res_sells = res_sells;
+	}
+	public int getRes_likes() {
+		return res_likes;
+	}
+	public void setRes_likes(int res_likes) {
+		this.res_likes = res_likes;
+	}
+	public int getRes_price() {
+		return res_price;
+	}
+	public void setRes_price(int res_price) {
+		this.res_price = res_price;
+	}
+	public double getRes_grade() {
+		return res_grade;
+	}
+	public void setRes_grade(double res_grade) {
+		this.res_grade = res_grade;
+	}
 	private String user_email;
-	private String res_photo;
 
 
 
