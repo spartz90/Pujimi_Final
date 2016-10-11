@@ -81,7 +81,7 @@
 							<div class="buy_coupon_info_amount">
 								<button class="amountdown">-</button>
 								<button class="amountup">+</button>
-								<input type="text" id="amount" value="1" name="amount" onkeypress="return isNumberKey(event)"/>수량&nbsp&nbsp&nbsp
+								<input type="text" id="amount" value="1" name="amount"/>수량&nbsp&nbsp&nbsp
 							</div>
 							<br/>
 							<div class="clearfix" style="border-bottom: 2px dashed;"></div>
@@ -162,46 +162,47 @@
         <script src="vendors/sweet-alert/sweet-alert.min.js"></script>
         
         <script src="js/functions.js"></script>
-        <script src="js/demo.js"></script>
         
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         
         <script type="text/javascript">
         	$(document).ready(function() {
-				function inNumberKey(evt) {
-					var charCode = (evt.which) ? evt.which : event.keyCode;
-					if ((charCode != 46) && (charCode > 31) && ((charCode < 48) || (charCode > 57))) {
-						return false;
-					}
-					
-					// Textbox value    
-					var _value = event.srcElement.value;
-					
-					// 소수점(.)이 두번 이상 나오지 못하게
-			        var _pattern0 = /^\d*[.]\d*$/; // 현재 value값에 소수점(.) 이 있으면 . 입력불가
-			        if (_pattern0.test(_value)) {
-			            if (charCode == 46) {
-			                return false;
-			            }
-			        }
-			        
-			     	// 1000 이하의 숫자만 입력가능 
-			        var _pattern1 = /^\d{3}$/; // 현재 value값이 3자리 숫자이면 . 만 입력가능
-			        if (_pattern1.test(_value)) {
-			            if (charCode != 46) {
-			                alert("1000 이하의 숫자만 입력가능합니다");
-			                return false;
-			            }
-			        }
-			        
-			    	// 소수점 둘째자리까지만 입력가능
-			        var _pattern2 = /^\d*[.]\d{2}$/; // 현재 value값이 소수점 둘째짜리 숫자이면 더이상 입력 불가
-			        if (_pattern2.test(_value)) {
-			            alert("소수점 둘째자리까지만 입력가능합니다.");
-			            return false;
-			        }
-			        return false;
-				}
+        		/*
+        		$(function(){
+        			$('#amount').keypress(function(event){
+        				if (event.which && (event.which  > 47 && event.which  < 58 || event.which == 8)) {
+							if ($('#amount').val()<= 0) {
+								//$('#amount').val(0);
+							}
+        				} else {
+        			    event.preventDefault();
+        				}
+        				
+        			});
+        		});*/
+        		
+        		$("#amount").keyup(function (event) {
+        			//if ($("#amount").val()>=100) {
+                    //	event.preventDefault();
+    				//}
+                    regexp = /\d\d{2,100}/gi;
+                    v = $(this).val();
+                    
+                    if (regexp.test(v)) {
+                    	$(this).val(v.replace(regexp, '1'));
+                    }
+                    regexp = /[^0-9]/gi;
+                    v = $(this).val();
+                    
+                    if (regexp.test(v)) {
+                    	$(this).val(v.replace(regexp, ''));
+                    }
+                });
+        		
+
+       
+
+
 			});
         </script>
        
