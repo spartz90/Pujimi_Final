@@ -79,7 +79,7 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#Seq</th>
+                                        <th>Seq</th>
                                         <th>Email</th>
                                         <th>Nickname</th>
                                         <th>Gender</th>
