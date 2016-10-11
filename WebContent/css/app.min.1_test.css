@@ -16204,11 +16204,12 @@ a.thumbnail.active {
 
 .mobile-lojocoo-drop {
 	display: none;
-	position: relative;
+	position: fixed;
 	width: 100%;
 	list-style: none;
 	text-align: center;
 	background-color:#0178A5;
+	z-index: 11;
 }
 .mobile-lojocoo-drop > ul {
 	list-style: none;
@@ -16249,11 +16250,12 @@ a.thumbnail.active {
 
 .mobile-menu-drop {
 	display: none;
-	position: relative;
+	position: fixed;
 	width: 100%;
 	list-style: none;
 	text-align: center;
 	background-color:#0178A5;
+	z-index: 11;
 }
 .mobile-menu-drop > ul {
 	list-style: none;

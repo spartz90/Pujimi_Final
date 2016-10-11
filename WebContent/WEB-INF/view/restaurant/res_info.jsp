@@ -299,6 +299,10 @@
 				$('button').on('click', function() {
 					var user_seq = <%=member_seq %>;
 					var res_seq = $(this).attr('idx');
+					if (user_seq == -1) {
+						alert("로그인이 필요합니다.")
+						return false;
+					}
 					$.ajax({
 						url: './checkOk.like',
 						type: 'post',
