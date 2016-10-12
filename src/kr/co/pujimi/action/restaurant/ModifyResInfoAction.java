@@ -19,7 +19,7 @@ public class ModifyResInfoAction implements Action {
 		resTo.setUser_seq(Integer.parseInt(request.getParameter("user_seq")));
 
 		ResDAO resDao = new ResDAO();
-		resTo = resDao.ResModify(resTo);
+		resTo = resDao.resModify(resTo);
 		
 		request.setAttribute("resTo", resTo);
 	}
