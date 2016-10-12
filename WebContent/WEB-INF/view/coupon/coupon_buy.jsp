@@ -54,6 +54,7 @@
 					<h2>쿠폰 구매</h2>
 					쿠폰을 구매합니다.
 				</div>
+				<div class="row">
 				<div class="buy_coupon">
 					<div align="center">
 						<div class="coupon">
@@ -81,30 +82,30 @@
 							<div class="buy_coupon_info_amount">
 								<button class="amountdown">-</button>
 								<button class="amountup">+</button>
-								<input type="text" id="amount" value="1" name="amount"/>수량&nbsp&nbsp&nbsp
+								<input type="text" id="amount" value="1" name="amount" maxlength="2" onfocus = "this.select()"/><a>수량&nbsp&nbsp&nbsp</a>
 							</div>
-							<br/>
+							<br/><br/>
 							<div class="clearfix" style="border-bottom: 2px dashed;"></div>
 							<br/>
 							<div class="buy_coupon_info_point">보유 Point</div>
 							<div class="buy_coupon_info_point"><%=user_point %>P</div>
 							<div class="clearfix"></div>
 							<div class="buy_coupon_info_point">-&nbsp&nbsp&nbsp&nbsp쿠폰 가격</div>
-							<div class="buy_coupon_info_point">15000P</div>
+							<div class="buy_coupon_info_point" id="coupon_all_price"></div>
 							<br/>
 							<div class="clearfix" style="height:20px; border-bottom: 2px dashed;"></div>
 							<br/>
-							<div class="buy_coupon_info_point">잔여 Point</div>
-							<div class="buy_coupon_info_point">1000P</div>
+							<div class="buy_coupon_info_point" id="coupon_remain_text">잔여 Point</div>
+							<div class="buy_coupon_info_point" id="coupon_remain"></div>
 						</div>
 						<hr color="#D5D5D5"/>
 						<div class="cancle_submit">
-							<button>취소</button>
-							<button>구매</button>
+							<button id="cancle">취소</button>
+							<button id="submit" class="">구매</button>
 						</div>
 					</div>
 				</div>
-				
+				</div>
 			</div>
 		</section>
         </section>
@@ -167,42 +168,83 @@
         
         <script type="text/javascript">
         	$(document).ready(function() {
-        		/*
-        		$(function(){
+        		$(function(){        			
+        			$('#coupon_all_price').text(parseInt($('#amount').val())*<%=res_price %>+'P');
+        			$('#coupon_remain').text(<%=user_point %>-parseInt($('#amount').val())*<%=res_price %> +'P');
+        			//숫자만 입력
+        			/*
         			$('#amount').keypress(function(event){
         				if (event.which && (event.which  > 47 && event.which  < 58 || event.which == 8)) {
-							if ($('#amount').val()<= 0) {
-								//$('#amount').val(0);
-							}
         				} else {
         			    event.preventDefault();
         				}
+        			});*/
+        			$("#amount").keyup(function (event) {
+                        regexp = /[^0-9]/gi;
+                        v = $(this).val();
+                        
+                        if (regexp.test(v)) {
+                        	$(this).val(v.replace(regexp, ''));
+                        }
+                        
+                       	couponAllPrice();
+                    });
+        			
+        			
+        			//수량 1증가
+        			$('.amountup').on('click', function() {
+        				if ($('#amount').val()=='99') {
+        					return false;
+						}
+        				$('#amount').val(parseInt($('#amount').val())+1);
         				
-        			});
-        		});*/
-        		
-        		$("#amount").keyup(function (event) {
-        			//if ($("#amount").val()>=100) {
-                    //	event.preventDefault();
-    				//}
-                    regexp = /\d\d{2,100}/gi;
-                    v = $(this).val();
-                    
-                    if (regexp.test(v)) {
-                    	$(this).val(v.replace(regexp, '1'));
-                    }
-                    regexp = /[^0-9]/gi;
-                    v = $(this).val();
-                    
-                    if (regexp.test(v)) {
-                    	$(this).val(v.replace(regexp, ''));
-                    }
-                });
-        		
-
-       
-
-
+        				if ($('#amount').val()=='NaN') {
+							$('#amount').val(1);
+						}
+        				couponAllPrice();
+					});
+        			
+        			//수량 1감소
+        			$('.amountdown').on('click', function() {
+        				if ($('#amount').val()=='1') {
+        					return false;
+						}
+        				$('#amount').val(parseInt($('#amount').val())-1);	
+        				if ($('#amount').val()=='NaN') {
+							$('#amount').val(1);
+						}
+        				couponAllPrice();
+					});
+        			
+        			//쿠폰 전체가격 (쿠폰 가격 X 수량) & 잔여Point & 구매버튼 활성/비활성
+        			function couponAllPrice() {
+        				//쿠폰 전체 가격
+						$('#coupon_all_price').text(parseInt($('#amount').val())*<%=res_price %>+'P');
+						if($('#coupon_all_price').text()=='NaNP'){
+							$('#coupon_all_price').text('0P');
+						}
+						
+						//잔여 Point & 구매버튼 활성/비활성
+						var coupon_remain = <%=user_point %>-parseInt($('#amount').val())*<%=res_price %>;
+						$('#coupon_remain').text(coupon_remain +'P');
+						if($('#coupon_remain').text()=='NaNP'){
+							$('#coupon_remain').text(<%=user_point %>+'P');
+						}
+						if (coupon_remain < 0) {
+							$('#coupon_remain_text').css('color','#ff0000');
+							$('#coupon_remain').css('color','#ff0000');
+							$('#submit').attr('disabled',true);
+							$('#submit').addClass('disable');
+							
+						} else {
+							$('#coupon_remain_text').css('color','#5e5e5e');
+							$('#coupon_remain').css('color','#5e5e5e');
+							$('#submit').attr('disabled',false);
+							$('#submit').removeClass('disable');
+						}
+					}
+        			
+        		});
 			});
         </script>
        
