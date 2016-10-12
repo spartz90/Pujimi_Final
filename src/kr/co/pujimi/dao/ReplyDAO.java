@@ -2,7 +2,9 @@ package kr.co.pujimi.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -36,16 +38,18 @@ public class ReplyDAO {
 		PreparedStatement pstmt = null;
 		// 회원가입 성공여부를 위한 check 설정
 		int check = 1;
+		int res_seq = -1;
 
 		try {
-			System.out.println(redto.getRes_grade());
+			
 			conn = this.dataSource.getConnection();
 			// re_seq, re_content, re_photo, re_date, re_grade, user_seq, res_seq
 			String sql = "INSERT INTO reply VALUES (0, ?, ?, NOW(), ?, ?, ?)";
+			res_seq = redto.getRes_seq();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, redto.getRe_content());
 			pstmt.setString(2, redto.getRe_photo());
-			pstmt.setDouble(3, redto.getRes_grade());
+			pstmt.setDouble(3, redto.getRe_grade());
 			pstmt.setInt(4, redto.getUser_seq());
 			pstmt.setInt(5, redto.getRes_seq());			
 
@@ -56,6 +60,22 @@ public class ReplyDAO {
 				check = 0;
 				// 비정상이면 flag = 1;
 			}
+			pstmt.close();		
+			
+			sql = "UPDATE restaurant SET res_grade = (SELECT AVG(re_grade) FROM reply WHERE res_seq = ?) WHERE res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);
+			pstmt.setInt(2, res_seq);
+			
+			int update = pstmt.executeUpdate();
+			
+			if(update == 1){
+				System.out.println("업데이트 성공");
+			} else {
+				System.out.println("업데이트 실패");
+			}
+			
+			
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e.getMessage());
 		} finally {
@@ -76,4 +96,55 @@ public class ReplyDAO {
 		}
 		return check;
 	}
+	
+	public ArrayList<ReplyTO> replyList(int res_seq) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<ReplyTO> result = new ArrayList<>();
+		
+
+		try {
+			conn = this.dataSource.getConnection();
+
+			String sql = "SELECT u.user_nickname, r.re_content, r.re_photo, r.re_date, r.re_grade FROM user u, reply r WHERE res_seq = ? AND r.user_seq = u.user_seq ORDER BY r.re_date DESC";
+						
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ReplyTO rdto = new ReplyTO();
+				//rdto.setUser_seq(Integer.parseInt(rs.getString("user_seq")));
+				rdto.setUser_nickname(rs.getString("user_nickname"));
+				rdto.setRe_content(rs.getString("re_content"));
+				rdto.setRe_date(rs.getString("re_date"));
+				rdto.setRe_photo(rs.getString("re_photo"));
+				rdto.setRe_grade(rs.getDouble("re_grade"));
+				result.add(rdto);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("SQL 에러 : " + e.getMessage());
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+		}
+		return result;
+	}
+	
 }

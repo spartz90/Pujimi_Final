@@ -5,10 +5,17 @@ public class ReplyTO {
 	private String re_content;
 	private String re_photo;
 	private String re_date;
-	private double res_grade;
+	private double re_grade;
 	private int res_seq;
 	private int user_seq;
+	private String user_nickname;
 	
+	public String getUser_nickname() {
+		return user_nickname;
+	}
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
+	}
 	public int getRe_seq() {
 		return re_seq;
 	}
@@ -33,11 +40,11 @@ public class ReplyTO {
 	public void setRe_date(String re_date) {
 		this.re_date = re_date;
 	}
-	public double getRes_grade() {
-		return res_grade;
+	public double getRe_grade() {
+		return re_grade;
 	}
-	public void setRes_grade(double res_grade) {
-		this.res_grade = res_grade;
+	public void setRe_grade(double res_grade) {
+		this.re_grade = res_grade;
 	}
 	public int getRes_seq() {
 		return res_seq;

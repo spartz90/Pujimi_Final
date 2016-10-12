@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.co.pujimi.dto.RatingTO;
 import kr.co.pujimi.dto.ResTO;
 
 public class ResDAO {
@@ -170,54 +171,7 @@ public class ResDAO {
 		return rdto;
 		
 	}
-	
-/*
-	public ArrayList<ReplyDTO> replyList(int res_seq) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
-		ArrayList<ReplyDTO> result = new ArrayList<>();
-
-		try {
-			conn = this.dataSource.getConnection();
-
-			String sql = "SELECT u.user_nickname, r.reply_content, r.reply_photo, r.reply_date FROM user u, reply r WHERE r.user_seq = u.user_seq AND res_seq = ? ORDER BY r.reply_date DESC";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, res_seq);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-
-				ReplyDTO rdto = new ReplyDTO();
-
-				rdto.setUser_nickname(rs.getString("user_nickname"));
-				rdto.setReply_content(rs.getString("reply_content"));
-				rdto.setReply_date(rs.getString("reply_date"));
-				result.add(rdto);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("SQL 에러 : " + e.getMessage());
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-				}
-			if (pstmt != null)
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e) {
-				}
-		}
-		return result;
-	}
-*/
 	
 	
 	public ArrayList<ResTO> viewList() {
@@ -448,4 +402,62 @@ public class ResDAO {
 		}
 		return flag;
 	}
+	
+	public RatingTO ratView(int res_seq){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		RatingTO rato = new RatingTO();
+		
+		try {
+			conn = this.dataSource.getConnection();
+			
+			String sql = "SELECT COUNT(IF(re_grade=1,re_grade,NULL)) AS one, COUNT(IF(re_grade=2,re_grade,NULL)) AS two, COUNT(IF(re_grade=3,re_grade,NULL)) AS three, COUNT(IF(re_grade=4,re_grade,NULL)) AS four, COUNT(IF(re_grade=5,re_grade,NULL)) AS five FROM reply WHERE res_seq = ?";
+			//SELECT COUNT(IF(re_grade=1,re_grade,NULL)) AS one, COUNT(IF(re_grade=2,re_grade,NULL)) AS two, COUNT(IF(re_grade=3,re_grade,NULL)) AS three, COUNT(IF(re_grade=4,re_grade,NULL)) AS four, COUNT(IF(re_grade=5,re_grade,NULL)) AS five FROM reply WHERE res_seq = 1
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				rato.setOne(rs.getDouble("one"));
+				rato.setTwo(rs.getDouble("two"));
+				rato.setThree(rs.getDouble("three"));
+				rato.setFour(rs.getDouble("four"));
+				rato.setFive(rs.getDouble("five"));
+			}						
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		
+		return rato;
+		
+	}
+	
 }

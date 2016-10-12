@@ -37,6 +37,15 @@ public class ReplyController extends HttpServlet {
 
 		try {
 			request.setCharacterEncoding("utf-8");
+			
+			/*
+			String res_seq = request.getAttribute("res_seq").toString();
+			String user_seq = request.getParameter("user_seq");
+			String user_admin = request.getParameter("user_admin");
+			
+			System.out.println(user_seq);
+			System.out.println(user_admin);*/
+			
 			String path = request.getRequestURI().replaceAll(request.getContextPath(), "");
 			String url = "";
 			Action action = null;
