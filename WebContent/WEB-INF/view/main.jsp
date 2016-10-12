@@ -55,7 +55,7 @@
 		recom_result.append("				<li>좋아요 : " + res_likes + "</li>");
 		recom_result.append("			</ul>");
 		recom_result.append("			<ul class='recommend_cooperate_detail_follow_click'>");
-		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + user_seq + "'>구  매</a></li>");
+		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin+ "'>구  매</a></li>");
 		recom_result.append("				<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		recom_result.append("			</ul>");
 		recom_result.append("		</div>");

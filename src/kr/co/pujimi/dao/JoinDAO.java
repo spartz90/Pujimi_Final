@@ -12,7 +12,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.mysql.jdbc.Statement;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
+import kr.co.pujimi.dto.CouponTO;
 import kr.co.pujimi.dto.ResTO;
 import kr.co.pujimi.dto.UserTO;
 
@@ -401,4 +403,45 @@ public int userModifyOk(UserTO userTo) {
 		}
 		return price;
 	}
+	
+	public int pointUpdate(CouponTO cTo){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		
+		int flag = 0;
+		try {
+			conn = this.dataSource.getConnection();
+
+			String sql = "update user set user_point = ? where user_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cTo.getUser_point());
+			pstmt.setInt(2, cTo.getUser_seq());
+			
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				flag = 1; // 정상
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
+	} 
 }

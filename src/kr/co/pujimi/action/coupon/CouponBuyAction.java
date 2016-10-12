@@ -9,7 +9,7 @@ import kr.co.pujimi.dao.LikeDAO;
 import kr.co.pujimi.dto.CouponTO;
 import kr.co.pujimi.dto.ResTO;
 
-public class CouponAction implements Action {
+public class CouponBuyAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {

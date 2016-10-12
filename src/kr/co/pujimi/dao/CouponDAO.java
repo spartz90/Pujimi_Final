@@ -44,13 +44,14 @@ public class CouponDAO {
 		try {
 			conn = this.dataSource.getConnection();
 
-			String sql = "SELECT r.res_name, r.res_price, u.user_point FROM restaurant r, user u WHERE r.res_seq = ? AND u.user_seq=?";
+			String sql = "SELECT r.res_seq, r.res_name, r.res_price, u.user_point FROM restaurant r, user u WHERE r.res_seq = ? AND u.user_seq=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cTo.getRes_seq());
 			pstmt.setInt(2, cTo.getUser_seq());
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
+				cTo.setRes_seq(rs.getInt("r.res_seq"));
 				cTo.setRes_name(rs.getString("r.res_name"));
 				cTo.setRes_price(rs.getInt("r.res_price"));
 				cTo.setUser_point(rs.getInt("u.user_point"));
@@ -81,7 +82,47 @@ public class CouponDAO {
 				}
 			}
 		}
-		
 		return cTo;
+	}
+	
+	public int couponBuyOk(CouponTO cTo, String cp_serial){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		int flag = 0;
+		try {
+			conn = this.dataSource.getConnection();
+
+			String sql = "INSERT INTO coupon VALUES(0, ?, now(), null,date_add(now(),INTERVAL 1 year), ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cp_serial);
+			pstmt.setInt(2, cTo.getUser_seq());
+			pstmt.setInt(3, cTo.getRes_seq());
+			
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				flag = 1; // 정상
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
 	}
 }

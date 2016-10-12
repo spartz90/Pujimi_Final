@@ -45,7 +45,7 @@
 		recom_result.append("				<li>좋아요 : " + res_likes + "</li>");
 		recom_result.append("			</ul>");
 		recom_result.append("			<ul class='recommend_cooperate_detail_follow_click'>");
-		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "'>구  매</a></li>");
+		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "'>구  매</a></li>");
 		recom_result.append("				<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		recom_result.append("			</ul>");
 		recom_result.append("		</div>");
@@ -85,7 +85,7 @@
 		res_result.append("			<li>좋아요 : " + res_likes +"</li>");
 		res_result.append("		</ul>");
 		res_result.append("		<ul class='general_cooperate_detail_follow_click'>");
-		res_result.append("			<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "'>구  매</a></li>");
+		res_result.append("			<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "'>구  매</a></li>");
 		res_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		res_result.append("		</ul>");
 		res_result.append("	</div>");

@@ -5,17 +5,19 @@
 	request.setCharacterEncoding("utf-8");
 	
 	CouponTO cTo = (CouponTO)request.getAttribute("cTo");
-
+	
+	int res_seq = cTo.getRes_seq();
 	String res_name = cTo.getRes_name();
 	int res_price = cTo.getRes_price();
 	int user_point =cTo.getUser_point();
 	
-	System.out.print(res_name + "///" + res_price + "///" + user_point);
+	System.out.println(res_name + "///" + res_price + "///" + user_point);
 	
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	
-	//System.out.println(res_name + "///" + res_price + "///" + user_point);
+	
+	System.out.println(member_seq + "///" + member_admin + "///" + user_point);
 %>
 <!DOCTYPE html>
     <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -77,6 +79,7 @@
 							</div>
 						</div>
 						<hr color="#D5D5D5"/>
+						
 						<div class="buy_coupon_info">
 							<div class="buy_coupon_info_point">가격&nbsp&nbsp&nbsp<%=res_price %>P</div>
 							<div class="buy_coupon_info_amount">
@@ -98,11 +101,17 @@
 							<div class="buy_coupon_info_point" id="coupon_remain_text">잔여 Point</div>
 							<div class="buy_coupon_info_point" id="coupon_remain"></div>
 						</div>
-						<hr color="#D5D5D5"/>
-						<div class="cancle_submit">
-							<button id="cancle">취소</button>
-							<button id="submit" class="">구매</button>
-						</div>
+							<hr color="#D5D5D5"/>
+						<form action="coupon_buy_ok.coupon" method="post" name="coupon_buy_info">
+							<input type="hidden" id="user_seq" value="<%=member_seq %>" name="user_seq"/>
+							<input type="hidden" id="user_point" value="" name="user_point"/>
+							<input type="hidden" id="res_seq" value="<%=res_seq %>" name="res_seq"/>
+							<input type="hidden" id="coupon_amount" value="" name="coupon_amount"/>
+							<div class="cancle_submit">
+								<a id="cancle">취소</a>
+								<button type="submit" id="submit">구매</button>
+							</div>
+						</form>
 					</div>
 				</div>
 				</div>
@@ -171,6 +180,8 @@
         		$(function(){        			
         			$('#coupon_all_price').text(parseInt($('#amount').val())*<%=res_price %>+'P');
         			$('#coupon_remain').text(<%=user_point %>-parseInt($('#amount').val())*<%=res_price %> +'P');
+        			$('#user_point').val(<%=user_point %>-parseInt($('#amount').val())*<%=res_price %>);
+        			$('#coupon_amount').val($('#amount').val());
         			//숫자만 입력
         			/*
         			$('#amount').keypress(function(event){
@@ -182,7 +193,6 @@
         			$("#amount").keyup(function (event) {
                         regexp = /[^0-9]/gi;
                         v = $(this).val();
-                        
                         if (regexp.test(v)) {
                         	$(this).val(v.replace(regexp, ''));
                         }
@@ -197,9 +207,11 @@
         					return false;
 						}
         				$('#amount').val(parseInt($('#amount').val())+1);
+        				$("#coupon_amount").val(parseInt($('#amount').val()));
         				
         				if ($('#amount').val()=='NaN') {
 							$('#amount').val(1);
+							$('#coupon_amount').val(1);
 						}
         				couponAllPrice();
 					});
@@ -209,15 +221,20 @@
         				if ($('#amount').val()=='1') {
         					return false;
 						}
-        				$('#amount').val(parseInt($('#amount').val())-1);	
+        				$('#amount').val(parseInt($('#amount').val())-1);
+        				$("#coupon_amount").val(parseInt($('#amount').val()));
         				if ($('#amount').val()=='NaN') {
 							$('#amount').val(1);
+							$('#coupon_amount').val(1);
 						}
         				couponAllPrice();
 					});
         			
-        			//쿠폰 전체가격 (쿠폰 가격 X 수량) & 잔여Point & 구매버튼 활성/비활성
+        			//쿠폰 수량 넘겨주기위해 input hidden value값 넣기 & 쿠폰 전체가격 (쿠폰 가격 X 수량) & 잔여Point & 구매버튼 활성/비활성
         			function couponAllPrice() {
+        				//쿠폰 수량
+        				$('#coupon_amount').val($('#amount').val());
+        				
         				//쿠폰 전체 가격
 						$('#coupon_all_price').text(parseInt($('#amount').val())*<%=res_price %>+'P');
 						if($('#coupon_all_price').text()=='NaNP'){
@@ -227,6 +244,7 @@
 						//잔여 Point & 구매버튼 활성/비활성
 						var coupon_remain = <%=user_point %>-parseInt($('#amount').val())*<%=res_price %>;
 						$('#coupon_remain').text(coupon_remain +'P');
+						$('#user_point').val(coupon_remain);
 						if($('#coupon_remain').text()=='NaNP'){
 							$('#coupon_remain').text(<%=user_point %>+'P');
 						}
@@ -241,6 +259,13 @@
 							$('#coupon_remain').css('color','#5e5e5e');
 							$('#submit').attr('disabled',false);
 							$('#submit').removeClass('disable');
+						}
+						
+						//수량이 0이거나 00이면 1로 변함
+						if ($('#amount').val()=='0' ||$('#amount').val()=="00") {
+							$('#amount').val(1);
+							$('#coupon_all_price').text(parseInt($('#amount').val())*<%=res_price %>+'P');
+							$('#coupon_remain').text(coupon_remain +'P');
 						}
 					}
         			
