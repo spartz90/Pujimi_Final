@@ -9,7 +9,8 @@
 	if(flag==0){
 		System.out.println(flag);
 		out.println("alert('댓글 작성에 성공했습니다.')");
-		out.println("location.href = 'res_view.restaurant?res_seq='" + res_seq + ";");
+		out.println("location.href = 'index.do';");
+//		out.println("location.href = 'res_view.restaurant?res_seq='" + res_seq + ";");
 	}else{
 		out.println("alert('댓글 작성에 실패했습니다.')");		
 		out.println("history.back();");

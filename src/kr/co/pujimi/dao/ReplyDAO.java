@@ -38,6 +38,7 @@ public class ReplyDAO {
 		int check = 1;
 
 		try {
+			System.out.println(redto.getRes_grade());
 			conn = this.dataSource.getConnection();
 			// re_seq, re_content, re_photo, re_date, re_grade, user_seq, res_seq
 			String sql = "INSERT INTO reply VALUES (0, ?, ?, NOW(), ?, ?, ?)";

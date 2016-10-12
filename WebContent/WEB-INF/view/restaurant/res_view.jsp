@@ -296,11 +296,10 @@
 						</div>
 						<!-- replyOk.reply -->
 						<!-- 히든으로 member_seq, member_admin, res_seq -->
-						<form action="replyOk.reply" method="get" name='user_join_frm'>
+						<form action="replyOk.reply" method="post" enctype="multipart/form-data" >
 						<input type="hidden" name="user_seq" value="<%=member_seq%>"/>
 						<input type="hidden" name="user_admin" value="<%=member_admin%>"/>
 						<input type="hidden" name="res_seq" value="<%=res_seq%>"/>
-						<input type="hidden" name="res_grade" value="<%=request.getParameter("rating")%>"/>
 						<div class="card w-post">
 							<div class="card-body">
 								<textarea id="re_content" name="re_content" class="wp-text auto-size" placeholder="후기를 작성해주세요." ></textarea>
@@ -324,7 +323,7 @@
                                			<i class="input-helper"></i>4<i class="md md-star"></i>
                            			</label>
 									<label class="radio radio-inline">
-                              				<input type="radio" name="res_grade" value="5">
+                              				<input type="radio" name="rating" value="5">
                                			<i class="input-helper"></i>5<i class="md md-star"></i>
                            			</label>                            				
                            		</div>								
@@ -364,6 +363,7 @@
 			</div>
 		</section>
 
+<!--  
 		<footer id="footer">
 			Copyright &copy; 2015 Material Admin
 
@@ -375,6 +375,7 @@
 				<li><a href="">Contact</a></li>
 			</ul>
 		</footer>
+-->
 
 		<!-- Page Loader -->
 		<!-- 일단 보류 필요한 기능인지 체크해봄 
