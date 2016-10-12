@@ -16863,9 +16863,13 @@ a.ui-button:active,
 	float: right;
 	font-size: 12px;
 }
+.buy_coupon_info_amount > a, .buy_coupon_info_amount > a:hover {
+		color: #5e5e5e;
+		font-size: 18px;
+}
 .buy_coupon_info_amount .amountup {
 	width: 25px;
-	height: 22px;
+	height: 24px;
 	font-size: 15px;
 	font-weight: bolder;
 	background: #ffffff;
@@ -16877,7 +16881,7 @@ a.ui-button:active,
 }
 .buy_coupon_info_amount .amountdown {
 	width: 25px;
-	height: 22px;
+	height: 24px;
 	font-size: 15px;
 	font-weight: bolder;
 	background: #ffffff;
@@ -16895,6 +16899,25 @@ a.ui-button:active,
 	width: 80px;
 	margin: 0px 2px;
 	color: #ffffff;
-	border: none;
+	border: 1px solid #01B0F0;
+}
+
+.cancle_submit > .disable{
+	background: #ffffff;
+	border-radius: 3px;
+	text-align: center;
+	display: inline-block;
+	width: 80px;
+	margin: 0px 2px;
+	color: #BDBDBD;
+	border: 1px solid #BDBDBD;
+}
+@media screen and (max-width:717px){
+	.buy_coupon_info {
+		width: 100%;
+	}
+	.buy_coupon_info_amount > a, .buy_coupon_info_amount > a:hover {
+		display: none;
+}
 }
 
