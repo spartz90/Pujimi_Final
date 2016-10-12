@@ -12,7 +12,7 @@ import kr.co.pujimi.core.Action;
 import kr.co.pujimi.dao.ResDAO;
 import kr.co.pujimi.dto.ResTO;
 
-public class ModifyOkResManageAction implements Action {
+public class ResManageModifyOkAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -24,13 +24,12 @@ public class ModifyOkResManageAction implements Action {
 			int maxFileSize = 1024 * 1024 * 5;
 			String encoding = "utf-8";
 			
-			// System.out.println("1번");
 			
 			MultipartRequest multi = new MultipartRequest(request, uploadPath, maxFileSize, encoding, new DefaultFileRenamePolicy());
 			
-			// System.out.println("2번");
-			// 페이지 돌아가기위한 user_admin 받아오기
-			String user_admin = multi.getParameter("user_admin");
+			// 페이지 돌아가기위한 member_admin, member_seq 받아오기
+			String member_admin = multi.getParameter("user_admin");
+			String member_seq = multi.getParameter("user_seq");
 			
 			//데이터를 넣기 위한 BoardTO 선언 (transfer Object)
 			ResTO resTo = new ResTO();
@@ -57,7 +56,8 @@ public class ModifyOkResManageAction implements Action {
 			ResDAO resDao = new ResDAO();
 			int flag = resDao.resModifyOk(resTo);
 			request.setAttribute("flag", flag);
-			request.setAttribute("user_admin", user_admin);
+			request.setAttribute("user_admin", member_admin);
+			request.setAttribute("user_seq", member_seq);
 			
 		} catch (NumberFormatException e) {
 			System.out.println("에러 : " + e.getMessage());

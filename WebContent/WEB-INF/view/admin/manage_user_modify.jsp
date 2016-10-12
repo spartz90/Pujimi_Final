@@ -1,26 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="kr.co.pujimi.dto.ResTO" %>
+<%@page import="kr.co.pujimi.dto.UserTO"%>
     
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	String member_seq = request.getParameter("user_seq");
+	String member_seq = request.getParameter("member_seq");
 	String member_admin = request.getParameter("user_admin");
 	
-	ResTO resTo = (ResTO)request.getAttribute("resTo");
+	UserTO userTo = (UserTO)request.getAttribute("userTo");
 	
-	int user_seq = resTo.getUser_seq();
-	int res_seq = resTo.getRes_seq();
+	String user_seq = Integer.toString(userTo.getUser_seq());
+	String user_email = userTo.getUser_email();
+	String user_password = userTo.getUser_password();
+	String user_nickname = userTo.getUser_nickname();
+	String user_gender = "";
+	if(Integer.toString(userTo.getUser_gender()).equals("0")){
+		user_gender = "남자";
+	}else{
+		user_gender = "여자";
+	}
 	
-	String res_name = resTo.getRes_name();
-	String res_addr = resTo.getRes_addr();
-	String res_phone = resTo.getRes_phone();
-	String res_octime = resTo.getRes_octime();
-	String otime = res_octime.substring(0, 8);
-	String ctime = res_octime.substring(9);
-	String res_content = resTo.getRes_content();
-	String res_photo = resTo.getRes_photo();
+	String user_age = userTo.getUser_age();
 	
 %>   
 
@@ -30,7 +31,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>가맹점 정보 수정 페이지</title>
+        <title>회원 정보 수정 페이지</title>
 
         <!-- Vendor CSS -->
         <link href="vendors/animate-css/animate.min.css" rel="stylesheet">
@@ -51,6 +52,32 @@
                 min-width: 130px;
             }
         </style>
+        <script type="text/javascript">
+	        function user_ChkForm() {
+	        	
+	        	if(document.frm.user_nickname.value.trim() == ""){
+	    			alert('닉네임을 입력해주세요.');
+	    			return false;
+	    		}
+	    		if(document.frm.user_email.value.trim() == ""){
+	    			alert('이메일을 입력해주세요.');
+	    			return false;
+	    		}
+	    		if(document.frm.user_password.value.trim() == ""){
+	    			alert('암호를 입력하셔야 합니다.');
+	    			return false;
+	    		}
+	    		if(document.rm.user_age.value.trim() == ""){
+	    			alert('생년월일을 입력해주세요');
+	    			return false;
+	    		}
+	    		if(document.frm.genderOption.value.trim() == ""){
+	    			alert('성별을 선택해 주세요.');
+	    			return false;
+	    		}
+	    		
+	    	}
+        </script>
     </head>
     
     <body class="toggled sw-toggled">
@@ -65,7 +92,7 @@
             <section id="content">
                 <div class="container">
                     <div class="block-header">
-                        <h2>가게 정보 관리 페이지</h2>
+                        <h2>회원 정보 관리 페이지</h2>
                     
                         <ul class="actions">
                             <li>
@@ -100,13 +127,13 @@
                     </div>
                 
                 <!-- 기본 폼 시작 -->
-                <form action="modifyOk_manage_rest.admin" method="post"  enctype="multipart/form-data" >
+                <form name="frm" id="frm" action="manage_user_modifyOk.admin" method="post" onSubmit='return user_ChkForm(this)'>
                 <input type="hidden" name='user_seq' value='<%= user_seq%>'>
-                <input type="hidden" name='res_seq' value='<%= res_seq%>'>
+                <input type="hidden" name='member_seq' value='<%= member_seq%>'>
                 <input type="hidden" name='user_admin' value='<%= member_admin%>'>
                     <div class="card">
                         <div class="card-header">
-                            <h2>가게 정보 입력 <small>가게에 대한 정보를 입력하는 공간입니다.</small></h2>
+                            <h2>회원 정보 입력 <small>회원에 대한 정보를 입력하는 공간입니다.</small></h2>
                         </div>
                         
                         <div class="card-body card-padding">
@@ -117,70 +144,64 @@
                             
                             <div class="row">
                                 <div class="col-sm-4">                       
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="md md-person"></i></span>
-                                        <div class="fg-line">
-                                                <input type="text" name="res_name" class="form-control" value="<%=res_name %>">
-                                        </div>
-                                    </div>
-                                    
-                                    <br/>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="md md-location-on"></i></span>
-                                        <div class="fg-line">    
-                                            <input type="text" name="res_addr" class="form-control" value="<%=res_addr %>">
-                                        </div>
-                                    </div>
-                                    
-                                    <br/>
-  									<div class="input-group">
-                                        <span class="input-group-addon"><i class="md md-local-phone"></i></span>
-                                        <div class="fg-line">
-                                            <input type="text" name="res_phone" class="form-control" value="<%=res_phone %>">
-                                        </div>
-                                    </div>
-                                    <br />
-                                    
-                                    <div class="input-group form-group">
-                                        <span class="input-group-addon"><i class="md md-access-time"></i></span>
-                                            <div class="dtp-container dropdown fg-line">
-                                            <input type='text' name="res_otime" class="form-control time-picker" data-toggle="dropdown" value="<%=otime %>">
-                                        </div>
-                                        <span class="input-group-addon"><i class="md md-access-time"></i></span>
-                                            <div class="dtp-container dropdown fg-line">
-                                            <input type='text' name="res_ctime" class="form-control time-picker" data-toggle="dropdown" value="<%=ctime %>">
-                                        </div>
-                                    </div> 
+                                    <div class="input-group m-b-20">
+						                <span class="input-group-addon"><i class="md md-person"></i></span>
+						                <div class="fg-line">
+						                    <input type="text" class="form-control" value="<%=user_nickname %>" placeholder="닉네임" id="nickname" name="user_nickname">
+						                </div>
+						            </div>
+						            
+						            <div class="input-group m-b-20">
+						                <span class="input-group-addon"><i class="md md-mail"></i></span>
+						                <div class="fg-line">
+						                    <input type="text" class="form-control" value="<%=user_email %>" placeholder="이메일" id="email" name="user_email">
+						                </div>
+						            </div>
+						            
+						            <div class="input-group m-b-20">
+						                <span class="input-group-addon"><i class="md md-accessibility"></i></span>
+						                <div class="fg-line">
+						                    <input type="text" class="form-control" value="<%=user_password %>" placeholder="비밀번호" id="password" name="user_password">
+						                </div>
+						            </div>
+						
+									<div class="input-group m-b-20">
+										<span class="input-group-addon"><i class="md md-event"></i></span>
+										<div class="dtp-container dropdown fg-line">
+											<input type='text' class="form-control date-picker" value="<%=user_age %>"	data-toggle="dropdown" placeholder="생년월일" name="user_age">
+										</div>
+									</div>
+									<br />
+									<label class="radio radio-inline m-20"> <input type="radio"
+										name="genderOption" id="radio" value="male" <% 
+											if(user_gender == "남자") {
+												out.print("checked");
+											}
+										%>> <i
+										class="input-helper"></i> <b>남</b>
+									</label> 
+									<label class="radio radio-inline m-20"> <input
+										type="radio" name="genderOption" id="radio" value="female" <% 
+											if(user_gender == "여자") {
+												out.print("checked");
+											}
+										%> > <i
+										class="input-helper"></i> <b>여</b>
+									</label>
                                 </div>
                            	</div>
-                        </div>     
+							<div class="card-header">
+                           		<h2>정보 수정을 하고난 후, 아래의 수정완료를 눌러주십시오 </small></h2>
+                       		</div>
+								<div class="card-body card-padding">
+								  	<div class="card-body card-padding">
+										<button type="submit" class="btn btn-primary btn-file m-r-10">수정 완료</button>
+									</div>
+								</div>
+                        </div>
 
                         </div>                     
                         <br/>
-                        <div class="card">
-							<div class="card-header">
-                           		<h2>가게 소개 <small>가게에 대한 소개를 입력하는 공간입니다.</small></h2>
-                       		</div>
-								<div class="card-body card-padding">
-                              		<div class="form-group">
-                               			<div class="fg-line">
-                                    		<textarea name="res_content" class="form-control auto-size"><%=res_content %></textarea>
-                                		</div>
-                            		</div>
-                              		<div class="form-group">
-                               			<div class="fg-line">
-                                    		<input type='file' name='res_photo' size='50' maxlength='45' class='box_05'>
-                                    		<img src='./upload/<%=res_photo %>' width='300' height='225' border='0'>
-                                    		<!-- 위가 원본 / 아래는 testUpload-->
-                                    		<%-- <img src='./testUpload/<%=res_photo %>' width='300' height='225' border='0'> --%>
-                                    		<small>파일명 : <%=res_photo %></small> 
-                                		</div>
-                            		</div>
-								  	<div class="card-body card-padding">
-										<button type="submit" class="btn btn-primary btn-file m-r-10">입력 완료</button>
-									</div>
-								</div>
-						</div>
 					</form>
                  </div>
                     

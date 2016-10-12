@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import ="kr.co.pujimi.dao.JoinDAO" %>
 <%@ page import ="kr.co.pujimi.dto.UserTO" %>
+<%@ page import="kr.co.pujimi.dto.ResTO"%>
+<%@ page import="java.util.ArrayList"%>
 
 <% 	   
 	String user_seq = "-1";
@@ -16,6 +18,51 @@
 	  user_nickname = session.getAttribute("user_nickname").toString();
 	  System.out.println("유저 : " + user_seq + " / 로그인상태");	 
    }
+   
+	ArrayList<ResTO> recom_lists = (ArrayList)request.getAttribute("recom_lists");
+	
+	StringBuffer recom_result = new StringBuffer();
+
+	for (ResTO resTo : recom_lists) {
+
+		int res_seq = resTo.getRes_seq();
+		String res_name = resTo.getRes_name();
+		String res_addr = resTo.getRes_addr();
+		String res_phone = resTo.getRes_phone();
+		String res_octime = resTo.getRes_octime();
+		String otime = res_octime.substring(0, 8);
+		String ctime = res_octime.substring(9);
+		String res_content = resTo.getRes_content();
+		String res_photo = resTo.getRes_photo();
+		String res_price = Integer.toString(resTo.getRes_price());
+		String res_grade = Double.toString(resTo.getRes_grade());
+		String res_sells = Integer.toString(resTo.getRes_sells());
+		String res_likes = Integer.toString(resTo.getRes_likes());
+		
+		recom_result.append("		<div class='recommend_cooperate'>");
+		recom_result.append("		<div class='recommend_cooperate_main'>");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "' style='padding: 0px;'><img src='upload/" + res_photo + "' alt='' height='250px' width='120px'></a>'");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "'><h2>" + res_name + "</h2></a>");
+		recom_result.append("		</div>");
+		recom_result.append("		<div class='recommend_cooperate_detail'>");
+		recom_result.append("			<ul>");
+		recom_result.append("				<li><i class='md md-room'></i>" +  res_addr + "</li>");
+		recom_result.append("				<li><i class='md md-aspect-ratio'></i>" +  res_price + "</li>	");
+		recom_result.append("				<li><i class='md md-schedule'></i>" + otime +  "-"  + ctime + "</li>");
+		recom_result.append("			</ul>");
+		recom_result.append("			<ul class='recommend_cooperate_detail_follow'>");
+		recom_result.append("				<li>구매 : " + res_sells + "</li>");
+		recom_result.append("				<li>좋아요 : " + res_likes + "</li>");
+		recom_result.append("			</ul>");
+		recom_result.append("			<ul class='recommend_cooperate_detail_follow_click'>");
+		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + user_seq + "'>구  매</a></li>");
+		recom_result.append("				<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		recom_result.append("			</ul>");
+		recom_result.append("		</div>");
+		recom_result.append("	</div>");
+
+	}
+   
 %>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -66,74 +113,11 @@
 						 최근 가장 핫한 점심 뷔페를 추천해드립니다.
 					</div>
 					<div class="row">
-						<div id="slidebox">
-							<div id="slider">
-								<div class="recommend_cooperate">
-									<div class="recommend_cooperate_main">
-										<a href=""  style="padding: 0px;"><img src="img/widgets/preview.jpg" alt=""></a>
-										<a href=""><h2>삿포로</h2></a>
-									</div>
-									<div class="recommend_cooperate_detail">
-										<ul>						
-											<li><i class="md md-room"></i> 서울 강남구 역삼동 818</li>
-											<li><i class="md md-aspect-ratio"></i> 5000원 </li>										
-											<li><i class="md md-schedule"></i> 10:00AM - 10:00PM</li>
-										</ul>
-										<ul class="recommend_cooperate_detail_follow">
-											<li>589 구매</li>
-											<li>8545 좋아요</li>
-										</ul>
-										<ul class="recommend_cooperate_detail_follow_click">
-											<li><a href="">구  매</a></li>
-											<li><a href="">좋아요</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="recommend_cooperate">
-									<div class="recommend_cooperate_main">
-										<a href=""  style="padding: 0px;"><img src="img/widgets/preview.jpg" alt=""></a>
-										<a href=""><h2>삿포로12</h2></a>
-									</div>
-									<div class="recommend_cooperate_detail">
-										<ul>						
-											<li><i class="md md-room"></i> 서울 강남구 역삼동 818</li>
-											<li><i class="md md-aspect-ratio"></i> 5000원 </li>										
-											<li><i class="md md-schedule"></i> 10:00AM - 10:00PM</li>
-										</ul>
-										<ul class="recommend_cooperate_detail_follow">
-											<li>589 구매</li>
-											<li>8545 좋아요</li>
-										</ul>
-										<ul class="recommend_cooperate_detail_follow_click">
-											<li><a href="">구  매</a></li>
-											<li><a href="">좋아요</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="recommend_cooperate">
-									<div class="recommend_cooperate_main">
-										<a href="" style="padding: 0px;"> <img src="img/widgets/preview.jpg" alt=""></a>
-										<a href=""><h2>삿포로123</h2></a>
-									</div>
-									<div class="recommend_cooperate_detail">
-										<ul>						
-											<li><i class="md md-room"></i> 서울 강남구 역삼동 818</li>
-											<li><i class="md md-aspect-ratio"></i> 5000원 </li>										
-											<li><i class="md md-schedule"></i> 10:00AM - 10:00PM</li>
-										</ul>
-										<ul class="recommend_cooperate_detail_follow">
-											<li>589 구매</li>
-											<li>8545 좋아요</li>
-										</ul>
-										<ul class="recommend_cooperate_detail_follow_click">
-											<li><a href="">구  매</a></li>
-											<li><a href="">좋아요</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-				
+				<div id="slidebox">
+					<div id="slider">
+						<%=recom_result %>
+					</div>
+				</div>
 						<div class="clearfix"></div>
 						<div align="center">
 							<ul class="fw-footer pagination wizard">

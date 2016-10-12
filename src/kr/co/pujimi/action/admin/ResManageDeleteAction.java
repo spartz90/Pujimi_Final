@@ -1,4 +1,4 @@
-package kr.co.pujimi.action.restaurant;
+package kr.co.pujimi.action.admin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,17 +9,17 @@ import kr.co.pujimi.dao.ResDAO;
 import kr.co.pujimi.dto.ResTO;
 import kr.co.pujimi.dto.UserTO;
 
-public class ModifyResInfoAction implements Action {
+public class ResManageDeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		ResTO resTo = new ResTO();
 
-		resTo.setUser_seq(Integer.parseInt(request.getParameter("user_seq")));
+		resTo.setRes_seq(Integer.parseInt(request.getParameter("res_seq")));
 
 		ResDAO resDao = new ResDAO();
-		resTo = resDao.resModify(resTo);
+		resTo = resDao.resDelete(resTo);
 		
 		request.setAttribute("resTo", resTo);
 	}

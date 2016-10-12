@@ -97,8 +97,8 @@
 			result.append("<td>" + res_contetnt + "</td>");
 			result.append("<td>" + res_point + "</td>");
 			result.append("<td>" + res_revenue + "</td>");
-			result.append("<td>" + "<input type='button' id='btn1' value='수정' onclick='javascript:location.href=\"modify_manage_rest.admin?user_seq="+ user_seq +"&res_seq="+ res_seq + "&user_admin="+ member_admin +"\"'/>" 
-			+ "&nbsp;"+ "&nbsp;" + "<input type='button' id='btn1' value='삭제'/>" + "</td>");
+			result.append("<td>" + "<input type='button' id='btn1' value='수정' onclick='javascript:location.href=\"manage_rest_modify.admin?user_seq="+ member_seq +"&res_seq="+ res_seq + "&user_admin="+ member_admin +"\"'/>" 
+			+ "&nbsp;"+ "&nbsp;" + "<input type='button' id='btn1' value='삭제' onclick='javascript:location.href=\"manage_rest_delete.admin?user_seq="+ member_seq +"&res_seq="+ res_seq + "&user_admin="+ member_admin +"\"'/>" + "</td>");
 			result.append("</tr>");
 
 		}

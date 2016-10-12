@@ -17,8 +17,10 @@ public class ResInfoAction implements Action {
 		ResDAO resDao = new ResDAO();
 		
 		ArrayList<ResTO> res_lists = resDao.viewList();
+		ArrayList<ResTO> recom_lists = resDao.viewRecomList();
 		
 		request.setAttribute("res_lists", res_lists);
+		request.setAttribute("recom_lists", recom_lists);
 		
 	}
 }
