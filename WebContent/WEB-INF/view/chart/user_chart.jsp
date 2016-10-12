@@ -1,3 +1,5 @@
+<%@page import="kr.co.pujimi.dto.LikeMenuDTO"%>
+<%@page import="kr.co.pujimi.dao.LikeMenuDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.HashSet"%>
@@ -12,19 +14,18 @@
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	
-	MenuDAO mdao = new MenuDAO();
-	ArrayList<MenuDTO> lists = mdao.menuView();
+	ArrayList<LikeMenuDTO> lists = (ArrayList)request.getAttribute("likeMenu_lists");
 	
-	StringBuffer food_group = new StringBuffer();
-	StringBuffer food_name = new StringBuffer();
+	StringBuffer result = new StringBuffer();
+	for(LikeMenuDTO lmdto : lists){
 		
-	for(MenuDTO mdto : lists){
+		String like_menu = lmdto.getMenu_name();
+		String like_date = lmdto.getLike_date();
 		
-		String menu_group = "<option>"+ mdto.getMenu_group() +"</option>";
-		String menu_name = "<option>"+ mdto.getMenu_name() +"</option>";
-		String menu_seq = mdto.getMenu_seq();
-		food_group.append(menu_group);
-		food_name.append(menu_name);
+		result.append("<tr>");
+		result.append("<td>" + like_date + "</td>");
+		result.append("<td>" + like_menu + "</td>");
+		result.append("</tr>");
 	}
 %>
 
@@ -184,13 +185,13 @@
                         
                         
                         <div class="col-md-12">
-                            <div class="card">
+                            <div class="card" style="position: absolute; width : 100%;">
                             	<div class="card-header">
                             		<h2>음식 선호도</h2>
                         		</div> 		
                     		
 
-						<div>
+								<div algin="center">
 									<label class="page1">식품군</label>									 
 									    <select id="food_group" name="food_group" >
 									        <option>음식군을 선택하세요</option>
@@ -220,9 +221,9 @@
 									
 									    <select id="food" name="food"></select>
 									
-									<h1><button class="btn bgm-blue btn-lg btn-info" id="food-like"><i class="md-thumb-up"></i>좋아요</button></h1>
-									<h1><button class="btn bgm-blue btn-lg btn-info" id="food-dislike"><i class="md-thumb-down"></i>싫어요</button></h1>
-																	
+									<h1><button class="btn bgm-blue btn-lg btn-info" id="food-like"><i class="md-thumb-up"></i>장바구니에 추가</button>
+									<button class="btn bgm-blue btn-lg btn-info" id="food-dislike"><i class="md-thumb-down"></i>장바구니에서 제거</button></h1>
+																								
 																		
 									<div class="col-sm-6 m-b-20">
 										<p class="f-500 m-b-20 c-black">지금 좋아한 음식들</p>
@@ -231,8 +232,22 @@
 									</div>
 									<div class="col-sm-6 m-b-20">
 										<p class="f-500 m-b-20 c-black">예전에 좋아한 음식들</p>
-										
-									</div>
+								<div class="table-responsive">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th
+													style="font-size: 20px; border-bottom: 2px solid #2196f3;">추가한 날짜</th>
+												<th
+													style="font-size: 20px; border-bottom: 2px solid #2196f3;">메뉴 이름</th>
+											</tr>
+										</thead>
+										<tbody>
+											<%=result%>
+										</tbody>
+									</table>
+								</div>
+							</div>
 																
 								</div>			
 						
@@ -649,13 +664,13 @@
     		        $foods.html(html)
     		    });    	
     		    
-    		    // 리스트 중복제거
+    		    // 리스트 중복제거    		      		    
     		    $("#food-like").click(function(){
     		    	
-    		    	var likeFood = $('#food option:selected').val();    		    	
-    		    	console.log(likeFood);
-    		    	
-    		    	var li = "<li class='list-group-item'>" + likeFood + "</li>";
+    		    	var likeFood = $('#food option:selected').val();     		    	
+    		    	console.log(likeFood);    		    	
+    		    	   		    	
+    		    	var li = "<li class='list-group-item'>" + likeFood + "<button class='btn bgm-blue btn-lg btn-info' id='like-menu-confirm'><i class='md md-add-shopping-cart'></i>리스트에 추가 확정</button>" + "</li>";
     		    	$("#likeList").append(li);
     		    	
     		    	var map = {};
@@ -666,25 +681,36 @@
     		    		}else{
     		    			alert('이미 선택하신 메뉴입니다.');
     		    			$(this).remove();
-    		    		}
-    		    			
+    		    		}    		    			
     		    	});
     		    	
     		    	$('#likeList').each(function(i, e){
     		    		$(this).append('<span id="id_' + i + '" class="arr"></span>');
-    		    	}) 
+    		    	})   	
+   	   		    	
+    		    });
+    		    
+    		    //리스트 아래에서부터 삭제
+    		    $("#food-dislike").click(function(){
+    		    	$('#likeList li').eq(-1).remove();    		    	
+    		    });
+    		    
+    		    $('#like-menu-confirm').click(function(){
     		    	
-   	   		    	$.ajax({
+    		    	var likeMenu = $('#likeList').text();
+    		    	
+    		    	console.log(likeMenu);
+    		    	$.ajax({
     		    		url : './likeMenuOk.likeMenu',
     		    		type : 'post',
     		    		data : {
-    		    			likeMenu : likeFood,
+    		    			likeMenu : likeMenu,
     		    			user_seq : user_seq
     		    		},
     		    		dataType : 'json',
     		    		success : function(json){
     		    			if(json.flag == 0){
-    		    				setTimeout("location.reload()", 1000);
+    		    				//setTimeout("location.reload()", 1000);
     		    			}else{
     		    				alert("좋아하는 메뉴 추가에 실패하였습니다.");
     		    			}
@@ -694,12 +720,6 @@
     		    		}
     		    	});
     		    });
-    		    
-    		    //리스트 아래에서부터 삭제
-    		    $("#food-dislike").click(function(){
-    		    	$('#likeList li').eq(-1).remove();
-    		    });
-    		    
     		    
     		});
     		

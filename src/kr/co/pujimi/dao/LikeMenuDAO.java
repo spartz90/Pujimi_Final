@@ -73,30 +73,31 @@ public class LikeMenuDAO {
 		}
 		return flag;
 	}
-	/*
-	public ArrayList<MenuDTO> menuView(){
+	
+	public ArrayList<LikeMenuDTO> likeMenuView(int user_seq){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ArrayList<MenuDTO> result = new ArrayList<>();
+		ArrayList<LikeMenuDTO> result = new ArrayList<>();
 		
 		try {
 			conn = this.dataSource.getConnection();
 			
-			String sql = "SELECT menu_seq, menu_group, menu_name FROM menu";
+			String sql = "SELECT like_date, menu_name FROM like_menu where user_seq = ?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_seq);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
 				
-				MenuDTO mdto = new MenuDTO();
+				LikeMenuDTO lmdto = new LikeMenuDTO();
 				
-				mdto.setMenu_seq(rs.getString("menu_seq"));
-				mdto.setMenu_group(rs.getString("menu_group"));
-				mdto.setMenu_name(rs.getString("menu_name"));
-				result.add(mdto);
+				lmdto.setMenu_name(rs.getString("menu_name"));
+				lmdto.setLike_date(rs.getString("like_date"));
+				
+				result.add(lmdto);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -126,5 +127,5 @@ public class LikeMenuDAO {
 		}
 		return result;
 	}	
-	*/
+	
 }
