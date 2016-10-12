@@ -68,7 +68,7 @@
 					<li><a><i class="md md-perm-identity"></i>마이페이지</a>
 						<ul>
 							<li><a href="mycoupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">내쿠폰</a></li>
-							<li><a href="mycalendar.html">식단 관리</a></li>
+							<li><a href="likeMenu.likeMenu?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">식단 관리</a></li>
 							<li><a href="inter_res.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">관심 가게</a></li>
 						</ul>
 					</li>
@@ -119,7 +119,7 @@
        	 		<div class="mobile-menu-drop-my">
        	 			<ul>
 						<li><a href="mycoupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">내쿠폰</a></li>
-						<li><a href="mycalendar.html">식단 관리</a></li>
+						<li><a href="likeMenu.likeMenu?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">식단 관리</a></li>
 						<li><a href="inter_res.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">관심 가게</a></li>
 					<%
                    		}

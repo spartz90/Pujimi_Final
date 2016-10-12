@@ -7,6 +7,10 @@
 
 <%
 	request.setCharacterEncoding("utf-8");
+
+
+	String member_seq = request.getParameter("user_seq");
+	String member_admin = request.getParameter("user_admin");
 	
 	MenuDAO mdao = new MenuDAO();
 	ArrayList<MenuDTO> lists = mdao.menuView();
@@ -50,7 +54,12 @@
     
     <body class="toggled sw-toggled">
     <div class="gongbak"></div>
-    <div id="top_side"></div> 
+        	<div>
+    		<jsp:include page="../template/top_side.jsp" >
+    		<jsp:param name="user_seq" value="<%=member_seq %>" />
+    		<jsp:param name="user_admin" value="<%=member_admin %>" />
+    		</jsp:include>
+    	</div>   
     
     <!-- c3, d3 -->
     <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -323,7 +332,6 @@
         
         <script type="text/javascript">
     		$('#top_side').load('top_side-test.jsp');   		
-    		
     		jQuery(function($) {
     		    var foods = {
     		        '밥류': ['콩나물해장국',
@@ -630,6 +638,7 @@
 							'수조어육류' : ['육회', '대구포', '북어포']							
     		    }
     		    
+    		    var user_seq = <%=member_seq%>
     		    var $foods = $('#food');
     		    $('#food_group').change(function () {
     		        var food_group = $(this).val(), lcns = foods[food_group] || [];
@@ -663,12 +672,31 @@
     		    	
     		    	$('#likeList').each(function(i, e){
     		    		$(this).append('<span id="id_' + i + '" class="arr"></span>');
-    		    	})    		    	
+    		    	}) 
+    		    	
+   	   		    	$.ajax({
+    		    		url : './likeMenuOk.likeMenu',
+    		    		type : 'post',
+    		    		data : {
+    		    			likeMenu : likeFood,
+    		    			user_seq : user_seq
+    		    		},
+    		    		dataType : 'json',
+    		    		success : function(json){
+    		    			if(json.flag == 0){
+    		    				setTimeout("location.reload()", 1000);
+    		    			}else{
+    		    				alert("좋아하는 메뉴 추가에 실패하였습니다.");
+    		    			}
+    		    		},
+    		    		error : function(xhr, status, error){
+    		    			alert('에러 : ' + status + '\n\n' + error);
+    		    		}
+    		    	});
     		    });
     		    
     		    //리스트 아래에서부터 삭제
     		    $("#food-dislike").click(function(){
-    		    	
     		    	$('#likeList li').eq(-1).remove();
     		    });
     		    
