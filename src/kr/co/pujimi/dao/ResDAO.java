@@ -344,17 +344,17 @@ public class ResDAO {
 	}
 	
 	
-	public ResTO ResModify(ResTO rdto) {
+	public ResTO resModify(ResTO rdto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 				
 		try {
 			conn = this.dataSource.getConnection();				
-					
-			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where user_seq = ?";
+			
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, rdto.getUser_seq());
+			pstmt.setInt(1, rdto.getRes_seq());
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -400,13 +400,13 @@ public class ResDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		//글삭제 성공여부를 위한 flag 설정
+		//글 수정 성공여부를 위한 flag 설정
 		int flag = 2;
 
 		try {
 
 			conn = this.dataSource.getConnection();
-			String sql = "update restaurant set res_name = ?, res_addr = ?, res_phone = ?, res_octime = ?, res_content = ?, res_photo = ? where user_seq = ? and res_seq = ?";
+			String sql = "update restaurant set res_name = ?, res_addr = ?, res_phone = ?, res_octime = ?, res_content = ?, res_photo = ? where res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, rdto.getRes_name());
@@ -417,6 +417,100 @@ public class ResDAO {
 			pstmt.setString(6, rdto.getRes_photo());
 			pstmt.setInt(7, rdto.getUser_seq());
 			pstmt.setInt(8, rdto.getRes_seq());
+
+			//return int 값은 DML이 수행된 후의 정상실행은 1 false는 0
+			int result = pstmt.executeUpdate();
+			if (result == 0) {
+				flag = 1;
+				// 비밀번호 오류
+			} else if (result == 1) {
+				flag = 0;
+				// 정상
+			}
+
+		}catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
+	}
+	
+	public ResTO resDelete(ResTO rdto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+				
+		try {
+			conn = this.dataSource.getConnection();				
+					
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone from restaurant where res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rdto.getRes_seq());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				rdto.setUser_seq(rs.getInt("user_seq"));
+				rdto.setRes_seq(rs.getInt("res_seq"));
+				rdto.setRes_name(rs.getString("res_name"));
+				rdto.setRes_addr(rs.getString("res_addr"));
+				rdto.setRes_phone(rs.getString("res_phone"));
+			}
+
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return rdto;
+	}
+
+	public int resDeleteOk(ResTO rdto) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		//글삭제 성공여부를 위한 flag 설정
+		int flag = 2;
+
+		try {
+
+			conn = this.dataSource.getConnection();
+			String sql = "delete from restaurant where res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rdto.getRes_seq());
 
 			//return int 값은 DML이 수행된 후의 정상실행은 1 false는 0
 			int result = pstmt.executeUpdate();

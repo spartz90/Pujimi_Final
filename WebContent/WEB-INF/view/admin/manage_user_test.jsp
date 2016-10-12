@@ -88,7 +88,8 @@
 			result.append("<td>" + user_gender + "</td>");
 			result.append("<td>" + user_age + "</td>");
 			result.append("<td>" + user_admin + "</td>");
-			result.append("<td>" + "<input type='button' id='btn1' value='수정'/>" + "&nbsp;" + "<input type='button' id='btn1' value='삭제'/>" + "</td>");			
+			result.append("<td>" + "<input type='button' id='btn1' value='수정' onclick='javascript:location.href=\"manage_user_modify.admin?user_seq="+ user_seq + "&user_admin="+ member_admin + "&member_seq="+ member_seq +"\"'/>" 
+					+ "&nbsp;"+ "&nbsp;" + "<input type='button' id='btn1' value='삭제' onclick='javascript:location.href=\"manage_user_delete.admin?user_seq="+ user_seq + "&user_admin="+ member_admin + "&member_seq="+ member_seq +"\"'/>" + "</td>");			
 			result.append("</tr>");
 
 		}
