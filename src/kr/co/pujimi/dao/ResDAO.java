@@ -227,6 +227,7 @@ public class ResDAO {
 		ResultSet rs = null;
 		
 		ArrayList<ResTO> result = new ArrayList<>();
+		ResDAO resDao = new ResDAO();
 		
 		try{
 
@@ -234,7 +235,7 @@ public class ResDAO {
 			
 			// DB에서 꺼내올때 날짜 포맷 지정
 			String sql = "select res_seq, res_name, res_addr, res_phone, "
-					+ "res_octime, res_content, res_photo from restaurant order by res_revenue desc";
+					+ "res_octime, res_content, res_photo, res_price from restaurant order by res_revenue desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -243,12 +244,16 @@ public class ResDAO {
 				ResTO rdto = new ResTO();
 				
 				rdto.setRes_seq(rs.getInt("res_seq"));
+				int res_seq = rs.getInt("res_seq");
 				rdto.setRes_name(rs.getString("res_name"));
 				rdto.setRes_addr(rs.getString("res_addr"));
 				rdto.setRes_phone(rs.getString("res_phone"));
 				rdto.setRes_octime(rs.getString("res_octime"));
 				rdto.setRes_content(rs.getString("res_content"));
 				rdto.setRes_photo(rs.getString("res_photo"));
+				rdto.setRes_price(Integer.parseInt(rs.getString("res_price")));
+				rdto.setRes_sells(resDao.sellsCount(res_seq));
+				rdto.setRes_likes(resDao.likeCount(res_seq));
 		
 				result.add(rdto);
 			}
@@ -279,6 +284,177 @@ public class ResDAO {
 			}
 		}
 		return result;
+	}
+	
+	public ArrayList<ResTO> viewRecomList() {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<ResTO> result = new ArrayList<>();
+		ResDAO resDao = new ResDAO();
+		
+		try{
+			
+			conn = this.dataSource.getConnection();
+			
+			String sql = "select res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade from restaurant where res_recom = 1 order by res_revenue desc";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				ResTO resTo = new ResTO();
+				
+				resTo.setRes_seq(rs.getInt("res_seq"));
+				int res_seq = rs.getInt("res_seq");
+				resTo.setRes_name(rs.getString("res_name"));
+				resTo.setRes_addr(rs.getString("res_addr"));
+				resTo.setRes_phone(rs.getString("res_phone"));
+				resTo.setRes_octime(rs.getString("res_octime"));
+				resTo.setRes_content(rs.getString("res_content"));
+				resTo.setRes_photo(rs.getString("res_photo"));
+				resTo.setRes_price(rs.getInt("res_price"));
+				resTo.setRes_grade(rs.getDouble("res_grade"));
+				resTo.setRes_sells(resDao.sellsCount(res_seq));
+				resTo.setRes_likes(resDao.likeCount(res_seq));
+
+				result.add(resTo);
+			}
+			pstmt.close();
+			rs.close();
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return result;
+	}
+	
+	public int sellsCount(int res_seq) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int sellsCount = 0;
+		try{
+			
+			conn = this.dataSource.getConnection();
+			
+			String sql = "SELECT COUNT( cp_seq ) AS res_sells FROM coupon WHERE res_seq = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				sellsCount = rs.getInt("res_sells");				
+			}
+			
+			pstmt.close();
+			rs.close();
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return sellsCount;
+	}
+	
+	public int likeCount(int res_seq) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int likeCount = 0;
+		
+		try{
+			
+			conn = this.dataSource.getConnection();
+			
+			String sql = "SELECT COUNT( user_seq ) AS res_likes FROM like_restaurant WHERE res_seq = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				likeCount = rs.getInt("res_likes");				
+			}
+			
+			pstmt.close();
+			rs.close();
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return likeCount;
 	}
 	
 	public ArrayList<ResTO> interList(ResTO resTo) {
