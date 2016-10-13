@@ -670,13 +670,13 @@
     		        $foods.html(html)
     		    });    	
     		    
-    		    // 리스트 중복제거    		      		    
+    		    // 리스트 추가 및 중복제거      		    
     		    $("#food-like").click(function(){
     		    	
     		    	var likeFood = $('#food option:selected').val();     		    	
     		    	console.log(likeFood);    		    	
     		    	   		    	
-    		    	var li = "<li class='list-group-item'>" + likeFood + "<button class='btn bgm-blue btn-lg btn-info' id='like-menu-confirm'><i class='md md-add-shopping-cart'></i>리스트에 추가 확정</button>" + "</li>";
+    		    	var li = "<li class='list-group-item'>" + likeFood + "<button id='like-menu-confirm'><i class='md md-add-shopping-cart'></i>추가</button>" + "</li>";
     		    	$("#likeList").append(li);
     		    	
     		    	var map = {};
@@ -691,11 +691,19 @@
     		    	});
     		    	
     		    	$('#likeList').each(function(i, e){
-    		    		$(this).append('<span id="id_' + i + '" class="arr"></span>');
-    		    	})   	
-   	   		    	
+    		    		$(this).append('<span class="arr"></span>');
+    		    	});  
+    		    	
+    		    	//호준아여기야아아아아
+    		    	
+    		    	$("#like-menu-confirm").click(function(){
+    	 		    	   var index = $("#like-menu-confirm").index(this);
+    	 		    	   //$("li:eq(" + index + ")").attr("data-val", "hello");
+    	 		    	   console.log(index);
+    	 		    	});
     		    });
     		    
+
     		    //리스트 아래에서부터 삭제
     		    $("#food-dislike").click(function(){
     		    	$('#likeList li').eq(-1).remove();    		    	
