@@ -45,17 +45,20 @@ public class ResDAO {
 			conn = this.dataSource.getConnection();
 			// res_seq, res_name, res_addr, res_phone, res_octime, res_content,
 			// res_point, res_revenue, user_seq
-			String sql = "insert into restaurant values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into restaurant values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, resdto.getRes_name());
 			pstmt.setString(2, resdto.getRes_addr());
 			pstmt.setString(3, resdto.getRes_phone());
 			pstmt.setString(4, resdto.getRes_octime());
 			pstmt.setString(5, resdto.getRes_content());
-			pstmt.setInt(6, 0); // 최초 가게정보 추가시 포인트 0
-			pstmt.setInt(7, 0); // 최초 가게정보 추가시 총 매출액 0
-			pstmt.setInt(8, user_seq);
-			pstmt.setString(9, "noimage.png");
+			pstmt.setInt(6, user_seq);
+			pstmt.setString(7, "noimage.png");
+			pstmt.setInt(8, 0); // 최초 가게정보 추가시 포인트 0
+			pstmt.setInt(9, 0); // 최초 가게정보 추가시 가격정보 0
+			pstmt.setInt(10, 0); // 최초 가게정보 추가시 총 매출액 0
+			pstmt.setDouble(11, 0.0); // 최초 가게정보 추가시 평점 0
+			pstmt.setInt(12, 0); // 최초 가게정보 추가시 추천제휴점 0;
 
 			// return int 값은 DML이 수행된 후의 정상실행은 1 false는 0
 			int result = pstmt.executeUpdate();
