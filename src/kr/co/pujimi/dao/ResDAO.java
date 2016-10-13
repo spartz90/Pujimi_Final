@@ -483,10 +483,9 @@ public class ResDAO {
 				
 		try {
 			conn = this.dataSource.getConnection();				
-			
-			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where res_seq = ?";
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where user_seq = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, rdto.getRes_seq());
+			pstmt.setInt(1, rdto.getUser_seq());
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
