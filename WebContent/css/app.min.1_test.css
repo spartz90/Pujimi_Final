@@ -16363,9 +16363,15 @@ a.thumbnail.active {
 	
 }
 .recommend_cooperate .recommend_cooperate_main > a > img{
+	position: absolute;
 	width: 100%;
+	height:100%;
 	margin: 0 0 -0.5px;
 	padding: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 .recommend_cooperate .recommend_cooperate_main > a{
 	background: #3f51b5;
@@ -16488,6 +16494,7 @@ a.thumbnail.active {
 		padding: 10px;
 		color: #FFF;
 		display: block;
+		top:0px;
 	}
 	.recommend_cooperate .recommend_cooperate_main > a > h2{
 		color: #FFF;

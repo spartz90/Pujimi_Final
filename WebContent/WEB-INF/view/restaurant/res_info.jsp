@@ -41,7 +41,7 @@
 		
 		recom_result.append("		<div class='recommend_cooperate'>");
 		recom_result.append("		<div class='recommend_cooperate_main'>");
-		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "' style='padding: 0px;'><img src='upload/" + res_photo + "' alt='' height='250px' width='120px'></a>'");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "' style='padding: 0px; position:relative; overflow:hidden; padding-top:52%'><img src='upload/" + res_photo + "' alt=''></a>'");
 		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "'><h2>" + res_name + "</h2></a>");
 		recom_result.append("		</div>");
 		recom_result.append("		<div class='recommend_cooperate_detail'>");
@@ -271,7 +271,7 @@
 						
 						container.css('margin-left', -100+'%');
 						container.prepend(container.children()[max-1]);
-						interval = setInterval(next, 5000);
+						//interval = setInterval(next, 5000);
 					}
 					function events() {
 						jQuery('#previous').on('click', prev);
@@ -288,8 +288,8 @@
 						animate('next');	
 					}
 					function animate( $direction ) {
-						clearInterval(interval);
-						interval = setInterval(next, 5000);
+						//clearInterval(interval);
+						//interval = setInterval(next, 5000);
 						
 						if ($direction == "next") {
 							container.append(container.children()[0]);

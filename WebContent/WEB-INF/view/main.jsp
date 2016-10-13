@@ -41,7 +41,7 @@
 		
 		recom_result.append("		<div class='recommend_cooperate'>");
 		recom_result.append("		<div class='recommend_cooperate_main'>");
-		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "' style='padding: 0px;'><img src='upload/" + res_photo + "' alt='' height='250px' width='120px'></a>'");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "' style='padding: 0px; position:relative; overflow:hidden; padding-top:52%'><img src='upload/" + res_photo + "' alt=''></a>'");
 		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "'><h2>" + res_name + "</h2></a>");
 		recom_result.append("		</div>");
 		recom_result.append("		<div class='recommend_cooperate_detail'>");
@@ -261,6 +261,58 @@
 					
 					jQuery(document).ready(init);
 				})();
+				
+				
+				$('button').on('click', function() {
+					var user_seq = <%=user_seq %>;
+					var res_seq = $(this).attr('idx');
+					if (user_seq == -1) {
+						alert("로그인이 필요합니다.")
+						return false;
+					}
+					$.ajax({
+						url: './checkOk.like',
+						type: 'post',
+						data: {
+							user_seq: user_seq,
+							res_seq: $(this).attr('idx'),
+						},
+						dataType: 'json',
+						success: function(json) {
+							if(json.flag == 0) {
+								//alert("좋아요 했습니다.");
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff0000');
+								$('button[idx="' + res_seq +'"]').css('background-color','#ff0000');
+								
+								//좋아요 숫자 1증가
+								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])+1;
+								$("li[idx='lcR"+res_seq+"']").text("좋아요 : " + likeNum);
+								
+								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])+1;
+								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								
+							} else {
+								//alert("좋아요를 해제했습니다.")
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#01B0F0');
+								$('button[idx="' + res_seq +'"]').css('background-color','#01B0F0');
+								
+								//좋아요 숫자 1감소
+								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])-1;
+								$("li[idx='lcR"+res_seq+"']").text("좋아요 : " + likeNum);
+								
+								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])-1;
+								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+							}
+						},
+						error : function(xhr, status, error) {
+							alert('에러:' + status + '\n\n' + error);
+						}
+					})
+				});
 			});
         </script>
     </body>
