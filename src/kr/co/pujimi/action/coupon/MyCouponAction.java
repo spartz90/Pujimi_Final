@@ -19,7 +19,7 @@ public class MyCouponAction implements Action {
 		//CouponTO cTo = new CouponTO();
 
 		int user_seq = Integer.parseInt(request.getParameter("user_seq"));
-
+		
 		CouponDAO couponDao = new CouponDAO();
 		ArrayList<CouponTO> couponList = couponDao.myCoupon(user_seq);
 		
