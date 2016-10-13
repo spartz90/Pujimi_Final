@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.pujimi.action.coupon.CouponBuyAction;
 import kr.co.pujimi.action.coupon.CouponBuyOkAction;
 import kr.co.pujimi.action.coupon.MyCouponAction;
-import kr.co.pujimi.action.main.MainAction;
 import kr.co.pujimi.core.Action;
 
 
