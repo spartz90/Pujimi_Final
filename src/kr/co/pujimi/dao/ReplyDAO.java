@@ -33,7 +33,7 @@ public class ReplyDAO {
 		}
 	}
 	
-	public int writeOk(ReplyTO redto) {
+	public int writeOk(ReplyTO reto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		// 회원가입 성공여부를 위한 check 설정
@@ -45,13 +45,13 @@ public class ReplyDAO {
 			conn = this.dataSource.getConnection();
 			// re_seq, re_content, re_photo, re_date, re_grade, user_seq, res_seq
 			String sql = "INSERT INTO reply VALUES (0, ?, ?, NOW(), ?, ?, ?)";
-			res_seq = redto.getRes_seq();
+			res_seq = reto.getRes_seq();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, redto.getRe_content());
-			pstmt.setString(2, redto.getRe_photo());
-			pstmt.setDouble(3, redto.getRe_grade());
-			pstmt.setInt(4, redto.getUser_seq());
-			pstmt.setInt(5, redto.getRes_seq());			
+			pstmt.setString(1, reto.getRe_content());
+			pstmt.setString(2, reto.getRe_photo());
+			pstmt.setDouble(3, reto.getRe_grade());
+			pstmt.setInt(4, reto.getUser_seq());
+			pstmt.setInt(5, reto.getRes_seq());			
 
 			// return int 값은 DML이 수행된 후의 정상실행은 1 false는 0
 			int result = pstmt.executeUpdate();
@@ -95,6 +95,54 @@ public class ReplyDAO {
 			}
 		}
 		return check;
+	}
+	public ReplyTO modifyReply(ReplyTO reto){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = this.dataSource.getConnection();
+			String sql = "SELECT re_seq, re_content, re_photo, re_date, re_grade, user_seq, res_seq FROM reply WHERE re_seq = ?";
+			pstmt = conn.prepareStatement(sql);		
+			pstmt.setInt(1, reto.getRe_seq());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				reto.setRe_content(rs.getString("re_content"));
+				reto.setRe_photo(rs.getString("re_photo"));
+				reto.setRe_date(rs.getString("re_date"));
+				reto.setRe_grade(rs.getDouble("re_grade"));
+				reto.setUser_seq(rs.getInt("user_seq"));
+				reto.setRes_seq(rs.getInt("res_seq"));
+			}
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}		
+		
+		return reto;
 	}
 	
 	public ArrayList<ReplyTO> replyList(int res_seq) {

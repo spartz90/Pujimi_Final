@@ -10,42 +10,17 @@
 
 <%
 	request.setCharacterEncoding( "utf-8");
-	
-	ResTO resTo	= (ResTO)request.getAttribute("resTo");
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	String res_seq = request.getParameter("res_seq");
+
+	ReplyTO reto = (ReplyTO)request.getAttribute("reto");
 	
-	String res_name = resTo.getRes_name();
-	String res_addr = resTo.getRes_addr();
-	String res_phone = resTo.getRes_phone();
-	String res_octime[] = resTo.getRes_octime().split("-");
-	String otime = res_octime[0];
-	String ctime = res_octime[1];
-	String res_content = resTo.getRes_content();
-	String res_photo = resTo.getRes_photo();	
-	int res_price = resTo.getRes_price();
-	double res_grade = Math.round(resTo.getRes_grade()*100)/100.0;
-	int num_star = (int)Math.round(res_grade);
-	int res_sells = resTo.getRes_sells();
-	int res_likes = resTo.getRes_likes();
+	String re_content = reto.getRe_content();
+	String user_nickname = reto.getUser_nickname();
+	int re_grade = (int)reto.getRe_grade();
+	String re_photo = reto.getRe_photo();
 	
-	StringBuffer result	= (StringBuffer)request.getAttribute("result");	
-		
-	RatingTO rato = (RatingTO)request.getAttribute("rato");
-	
-	double one = rato.getOne();
-	double two = rato.getTwo();
-	double three = rato.getThree();
-	double four = rato.getFour();
-	double five = rato.getFive();
-	
-	double sum = one + two + three + four + five;
-	double prog_one = Math.round( one / sum * 100);
-	double prog_two = Math.round(two / sum * 100);
-	double prog_three = Math.round(three / sum * 100);
-	double prog_four = Math.round(four / sum * 100);
-	double prog_five = Math.round(five / sum * 100);   	
 	
 %>
 <!DOCTYPE html>
@@ -80,210 +55,24 @@
     	</div>   
 	<section id="main">
 		<!-- 배경색 지정  -->
-		<section id="content">
-			<div class="container">
-			
+		<section id="content">			
 			<div class="row">
-				<div class="block-header">
-				<br/>
-					<h2>
-						제휴점 상세 정보 <small>제휴점의 자세한 정보를 확인할 수 있습니다. </small>
-					</h2>
-
-					<ul class="actions">
-						<li><a href=""> <i class="zmdi zmdi-trending-up"></i>
-						</a></li>
-						<li><a href=""> <i class="zmdi zmdi-check-all"></i>
-						</a></li>
-						<li class="dropdown"><a href=""> <i
-								class="zmdi zmdi-more-vert"></i>
-						</a>
-
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li><a href="">Refresh</a></li>
-								<li><a href="">Manage Widgets</a></li>
-								<li><a href="">Widgets Settings</a></li>
-							</ul></li>
-					</ul>
-				</div>
-
-				<div class="container">
-					<div class="card blog-post">
-						<div class="bp-header">
-							<div class="resImg"><img src="./upload/<%=res_photo%>" alt="" ></div> 
-							<a href="" class="bp-title">
-								<h2><%=res_name %></h2> 
-								<small><%=res_content %></small>
-							</a>
-						</div>
-
-						<div class="col-md-8">
-							<div class="card profile-view">
-
-								<div class="pv-body" style="margin-top: 10px;">
-
-									<ul class="pv-contact">
-										<br />
-										<li><i class="md md-room"></i> <%=res_addr %></li>
-										<li><i class="md md-phone"></i> <%=res_phone %></li>										
-									</ul>
-									<ul class="pv-contact">
-										<br />
-										<li><i class="md md-schedule"></i> <%=otime %> - <%=ctime %></li>
-									</ul>
-									<ul class="pv-follow">
-										<li><%=res_price %> 원</li>
-										<li>구매 : <%=res_sells %></li>
-										<li>좋아요 : <%=res_likes %> </li>
-									</ul>
-
-									<a href="coupon_buy.coupon?res_seq=<%=res_seq %>&user_seq=<%=member_seq %>%user_admin=<%=member_admin %>" class="pv-follow-btn" style="background-color: #01B0F0">구매 하기</a><br /> 
-									<a href="" class="pv-follow-btn" style="background-color: #01B0F0">좋아요</a>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-4 hidden-sm hidden-xs" style="margin-top: 10px;">
-							<div class="card rating-list">
-								<div class="listview">
-									<div class="lv-header">
-										<div class="m-t-5">평점 평균 <%=res_grade %></div>
-
-										<div class="clearfix"></div>
-
-										<div class="rl-star">
-										
-										<% 
-											for(int i = 0; i<num_star; i++){
-												out.print("<i class=\"md md-star active\"></i>");
-											}
-											for(int j = 0; j<5-num_star; j++){
-												out.print("<i class=\"md md-star\"></i>");
-											}
-											
-										%>	
-											
-										</div>
-									</div>
-
-									<div class="lv-body">
-										<div class="p-15">
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														1 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right"><%=(int)one %></div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%=prog_one %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_one %>%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														2 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right"><%=(int)two %></div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%=prog_two %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_two %>%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														3 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right"><%=(int)three %></div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=prog_three %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_three %>%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														4 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right"><%=(int)four %></div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%=prog_four %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_four %>%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														5 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right"><%=(int)five %></div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%=prog_five %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_five %>%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>                      			
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-
-
-
 				<div class="container">
 					<div class="col-md-12">
 						<div class="block-header">
 							<h2>
-								후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
+								후기 수정하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
 							</h2>
-							<!-- <ul class="actions">									
-								<li class="dropdown"><i	class="md md-more-vert"></i>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li><a href="">Refresh</a></li>
-										<li><a href="">Manage Widgets</a></li>
-										<li><a href="">Widgets Settings</a></li>
-									</ul>
-								</li>
-							</ul> -->
+							
 						</div>
-						<!-- replyOk.reply -->
-						<!-- 히든으로 member_seq, member_admin, res_seq -->
-						<form action="writeOk.reply" method="post" enctype="multipart/form-data" >
+						
+						<form action="modifyOk.reply" method="post" enctype="multipart/form-data" >
 						<input type="hidden" name="user_seq" value="<%=member_seq%>"/>
 						<input type="hidden" name="user_admin" value="<%=member_admin%>"/>
 						<input type="hidden" name="res_seq" value="<%=res_seq%>"/>
 						<div class="card w-post">
 							<div class="card-body">
-								<textarea id="re_content" name="re_content" class="wp-text auto-size" placeholder="후기를 작성해주세요." ></textarea>
+								<textarea id="re_content" name="re_content" class="wp-text auto-size" placeholder="후기를 작성해주세요." ><%=re_content %></textarea>
 								<!-- 버튼 위치 -->
 								<div class="p-5" align="center" style="border-top: 1px solid #F0F0F0;">
 								<br/>
@@ -332,17 +121,11 @@
 											<i class="md md-collections"></i><label style="font-size:13px">사진 첨부</label>
 										</a> 
 									</div>
-										<button type="submit" class="btn btn-primary btn-sm pull-right">작성</button>
+										<button type="submit" class="btn btn-primary btn-sm pull-right">수정</button>
 								</div>
 								</div>
 							</div>
-						</form>
-					<div class="block-header">
-					<br/>
-						<h2>후기 보기<small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small></h2>
-					</div>	
-					<!-- result 들어갈부분 -->
-					<%=result %>
+						</form>					
 					</div>
 				</div>
 			</div>
