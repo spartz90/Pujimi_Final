@@ -110,7 +110,7 @@
 				<div class="container">
 					<div class="card blog-post">
 						<div class="bp-header">
-							<img src="./upload/<%=res_photo%>" alt="" style="width: 100%; height: 60%"> 
+							<div class="resImg"><img src="./upload/<%=res_photo%>" alt="" ></div> 
 							<a href="" class="bp-title">
 								<h2><%=res_name %></h2> 
 								<small><%=res_content %></small>
