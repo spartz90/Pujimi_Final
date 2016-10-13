@@ -1,6 +1,11 @@
+<%@page import="kr.co.pujimi.dto.RatingTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%@ page import="kr.co.pujimi.dto.ResTO" %>
+<%@page import="kr.co.pujimi.dto.ReplyTO"%>
+<%@page import="kr.co.pujimi.dao.ReplyDAO"%>
+
 <%@ page import="java.util.ArrayList" %>
 
 <%
@@ -20,51 +25,28 @@
 	String res_content = resTo.getRes_content();
 	String res_photo = resTo.getRes_photo();	
 	int res_price = resTo.getRes_price();
-	double res_grade = resTo.getRes_grade();
+	double res_grade = Math.round(resTo.getRes_grade()*100)/100.0;
+	int num_star = (int)Math.round(res_grade);
 	int res_sells = resTo.getRes_sells();
 	int res_likes = resTo.getRes_likes();
-			
-	/*
-	// 댓글 가져오기 아직 안함
-	ReplyDAO rdao = new ReplyDAO();	
-	ArrayList<ReplyDTO> lists = rdao.replyList(res_seq);
-	StringBuffer result = new StringBuffer();
 	
-	for(ReplyDTO dto : lists){
-		String reply_user_nickname = dto.getUser_nickname();
-		String reply_date = dto.getReply_date();
-		String reply_photo = dto.getReply_photo();
-		String reply_content = dto.getReply_content();		
+	StringBuffer result	= (StringBuffer)request.getAttribute("result");	
 		
-		result.append("<div class='card w-item'>");
-		result.append("		<div class='card-header'>");
-		result.append("			<div class='media'>");
-		result.append("				<div class='pull-left'>");
-		result.append("					<img class='avatar-img' src='img/profile-pics/1.jpg' alt=''>");
-		result.append("				</div>");
-		result.append("				<div class='media-body'>");
-		result.append("					<h2>"+ reply_user_nickname +"<small>Posted on" + reply_date + "</small></h2>");
-		result.append("				</div>");
-		result.append("			</div>");
-		result.append("		</div>");
-		result.append("		<div class='card-body card-padding'>");
-		result.append("			<div class='wi-preview lightbox clearfix'>");
-		result.append("				<div class='wip-item' data-src='img/headers/4.png' style='background-image: url(img/headers/4.png);'>");
-		result.append("					<div class='lightbox-item'></div>");
-		result.append("				</div>");
-		result.append("			</div>");
-		result.append("			<p>" + reply_content + "</p>");
-		result.append("			<div class='wi-stats clearfix'>");
-		result.append("				<div class='wis-numbers'>");
-		result.append("					<span><i class='zmdi zmdi-comments'></i> 36</span>");
-		result.append("					<span class='active'><i class='zmdi zmdi-favorite'></i> 220</span>");
-		result.append("				</div>");									
-		result.append("			</div>");
-		result.append("		</div>");							
-		result.append("</div>");
-	}
-	*/
-   	
+	RatingTO rato = (RatingTO)request.getAttribute("rato");
+	
+	double one = rato.getOne();
+	double two = rato.getTwo();
+	double three = rato.getThree();
+	double four = rato.getFour();
+	double five = rato.getFive();
+	
+	double sum = one + two + three + four + five;
+	double prog_one = Math.round( one / sum * 100);
+	double prog_two = Math.round(two / sum * 100);
+	double prog_three = Math.round(three / sum * 100);
+	double prog_four = Math.round(four / sum * 100);
+	double prog_five = Math.round(five / sum * 100);   	
+	
 %>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -100,11 +82,12 @@
 		<!-- 배경색 지정  -->
 		<section id="content">
 			<div class="container">
-			<div class="container container-alt">
+			
+			<div class="row">
 				<div class="block-header">
 				<br/>
 					<h2>
-						제휴점 상세 정보 <small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small>
+						제휴점 상세 정보 <small>제휴점의 자세한 정보를 확인할 수 있습니다. </small>
 					</h2>
 
 					<ul class="actions">
@@ -169,11 +152,17 @@
 										<div class="clearfix"></div>
 
 										<div class="rl-star">
-											<i class="md md-star active"></i> 
-											<i class="md md-star active"></i>
-											<i class="md md-star active"></i>
-											<i class="md md-star"></i> 
-											<i class="md md-star"></i>
+										
+										<% 
+											for(int i = 0; i<num_star; i++){
+												out.print("<i class=\"md md-star active\"></i>");
+											}
+											for(int j = 0; j<5-num_star; j++){
+												out.print("<i class=\"md md-star\"></i>");
+											}
+											
+										%>	
+											
 										</div>
 									</div>
 
@@ -185,13 +174,11 @@
 														1 <i class="md md-star"></i>
 													</div>
 
-													<div class="pull-right">20</div>
+													<div class="pull-right"><%=(int)one %></div>
 
 													<div class="media-body">
 														<div class="progress">
-															<div class="progress-bar progress-bar-danger"
-																role="progressbar" aria-valuenow="20" aria-valuemin="0"
-																aria-valuemax="100" style="width: 20%"></div>
+															<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%=prog_one %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_one %>%"></div>
 														</div>
 													</div>
 												</div>
@@ -203,13 +190,11 @@
 														2 <i class="md md-star"></i>
 													</div>
 
-													<div class="pull-right">45</div>
+													<div class="pull-right"><%=(int)two %></div>
 
 													<div class="media-body">
 														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="45" aria-valuemin="0"
-																aria-valuemax="100" style="width: 45%"></div>
+															<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%=prog_two %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_two %>%"></div>
 														</div>
 													</div>
 												</div>
@@ -221,13 +206,11 @@
 														3 <i class="md md-star"></i>
 													</div>
 
-													<div class="pull-right">60</div>
+													<div class="pull-right"><%=(int)three %></div>
 
 													<div class="media-body">
 														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="60" aria-valuemin="0"
-																aria-valuemax="100" style="width: 60%"></div>
+															<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=prog_three %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_three %>%"></div>
 														</div>
 													</div>
 												</div>
@@ -239,13 +222,11 @@
 														4 <i class="md md-star"></i>
 													</div>
 
-													<div class="pull-right">78</div>
+													<div class="pull-right"><%=(int)four %></div>
 
 													<div class="media-body">
 														<div class="progress">
-															<div class="progress-bar progress-bar-success"
-																role="progressbar" aria-valuenow="78" aria-valuemin="0"
-																aria-valuemax="100" style="width: 78%"></div>
+															<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%=prog_four %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_four %>%"></div>
 														</div>
 													</div>
 												</div>
@@ -257,11 +238,11 @@
 														5 <i class="md md-star"></i>
 													</div>
 
-													<div class="pull-right">22</div>
+													<div class="pull-right"><%=(int)five %></div>
 
 													<div class="media-body">
 														<div class="progress">
-															<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100" style="width: 22%"></div>
+															<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%=prog_five %>" aria-valuemin="0" aria-valuemax="100" style="width: <%=prog_five %>%"></div>
 														</div>
 													</div>
 												</div>
@@ -284,7 +265,7 @@
 							<h2>
 								후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
 							</h2>
-							<ul class="actions">									
+							<!-- <ul class="actions">									
 								<li class="dropdown"><i	class="md md-more-vert"></i>
 									<ul class="dropdown-menu dropdown-menu-right">
 										<li><a href="">Refresh</a></li>
@@ -292,7 +273,7 @@
 										<li><a href="">Widgets Settings</a></li>
 									</ul>
 								</li>
-							</ul>
+							</ul> -->
 						</div>
 						<!-- replyOk.reply -->
 						<!-- 히든으로 member_seq, member_admin, res_seq -->
@@ -348,7 +329,7 @@
 									<div class="wp-actions clearfix">
 									<div class="wpa-media-list pull-left">
 										<a data-toggle="tab" href="#wpm-image" class="c-amber"> 
-											<i class="md md-collections"></i>
+											<i class="md md-collections"></i><label style="font-size:13px">사진 첨부</label>
 										</a> 
 									</div>
 										<button type="submit" class="btn btn-primary btn-sm pull-right">작성</button>
@@ -356,11 +337,16 @@
 								</div>
 							</div>
 						</form>
-						
+					<div class="block-header">
+					<br/>
+						<h2>후기 보기<small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small></h2>
+					</div>	
 					<!-- result 들어갈부분 -->
+					<%=result %>
 					</div>
 				</div>
 			</div>
+			
 		</section>
 
 <!--  

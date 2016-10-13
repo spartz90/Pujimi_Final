@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import kr.co.pujimi.dto.RatingTO;
 import kr.co.pujimi.dto.ResTO;
 
 public class ResDAO {
@@ -170,54 +171,6 @@ public class ResDAO {
 		return rdto;
 		
 	}
-	
-/*
-	public ArrayList<ReplyDTO> replyList(int res_seq) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		ArrayList<ReplyDTO> result = new ArrayList<>();
-
-		try {
-			conn = this.dataSource.getConnection();
-
-			String sql = "SELECT u.user_nickname, r.reply_content, r.reply_photo, r.reply_date FROM user u, reply r WHERE r.user_seq = u.user_seq AND res_seq = ? ORDER BY r.reply_date DESC";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, res_seq);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-
-				ReplyDTO rdto = new ReplyDTO();
-
-				rdto.setUser_nickname(rs.getString("user_nickname"));
-				rdto.setReply_content(rs.getString("reply_content"));
-				rdto.setReply_date(rs.getString("reply_date"));
-				result.add(rdto);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("SQL 에러 : " + e.getMessage());
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-				}
-			if (pstmt != null)
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-				}
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e) {
-				}
-		}
-		return result;
-	}
-*/
 	
 	
 	public ArrayList<ResTO> viewList() {
@@ -520,17 +473,17 @@ public class ResDAO {
 	}
 	
 	
-	public ResTO ResModify(ResTO rdto) {
+	public ResTO resModify(ResTO rdto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 				
 		try {
 			conn = this.dataSource.getConnection();				
-					
-			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where user_seq = ?";
+			
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, rdto.getUser_seq());
+			pstmt.setInt(1, rdto.getRes_seq());
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -576,13 +529,13 @@ public class ResDAO {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		//글삭제 성공여부를 위한 flag 설정
+		//글 수정 성공여부를 위한 flag 설정
 		int flag = 2;
 
 		try {
 
 			conn = this.dataSource.getConnection();
-			String sql = "update restaurant set res_name = ?, res_addr = ?, res_phone = ?, res_octime = ?, res_content = ?, res_photo = ? where user_seq = ? and res_seq = ?";
+			String sql = "update restaurant set res_name = ?, res_addr = ?, res_phone = ?, res_octime = ?, res_content = ?, res_photo = ? where res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, rdto.getRes_name());
@@ -624,4 +577,156 @@ public class ResDAO {
 		}
 		return flag;
 	}
+	
+	public ResTO resDelete(ResTO rdto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+				
+		try {
+			conn = this.dataSource.getConnection();				
+					
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone from restaurant where res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rdto.getRes_seq());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				rdto.setUser_seq(rs.getInt("user_seq"));
+				rdto.setRes_seq(rs.getInt("res_seq"));
+				rdto.setRes_name(rs.getString("res_name"));
+				rdto.setRes_addr(rs.getString("res_addr"));
+				rdto.setRes_phone(rs.getString("res_phone"));
+			}
+
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return rdto;
+	}
+
+	public int resDeleteOk(ResTO rdto) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		//글삭제 성공여부를 위한 flag 설정
+		int flag = 2;
+
+		try {
+
+			conn = this.dataSource.getConnection();
+			String sql = "delete from restaurant where res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rdto.getRes_seq());
+
+			//return int 값은 DML이 수행된 후의 정상실행은 1 false는 0
+			int result = pstmt.executeUpdate();
+			if (result == 0) {
+				flag = 1;
+				// 비밀번호 오류
+			} else if (result == 1) {
+				flag = 0;
+				// 정상
+			}
+
+		}catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
+	}
+	
+	public RatingTO ratView(int res_seq){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		RatingTO rato = new RatingTO();
+		
+		try {
+			conn = this.dataSource.getConnection();
+			
+			String sql = "SELECT COUNT(IF(re_grade=1,re_grade,NULL)) AS one, COUNT(IF(re_grade=2,re_grade,NULL)) AS two, COUNT(IF(re_grade=3,re_grade,NULL)) AS three, COUNT(IF(re_grade=4,re_grade,NULL)) AS four, COUNT(IF(re_grade=5,re_grade,NULL)) AS five FROM reply WHERE res_seq = ?";
+			//SELECT COUNT(IF(re_grade=1,re_grade,NULL)) AS one, COUNT(IF(re_grade=2,re_grade,NULL)) AS two, COUNT(IF(re_grade=3,re_grade,NULL)) AS three, COUNT(IF(re_grade=4,re_grade,NULL)) AS four, COUNT(IF(re_grade=5,re_grade,NULL)) AS five FROM reply WHERE res_seq = 1
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				rato.setOne(rs.getDouble("one"));
+				rato.setTwo(rs.getDouble("two"));
+				rato.setThree(rs.getDouble("three"));
+				rato.setFour(rs.getDouble("four"));
+				rato.setFive(rs.getDouble("five"));
+			}						
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		
+		return rato;
+		
+	}
+	
 }

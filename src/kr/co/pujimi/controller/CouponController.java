@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.action.coupon.CouponBuyAction;
 import kr.co.pujimi.action.coupon.CouponBuyOkAction;
+import kr.co.pujimi.action.coupon.MyCouponAction;
 import kr.co.pujimi.action.main.MainAction;
 import kr.co.pujimi.core.Action;
 
@@ -39,7 +40,7 @@ public class CouponController extends HttpServlet {
 			Action action = null;
 
 			if (path.equals("/mycoupon.coupon")) {
-				action = new MainAction();
+				action = new MyCouponAction();
 				action.execute(request, response);
 				url = "/WEB-INF/view/coupon/mycoupon.jsp";
 			}else if (path.equals("/coupon_buy.coupon")) {

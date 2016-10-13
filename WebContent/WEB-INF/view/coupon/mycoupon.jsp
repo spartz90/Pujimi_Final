@@ -1,12 +1,73 @@
+<%@page import="kr.co.pujimi.dto.CouponTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    <%
+<%
 	request.setCharacterEncoding("utf-8");
 
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
-	%>
+	
+	ArrayList<CouponTO> couponList = (ArrayList)request.getAttribute("couponList");
+	
+	StringBuffer coupon_result = new StringBuffer();
+
+	if(couponList.size()==0){
+		coupon_result.append("<h3>" + "보유 쿠폰이 없습니다." + "</h3>");
+		coupon_result.append("<div align='center'>");
+		coupon_result.append("	<div class='coupon'>");
+		coupon_result.append("		<div class='couponmain'>");
+		coupon_result.append("			<div class='couponmain_img'>");
+		coupon_result.append("				<h3>푸지미</h3>");
+		coupon_result.append("				<h2>모바일 식권</h2>");
+		coupon_result.append("			</div>");
+		coupon_result.append("		</div>");
+		coupon_result.append("		<div class='coupondetail'>");
+		coupon_result.append("			<div class='coupondetail_resinfo'>");
+		coupon_result.append("				<h3>" + "푸지미푸지미푸지미 "+ "</h3>");
+		coupon_result.append("				<div>");
+		coupon_result.append("					쿠폰 번호<br/>");
+		coupon_result.append("					마지막 두 자리를<br/>");
+		coupon_result.append("					확인 하세요");									
+		coupon_result.append("				</div>");
+		coupon_result.append("			</div>");
+		coupon_result.append("			<div class='coupondetail_num'>" + "0000-0000-0000" + "</div>");
+		coupon_result.append("		</div>");
+		coupon_result.append("	</div>");
+		coupon_result.append("</div>");
+	} else {
+		for (CouponTO couponTo : couponList) {
+			String cp_serial = couponTo.getCp_serial();
+			String res_name = couponTo.getRes_name();
+			
+			coupon_result.append("<h3>" + res_name + "</h3>");
+			coupon_result.append("<div align='center'>");
+			coupon_result.append("	<div class='coupon'>");
+			coupon_result.append("		<div class='couponmain'>");
+			coupon_result.append("			<div class='couponmain_img'>");
+			coupon_result.append("				<h3>푸지미</h3>");
+			coupon_result.append("				<h2>모바일 식권</h2>");
+			coupon_result.append("			</div>");
+			coupon_result.append("		</div>");
+			coupon_result.append("		<div class='coupondetail'>");
+			coupon_result.append("			<div class='coupondetail_resinfo'>");
+			coupon_result.append("				<h3>" + res_name + "</h3>");
+			coupon_result.append("				<div>");
+			coupon_result.append("					쿠폰 번호<br/>");
+			coupon_result.append("					마지막 두 자리를<br/>");
+			coupon_result.append("					확인 하세요");									
+			coupon_result.append("				</div>");
+			coupon_result.append("			</div>");
+			coupon_result.append("			<div class='coupondetail_num'>" + cp_serial + "</div>");
+			coupon_result.append("		</div>");
+			coupon_result.append("	</div>");
+			coupon_result.append("</div>");
+		}
+	}
+	
+	
+%>
 	
 <!DOCTYPE html>
     <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -45,8 +106,9 @@
 					<h2>내 쿠폰</h2>
 					개인 페이지입니다.
 				</div>
-
+				
 				<div id="accordion">
+					<!-- 
 					<h3>Section 1</h3>
 					<div align="center">
 						<div class="coupon">
@@ -69,50 +131,8 @@
 							</div>
 						</div>
 					</div>
-					<h3>Section 2</h3>
-					<div align="center">
-						<div class="coupon">
-							<div class="couponmain">
-								<div class="couponmain_img">
-									<h3>푸지미</h3>
-									<h2>모바일 식권</h2>
-								</div>
-							</div>
-							<div class="coupondetail">
-								<div class="coupondetail_resinfo">
-									<h3>삿포로</h3>
-									<div>
-										쿠폰 번호<br/>
-										마지막 두 자리를<br/>
-										확인 하세요										
-									</div>
-								</div>
-								<div class="coupondetail_num">1234-5678-0000</div>
-							</div>
-						</div>
-					</div>
-					<h3>Section 3</h3>
-					<div align="center">
-						<div class="coupon">
-							<div class="couponmain">
-								<div class="couponmain_img">
-									<h3>푸지미</h3>
-									<h2>모바일 식권</h2>
-								</div>
-							</div>
-							<div class="coupondetail">
-								<div class="coupondetail_resinfo">
-									<h3>삿포로</h3>
-									<div>
-										쿠폰 번호<br/>
-										마지막 두 자리를<br/>
-										확인 하세요										
-									</div>
-								</div>
-								<div class="coupondetail_num">1234-5678-0000</div>
-							</div>
-						</div>
-					</div>
+					 -->
+					<%=coupon_result %>
 				</div>
 			</div>
 		</section>

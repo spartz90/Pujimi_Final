@@ -6,6 +6,7 @@ public class CouponTO {
 	private int res_price;
 	private int user_seq;
 	private int user_point;
+	private String cp_serial;
 	
 	public int getRes_seq() {
 		return res_seq;
@@ -36,6 +37,12 @@ public class CouponTO {
 	}
 	public void setUser_point(int user_point) {
 		this.user_point = user_point;
+	}
+	public String getCp_serial() {
+		return cp_serial;
+	}
+	public void setCp_serial(String cp_serial) {
+		this.cp_serial = cp_serial;
 	}
 	
 	
