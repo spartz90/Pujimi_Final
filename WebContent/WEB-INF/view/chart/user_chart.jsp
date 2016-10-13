@@ -49,8 +49,14 @@
         <link href="css/app.min.2_test.css" rel="stylesheet">
         
         <!-- C3 -->
-    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>       
-        
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css"/>  
+    	     
+        <script type="text/javascript">
+        	if (<%=member_admin %> == "-1") {
+    			alert("로그인이 필요합니다");
+    			location.href="login.member";
+    		}	
+        </script>
     </head>
     
     <body class="toggled sw-toggled">

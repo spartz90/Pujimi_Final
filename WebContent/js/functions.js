@@ -58,6 +58,8 @@ $(document).ready(function(){
 		$(".mobile-menu-drop-my").toggleClass("mobile-menu-drop-my-toggle");
 		
     });
+    
+    
     /*
      * Top Search
      */

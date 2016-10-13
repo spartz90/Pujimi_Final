@@ -73,6 +73,12 @@
 <link href="css/app.min.1_test.css" rel="stylesheet">
 <link href="css/app.min.2_test.css" rel="stylesheet">
 
+<script type="text/javascript">
+	if (<%=member_admin %> == "-1") {
+    	alert("로그인이 필요합니다");
+    	location.href="login.member";
+    }	
+</script>
 
 </head>
 <body class="toggled sw-toggled">
