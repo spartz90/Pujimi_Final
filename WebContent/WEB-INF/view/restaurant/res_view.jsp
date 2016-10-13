@@ -137,8 +137,8 @@
 										<li>좋아요 : <%=res_likes %> </li>
 									</ul>
 
-									<a href="" class="pv-follow-btn">구매 하기</a><br /> 
-									<a href="" class="pv-follow-btn">좋아요</a>
+									<a href="coupon_buy.coupon?res_seq=<%=res_seq %>&user_seq=<%=member_seq %>%user_admin=<%=member_admin %>" class="pv-follow-btn" style="background-color: #01B0F0">구매 하기</a><br /> 
+									<a href="" class="pv-follow-btn" style="background-color: #01B0F0">좋아요</a>
 								</div>
 							</div>
 						</div>

@@ -1,3 +1,4 @@
+<%@page import="kr.co.pujimi.dao.LikeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="kr.co.pujimi.dto.ResTO"%>
@@ -16,6 +17,15 @@
 	for (ResTO resTo : recom_lists) {
 
 		int res_seq = resTo.getRes_seq();
+		
+		ResTO resTo2 = new ResTO();
+		resTo2.setUser_seq(Integer.parseInt(member_seq));
+		resTo2.setRes_seq(res_seq);
+		
+		LikeDAO lDao = new LikeDAO();
+		int chk = lDao.checkOk(resTo2);
+		
+		
 		String res_name = resTo.getRes_name();
 		String res_addr = resTo.getRes_addr();
 		String res_phone = resTo.getRes_phone();
@@ -42,11 +52,15 @@
 		recom_result.append("			</ul>");
 		recom_result.append("			<ul class='recommend_cooperate_detail_follow'>");
 		recom_result.append("				<li>구매 : " + res_sells + "</li>");
-		recom_result.append("				<li>좋아요 : " + res_likes + "</li>");
+		recom_result.append("				<li idx='lcR"+res_seq+"'>좋아요 : " + res_likes +"</li>");
 		recom_result.append("			</ul>");
 		recom_result.append("			<ul class='recommend_cooperate_detail_follow_click'>");
 		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "'>구  매</a></li>");
-		recom_result.append("				<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		if (chk == 0) {
+			recom_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		} else {
+			recom_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+		}
 		recom_result.append("			</ul>");
 		recom_result.append("		</div>");
 		recom_result.append("	</div>");
@@ -61,9 +75,21 @@
 	for (ResTO resTo : lists) {
 
 		int res_seq = resTo.getRes_seq();
-
+		
+		ResTO resTo2 = new ResTO();
+		resTo2.setUser_seq(Integer.parseInt(member_seq));
+		resTo2.setRes_seq(res_seq);
+		
+		LikeDAO lDao = new LikeDAO();
+		int chk = lDao.checkOk(resTo2);
+		
 		String res_name = resTo.getRes_name();
 		String res_addr = resTo.getRes_addr();
+		
+		if(res_addr.length() > 9) {
+			res_addr = res_addr.substring(0, 9)+"...";
+		}
+		
 		String res_photo = resTo.getRes_photo();
 		String res_price = Integer.toString(resTo.getRes_price());
 		String res_sells = Integer.toString(resTo.getRes_sells());
@@ -82,11 +108,16 @@
 		res_result.append("		</ul>");
 		res_result.append("		<ul class='general_cooperate_detail_follow'>");
 		res_result.append("			<li>구매 : " + res_sells + "</li>");
-		res_result.append("			<li>좋아요 : " + res_likes +"</li>");
+		res_result.append("			<li idx='lcG"+res_seq+"'>좋아요 : " + res_likes +"</li>");
 		res_result.append("		</ul>");
 		res_result.append("		<ul class='general_cooperate_detail_follow_click'>");
 		res_result.append("			<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "'>구  매</a></li>");
-		res_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		if (chk == 0) {
+			res_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		} else {
+			res_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+		}
+		
 		res_result.append("		</ul>");
 		res_result.append("	</div>");
 		res_result.append("</div>");
@@ -149,7 +180,7 @@
 					</ul>
 				</div>
 			</div>
-
+			<a onclick="checkLogin"></a>
 			<div class="block-header">
 				<h2>제휴점 정보</h2>
 				다양한 메뉴, 저렴한 가격과 정확한 위치를 참고하세요.<br /> 
@@ -275,7 +306,6 @@
 				})();
 				
 				// 좋아요 기능 //
-				
 				$('button').on('click', function() {
 					var user_seq = <%=member_seq %>;
 					var res_seq = $(this).attr('idx');
@@ -296,10 +326,29 @@
 								//alert("좋아요 했습니다.");
 								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff0000');
 								$('button[idx="' + res_seq +'"]').css('background-color','#ff0000');
+								
+								//좋아요 숫자 1증가
+								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])+1;
+								$("li[idx='lcR"+res_seq+"']").text("좋아요 : " + likeNum);
+								
+								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])+1;
+								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								
 							} else {
 								//alert("좋아요를 해제했습니다.")
 								$('button[idx="' + res_seq +'"]').parent().css('background-color','#01B0F0');
 								$('button[idx="' + res_seq +'"]').css('background-color','#01B0F0');
+								
+								//좋아요 숫자 1감소
+								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])-1;
+								$("li[idx='lcR"+res_seq+"']").text("좋아요 : " + likeNum);
+								
+								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])-1;
+								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
 							}
 						},
 						error : function(xhr, status, error) {
@@ -307,6 +356,9 @@
 						}
 					})
 				});
+				
+				
+				
 			});
         </script>
 </body>

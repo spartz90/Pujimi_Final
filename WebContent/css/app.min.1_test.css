@@ -16431,6 +16431,12 @@ a.thumbnail.active {
 .recommend_cooperate_detail_follow_click > li >a{
 	color: #ffffff
 }
+.recommend_cooperate_detail_follow_click > li >button{
+	color: #ffffff;
+	background-color: #01B0F0;
+	border: none;
+	width: 100%;
+}
 
 @media screen and (max-width: 940px) and (min-width: 717px){
 	.recommend_cooperate .recommend_cooperate_detail{
@@ -16553,7 +16559,7 @@ a.thumbnail.active {
 	margin: 0px;
 	padding: 0px;
 	font-size: 12px;
-	margin-bottom: 5px;
+	margin-bottom: 5px;	
 }
 
 .general_cooperate .general_cooperate_detail .general_cooperate_detail_info>li>i{
