@@ -182,6 +182,19 @@
         			$('#coupon_remain').text(<%=user_point %>-parseInt($('#amount').val())*<%=res_price %> +'P');
         			$('#user_point').val(<%=user_point %>-parseInt($('#amount').val())*<%=res_price %>);
         			$('#coupon_amount').val($('#amount').val());
+        			
+        			if (<%=user_point %>-parseInt($('#amount').val())*<%=res_price %> < 0) {
+						$('#coupon_remain_text').css('color','#ff0000');
+						$('#coupon_remain').css('color','#ff0000');
+						$('#submit').attr('disabled',true);
+						$('#submit').addClass('disable');
+						
+					} else {
+						$('#coupon_remain_text').css('color','#5e5e5e');
+						$('#coupon_remain').css('color','#5e5e5e');
+						$('#submit').attr('disabled',false);
+						$('#submit').removeClass('disable');
+					}
         			//숫자만 입력
         			/*
         			$('#amount').keypress(function(event){

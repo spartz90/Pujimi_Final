@@ -137,7 +137,7 @@ public ArrayList<CouponTO> myCoupon(int user_seq){
 		try {
 			conn = this.dataSource.getConnection();
 
-			String sql = "SELECT c.cp_serial, r.res_name FROM coupon c, restaurant r WHERE c.user_seq = ? AND c.res_seq = r.res_seq";
+			String sql = "SELECT c.cp_serial, r.res_name FROM coupon c, restaurant r WHERE c.user_seq = ? AND c.res_seq = r.res_seq AND c.cp_udate IS NULL";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user_seq);
 			rs = pstmt.executeQuery();

@@ -41,6 +41,11 @@
 			String cp_serial = couponTo.getCp_serial();
 			String res_name = couponTo.getRes_name();
 			
+			
+			String cp_serial_stepOne = cp_serial.substring(0, 4);
+			String cp_serial_stepTwo = cp_serial.substring(4, 8);
+			String cp_serial_stepThree = cp_serial.substring(8, 12);
+			
 			coupon_result.append("<h3>" + res_name + "</h3>");
 			coupon_result.append("<div align='center'>");
 			coupon_result.append("	<div class='coupon'>");
@@ -59,7 +64,7 @@
 			coupon_result.append("					확인 하세요");									
 			coupon_result.append("				</div>");
 			coupon_result.append("			</div>");
-			coupon_result.append("			<div class='coupondetail_num'>" + cp_serial + "</div>");
+			coupon_result.append("			<div class='coupondetail_num'>" + cp_serial_stepOne + "-" + cp_serial_stepTwo + "-" + cp_serial_stepThree + "</div>");
 			coupon_result.append("		</div>");
 			coupon_result.append("	</div>");
 			coupon_result.append("</div>");
