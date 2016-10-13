@@ -80,7 +80,7 @@
 						<ul>
 							<li><a href="res_chart.jsp">매출 정보</a></li>
 	                        <li><a href="res_management.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 정보 관리</a></li>
-	                        <li><a href="rest_calendar.html">캘린더</a></li>
+	                        <!-- <li><a href="rest_calendar.html">캘린더</a></li>  -->
 	                        <li><a href="rest_view.jsp">댓글/후기</a></li>
 						</ul>
 					</li>
@@ -131,7 +131,7 @@
        	 			<ul>
        	 				<li><a href="res_chart.jsp">매출 정보</a></li>
                         <li><a href="res_management.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 정보 관리</a></li>
-                        <li><a href="rest_calendar.html">캘린더</a></li>
+                        <!-- <li><a href="rest_calendar.html">캘린더</a></li>  -->
                         <li><a href="rest_view.jsp">댓글, 후기 모아보기</a></li>
        	 			<%
 						}
