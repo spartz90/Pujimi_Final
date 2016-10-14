@@ -175,6 +175,94 @@ public class ResDAO {
 		
 	}
 	
+	public ResTO resView(int user_seq){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int res_seq = 0;
+		ResTO rdto = new ResTO();
+		
+		try {
+			conn = this.dataSource.getConnection();
+			
+			String sql = "SELECT res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade FROM restaurant WHERE user_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_seq);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				res_seq = rs.getInt("res_seq");
+				rdto.setRes_seq(res_seq);
+				rdto.setRes_name(rs.getString("res_name"));
+				rdto.setRes_addr(rs.getString("res_addr"));
+				rdto.setRes_phone(rs.getString("res_phone"));
+				rdto.setRes_octime(rs.getString("res_octime"));
+				rdto.setRes_content(rs.getString("res_content"));
+				rdto.setRes_photo(rs.getString("res_photo"));
+				rdto.setRes_price(rs.getInt("res_price"));
+				rdto.setRes_grade(rs.getDouble("res_grade"));				
+			}
+			pstmt.close();
+			rs.close();
+			
+			sql = "SELECT COUNT( cp_seq ) AS res_sells FROM coupon WHERE res_seq = ?";
+						
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				rdto.setRes_sells(rs.getInt("res_sells"));				
+			}
+			
+			pstmt.close();
+			rs.close();
+			
+			sql = "SELECT COUNT( user_seq ) AS res_likes FROM like_restaurant WHERE res_seq = ?";					  
+				
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);				
+			rs = pstmt.executeQuery();
+				
+			if (rs.next()) {
+				rdto.setRes_likes(rs.getInt("res_likes"));
+			}
+			
+			pstmt.close();
+			rs.close();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		
+		return rdto;
+	}
+	
 	
 	public ArrayList<ResTO> viewList() {
 		

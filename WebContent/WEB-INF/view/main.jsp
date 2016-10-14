@@ -4,6 +4,7 @@
 <%@ page import ="kr.co.pujimi.dto.UserTO" %>
 <%@ page import="kr.co.pujimi.dto.ResTO"%>
 <%@ page import="java.util.ArrayList"%>
+<%@page import="kr.co.pujimi.dao.LikeDAO"%>
 
 <% 	   
 	String user_seq = "-1";
@@ -26,6 +27,15 @@
 	for (ResTO resTo : recom_lists) {
 
 		int res_seq = resTo.getRes_seq();
+		
+		ResTO resTo2 = new ResTO();
+		resTo2.setUser_seq(Integer.parseInt(user_seq));
+		resTo2.setRes_seq(res_seq);
+		
+		LikeDAO lDao = new LikeDAO();
+		int chk = lDao.checkOk(resTo2);
+		
+		
 		String res_name = resTo.getRes_name();
 		String res_addr = resTo.getRes_addr();
 		String res_phone = resTo.getRes_phone();
@@ -52,17 +62,20 @@
 		recom_result.append("			</ul>");
 		recom_result.append("			<ul class='recommend_cooperate_detail_follow'>");
 		recom_result.append("				<li>구매 : " + res_sells + "</li>");
-		recom_result.append("				<li>좋아요 : " + res_likes + "</li>");
+		recom_result.append("				<li idx='lcR"+res_seq+"'>좋아요 : " + res_likes +"</li>");
 		recom_result.append("			</ul>");
 		recom_result.append("			<ul class='recommend_cooperate_detail_follow_click'>");
 		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin+ "'>구  매</a></li>");
-		recom_result.append("				<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		if (chk == 0) {
+			recom_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		} else {
+			recom_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+		}
 		recom_result.append("			</ul>");
 		recom_result.append("		</div>");
 		recom_result.append("	</div>");
 
 	}
-   
 %>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -292,6 +305,7 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])+1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								setTimeout("location.reload()", 1000);
 								
 							} else {
 								//alert("좋아요를 해제했습니다.")
@@ -306,6 +320,7 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])-1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								setTimeout("location.reload()", 1000);
 							}
 						},
 						error : function(xhr, status, error) {
