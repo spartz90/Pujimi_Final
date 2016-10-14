@@ -13,7 +13,8 @@
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	String res_seq = request.getParameter("res_seq");
-
+	String re_seq = request.getParameter("re_seq");	
+	
 	ReplyTO reto = (ReplyTO)request.getAttribute("reto");
 	
 	String re_content = reto.getRe_content();
@@ -70,6 +71,7 @@
 						<input type="hidden" name="user_seq" value="<%=member_seq%>"/>
 						<input type="hidden" name="user_admin" value="<%=member_admin%>"/>
 						<input type="hidden" name="res_seq" value="<%=res_seq%>"/>
+						<input type="hidden" name="re_seq" value="<%=re_seq%>"/>
 						<div class="card w-post">
 							<div class="card-body">
 								<textarea id="re_content" name="re_content" class="wp-text auto-size" placeholder="후기를 작성해주세요." ><%=re_content %></textarea>
@@ -77,33 +79,35 @@
 								<div class="p-5" align="center" style="border-top: 1px solid #F0F0F0;">
 								<br/>
 									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="1">
+                              				<input type="radio" name="rating" value="1" <%= re_grade == 1 ? "checked='checked'"  : "" %>>
                                			<i class="input-helper"></i>1<i class="md md-star"></i>
                            			</label>
 									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="2">
+                              				<input type="radio" name="rating" value="2" <%= re_grade == 2 ? "checked='checked'"  : "" %>>
                                			<i class="input-helper"></i>2<i class="md md-star"></i>
                            			</label>
 									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="3">
+                              				<input type="radio" name="rating" value="3" <%= re_grade == 3 ? "checked='checked'"  : "" %>>
                                			<i class="input-helper"></i>3<i class="md md-star"></i>
                            			</label>
 									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="4">
+                              				<input type="radio" name="rating" value="4" <%= re_grade == 4 ? "checked='checked'"  : "" %>>
                                			<i class="input-helper"></i>4<i class="md md-star"></i>
                            			</label>
 									<label class="radio radio-inline">
-                              				<input type="radio" name="rating" value="5">
+                              				<input type="radio" name="rating" value="5" <%= re_grade == 5 ? "checked='checked'"  : "" %>>
                                			<i class="input-helper"></i>5<i class="md md-star"></i>
                            			</label>                            				
                            		</div>								
 								
 								<div class="tab-content p-0">
-									<div class="wp-media tab-pane" id="wpm-image">
+									<div class="wp-media tab-pane active" id="wpm-image">
 										<p class="f-500 c-black m-b-20">사진 미리보기</p>
                            
-                           				<div class="fileinput fileinput-new" data-provides="fileinput">
-                               				<div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                           				<div class="fileinput fileinput-exists" data-provides="fileinput">
+                               				<div class="fileinput-preview thumbnail" data-trigger="fileinput">
+                               					<img src="./upload/<%=re_photo%>">
+                               				</div>
                             					<div>
                                   					<span class="btn btn-info btn-file">
                                        				<span class="fileinput-new">사진 선택</span>

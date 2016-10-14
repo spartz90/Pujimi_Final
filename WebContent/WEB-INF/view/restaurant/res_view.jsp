@@ -47,6 +47,8 @@
 	double prog_four = Math.round(four / sum * 100);
 	double prog_five = Math.round(five / sum * 100);   	
 	
+	
+	
 %>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->

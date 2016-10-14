@@ -96,6 +96,7 @@ public class ReplyDAO {
 		}
 		return check;
 	}
+	
 	public ReplyTO modifyReply(ReplyTO reto){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -145,6 +146,52 @@ public class ReplyDAO {
 		return reto;
 	}
 	
+	public int modifyOkReply(ReplyTO reto){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		int update = 0;
+		
+		try {
+			conn = this.dataSource.getConnection();
+			String sql = "UPDATE reply SET re_content = ?, re_photo = ?, re_date = NOW(), re_grade = ? WHERE re_seq = ? AND user_seq = ?";
+			pstmt = conn.prepareStatement(sql);		
+			pstmt.setString(1, reto.getRe_content());
+			pstmt.setString(2, reto.getRe_photo());
+			pstmt.setDouble(3, reto.getRe_grade());
+			pstmt.setInt(4, reto.getRe_seq());
+			pstmt.setInt(5, reto.getUser_seq());
+			
+			update = pstmt.executeUpdate();
+			
+			if(update == 1){
+				System.out.println("업데이트 성공");
+			} else {
+				System.out.println("업데이트 실패");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}		
+		
+		return update;
+	}
+	
 	public ArrayList<ReplyTO> replyList(int res_seq) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -156,7 +203,7 @@ public class ReplyDAO {
 		try {
 			conn = this.dataSource.getConnection();
 
-			String sql = "SELECT u.user_nickname, r.re_content, r.re_photo, r.re_date, r.re_grade FROM user u, reply r WHERE res_seq = ? AND r.user_seq = u.user_seq ORDER BY r.re_date DESC";
+			String sql = "SELECT u.user_nickname, r.re_seq, r.re_content, r.re_photo, r.re_date, r.re_grade, r.user_seq FROM user u, reply r WHERE res_seq = ? AND r.user_seq = u.user_seq ORDER BY r.re_date DESC";
 						
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, res_seq);
@@ -165,11 +212,13 @@ public class ReplyDAO {
 			while (rs.next()) {
 				ReplyTO rdto = new ReplyTO();
 				//rdto.setUser_seq(Integer.parseInt(rs.getString("user_seq")));
+				rdto.setRe_seq(rs.getInt("re_seq"));
 				rdto.setUser_nickname(rs.getString("user_nickname"));
 				rdto.setRe_content(rs.getString("re_content"));
 				rdto.setRe_date(rs.getString("re_date"));
 				rdto.setRe_photo(rs.getString("re_photo"));
 				rdto.setRe_grade(rs.getDouble("re_grade"));
+				rdto.setUser_seq(rs.getInt("user_seq"));
 				result.add(rdto);
 			}
 

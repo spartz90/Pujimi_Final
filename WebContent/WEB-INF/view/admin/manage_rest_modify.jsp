@@ -8,6 +8,8 @@
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	
+	String default_Latlng = "(37.49794199999999, 127.027621)";
+	
 	ResTO resTo = (ResTO)request.getAttribute("resTo");
 	
 	int user_seq = resTo.getUser_seq();
@@ -21,6 +23,14 @@
 	String ctime = res_octime.substring(9);
 	String res_content = resTo.getRes_content();
 	String res_photo = resTo.getRes_photo();
+	
+	String latlng = resTo.getRes_latlng();
+	String check = "'<b>가게의 위치를 변경하시려면</b> 지도에 표시해주십시요'";
+	
+	if(latlng.equals("") || latlng == default_Latlng) {
+		latlng = default_Latlng;
+		check = "'<b>가게의 위치을 클릭</b>해주십시요'";
+	}
 	
 %>   
 
@@ -44,6 +54,9 @@
         <!-- CSS -->
         <link href="css/app.min.1_test.css" rel="stylesheet">
         <link href="css/app.min.2_test.css" rel="stylesheet">
+        
+        <!-- MAP -->
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAgtZyE1FpTlWMOhg9VaIcqdAo-Qxtlpnk"></script>
         
         <!-- Following CSS are used only for the Demp purposes thus you can remove this anytime. -->
         <style type="text/css">
@@ -83,7 +96,7 @@
         </script>
     </head>
     
-    <body class="toggled sw-toggled">
+    <body class="toggled sw-toggled" onload="initialize();">
     <div class="gongbak"></div>
     	<div>
     		<jsp:include page="../template/top_side.jsp" >
@@ -134,19 +147,20 @@
                 <input type="hidden" name='user_seq' value='<%= member_seq%>'>
                 <input type="hidden" name='res_seq' value='<%= res_seq%>'>
                 <input type="hidden" name='user_admin' value='<%= member_admin%>'>
+                <input type="hidden" id="latlng" name="latlng" value="(37.49794199999999, 127.027621)"/>
                     <div class="card">
                         <div class="card-header">
                             <h2>가게 정보 입력 <small>가게에 대한 정보를 입력하는 공간입니다.</small></h2>
                         </div>
-                        
+
                         <div class="card-body card-padding">
                             <!-- <p class="c-black f-500 m-b-5">기본 정보</p> -->
                             <!-- <small>Place one add-on or button on either side of an input. You may also place one on both sides of an input.</small> -->
                             
-                            <br/>
+                            <hr />
                             
                             <div class="row">
-                                <div class="col-sm-4">                       
+                                <div class="col-sm-6">                       
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="md md-person"></i></span>
                                         <div class="fg-line">
@@ -182,6 +196,9 @@
                                         </div>
                                     </div> 
                                 </div>
+                                <div class="col-sm-6">
+									<div id="map_canvas" style="width: 300px; height: 300px;"></div>
+			                    </div>
                            	</div>
                         </div>     
 
@@ -363,6 +380,52 @@
         
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>
+        <script type="text/javascript">
+			var map;
+			var latlng = '';
+			function initialize() {
+				var myLatlng = new google.maps.LatLng<%=latlng%>;
+				var myOptions = {
+					zoom : 17,
+					center : myLatlng,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				}
+				map = new google.maps.Map(document.getElementById("map_canvas"),
+						myOptions);
+				//클릭했을 때 이벤트
+				google.maps.event.addListener(map, 'click', function(event) {
+					placeMarker(event.latLng);
+					/* infowindow.setContent("여기여기 latLng: " + event.latLng); */ // 인포윈도우 안에 클릭한 곳위 좌표값을 넣는다.
+					infowindow.setContent("Here!");
+					infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
+					latlng = '';
+					latlng += event.latLng;
+					
+					document.getElementById('latlng').value = '';
+					document.getElementById("latlng").value += latlng;
+					
+				});
+				//클릭 했을때 이벤트 끝
+				//인포윈도우의 생성
+				var infowindow = new google.maps.InfoWindow(
+						{
+							content : <%=check%>,
+							size : new google.maps.Size(50, 50),
+							position : myLatlng
+						});
+				infowindow.open(map);
+			} // function initialize() 함수 끝
+		
+			// 마커 생성 합수
+			function placeMarker(location) {
+				var clickedLocation = new google.maps.LatLng(location);
+				var marker = new google.maps.Marker({
+					position : location,
+					map : map
+				});
+				map.setCenter(location);
+			}
+		</script>
     
     </body>
 </html>

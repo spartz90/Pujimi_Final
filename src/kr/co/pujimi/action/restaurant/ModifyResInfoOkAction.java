@@ -18,7 +18,10 @@ public class ModifyResInfoOkAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			String uploadPath = "/home/hosting_users/tigger90/tomcat/webapps/ROOT/upload";
+			//String uploadPath = "/home/hosting_users/tigger90/tomcat/webapps/ROOT/upload";
+			// 경로 테스트 위가 서버용 / 아래는 개인 테스트용 
+			String uploadPath = "C:/pujimi3/WebContent/testUpload";
+			
 			int maxFileSize = 1024 * 1024 * 5;
 			String encoding = "utf-8";
 			
@@ -38,6 +41,8 @@ public class ModifyResInfoOkAction implements Action {
 			resTo.setRes_content(multi.getParameter("res_content"));
 			resTo.setUser_seq(Integer.parseInt(multi.getParameter("user_seq")));
 			resTo.setRes_seq(Integer.parseInt(multi.getParameter("res_seq")));
+			
+			resTo.setRes_latlng(multi.getParameter("latlng"));
 			
 			String res_photo = "noimage.png";
 			

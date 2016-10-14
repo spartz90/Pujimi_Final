@@ -45,6 +45,8 @@ public class ResManageModifyOkAction implements Action {
 			resTo.setUser_seq(Integer.parseInt(multi.getParameter("user_seq")));
 			resTo.setRes_seq(Integer.parseInt(multi.getParameter("res_seq")));
 			
+			resTo.setRes_latlng(multi.getParameter("latlng"));
+			
 			String res_photo = "noimage.png";
 			
 			if(multi.getFilesystemName("res_photo")!=null){
