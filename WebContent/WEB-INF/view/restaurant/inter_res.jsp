@@ -362,7 +362,7 @@
 						error : function(xhr, status, error) {
 							alert('에러:' + status + '\n\n' + error);
 						}
-					})
+					});
 				});
 			});
         </script>

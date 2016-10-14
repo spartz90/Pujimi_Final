@@ -14,12 +14,17 @@ public class LikeMenuOkAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		LikeMenuDTO lmDto = new LikeMenuDTO();
-
+		
 		lmDto.setUser_seq(Integer.parseInt(request.getParameter("user_seq")));
-		lmDto.setMenu_name(request.getParameter("likeMenu"));
+		
+		String[] likeMenus = request.getParameterValues("likeMenus");
 		
 		LikeMenuDAO lmDao = new LikeMenuDAO();
-		int flag = lmDao.doLikeMenu(lmDto);
+		int flag = 1;
+		for (int i = 0; i < request.getParameterValues("likeMenus").length-1; i++) {
+			lmDto.setMenu_name(likeMenus[i]);
+			flag = lmDao.doLikeMenu(lmDto);
+		}
 		
 		request.setAttribute("flag", flag);
 	}
