@@ -510,13 +510,14 @@ public class ResDAO {
 		ResultSet rs = null;
 		
 		ArrayList<ResTO> result = new ArrayList<>();
+		ResDAO resDao = new ResDAO();
 		
 		try{
 			
 			conn = this.dataSource.getConnection();
 			
 			// DB에서 꺼내올때 날짜 포맷 지정
-			String sql = "select r.res_seq, r.res_name, r.res_addr, r.res_phone, r.res_octime, r.res_content, r.res_photo from restaurant r "
+			String sql = "select r.res_seq, r.res_name, r.res_addr, r.res_phone, r.res_octime, r.res_content, r.res_photo, r.res_grade from restaurant r "
 					+ "where r.res_seq = ANY(select res_seq from like_restaurant where user_seq = ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, resTo.getUser_seq());
@@ -527,12 +528,19 @@ public class ResDAO {
 				ResTO rdto = new ResTO();
 				
 				rdto.setRes_seq(rs.getInt("r.res_seq"));
+				int res_seq = rs.getInt("r.res_seq");
 				rdto.setRes_name(rs.getString("r.res_name"));
 				rdto.setRes_addr(rs.getString("r.res_addr"));
 				rdto.setRes_phone(rs.getString("r.res_phone"));
 				rdto.setRes_octime(rs.getString("r.res_octime"));
 				rdto.setRes_content(rs.getString("r.res_content"));
 				rdto.setRes_photo(rs.getString("r.res_photo"));
+				rdto.setRes_grade(rs.getDouble("r.res_grade"));
+				
+				
+				rdto.setRes_sells(resDao.sellsCount(res_seq));
+				rdto.setRes_likes(resDao.likeCount(res_seq));
+
 				
 				result.add(rdto);
 			}

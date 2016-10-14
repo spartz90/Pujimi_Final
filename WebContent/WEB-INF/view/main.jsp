@@ -37,6 +37,9 @@
 		
 		
 		String res_name = resTo.getRes_name();
+		if(res_name.length() > 11 ){
+			res_name = res_name.substring(0, 11)+"...";
+		}
 		String res_addr = resTo.getRes_addr();
 		String res_phone = resTo.getRes_phone();
 		String res_octime = resTo.getRes_octime();
@@ -45,14 +48,14 @@
 		String res_content = resTo.getRes_content();
 		String res_photo = resTo.getRes_photo();
 		String res_price = Integer.toString(resTo.getRes_price());
-		String res_grade = Double.toString(resTo.getRes_grade());
+		String res_grade = Double.toString(Math.round(resTo.getRes_grade()*100)/100.0);
 		String res_sells = Integer.toString(resTo.getRes_sells());
 		String res_likes = Integer.toString(resTo.getRes_likes());
 		
 		recom_result.append("		<div class='recommend_cooperate'>");
 		recom_result.append("		<div class='recommend_cooperate_main'>");
 		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "' style='padding: 0px; position:relative; overflow:hidden; padding-top:52%'><img src='upload/" + res_photo + "' alt=''></a>'");
-		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "'><h2>" + res_name + "</h2></a>");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "' style='float:right'><h2 style='float:left'>" + res_name + "</h2><h2 style='float: right;'><i class='md md-star' style='color: #ff9800;'></i>"+res_grade+"</h2></a>");
 		recom_result.append("		</div>");
 		recom_result.append("		<div class='recommend_cooperate_detail'>");
 		recom_result.append("			<ul>");

@@ -280,7 +280,7 @@
 						
 						container.css('margin-left', -100+'%');
 						container.prepend(container.children()[max-1]);
-						//interval = setInterval(next, 5000);
+						interval = setInterval(next, 5000);
 					}
 					function events() {
 						jQuery('#previous').on('click', prev);
@@ -297,8 +297,8 @@
 						animate('next');	
 					}
 					function animate( $direction ) {
-						//clearInterval(interval);
-						//interval = setInterval(next, 5000);
+						clearInterval(interval);
+						interval = setInterval(next, 5000);
 						
 						if ($direction == "next") {
 							container.append(container.children()[0]);
