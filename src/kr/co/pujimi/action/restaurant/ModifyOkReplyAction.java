@@ -18,8 +18,8 @@ public class ModifyOkReplyAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			//String uploadPath = "/home/hosting_users/tigger90/tomcat/webapps/ROOT/upload";
-			String uploadPath = "C:/WorkSpace/Pujimi_final/WebContent/upload";
+			String uploadPath = "/home/hosting_users/tigger90/tomcat/webapps/ROOT/upload";
+			//String uploadPath = "C:/WorkSpace/Pujimi_final/WebContent/upload";
 			int maxFileSize = 1024 * 1024 * 5;
 			String encoding = "utf-8";
 			
