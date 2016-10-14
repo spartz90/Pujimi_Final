@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.action.likeMenu.LikeMenuAction;
 import kr.co.pujimi.action.likeMenu.LikeMenuOkAction;
+import kr.co.pujimi.action.resChart.ResChartAction;
 import kr.co.pujimi.core.Action;
 
 
 @WebServlet("*.sales")
-public class SalesController extends HttpServlet {
+public class ResChartController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,17 +39,11 @@ public class SalesController extends HttpServlet {
 			Action action = null;
 
 			if (path.equals("/resChart.sales")) {
-				action = new LikeMenuAction();
+				action = new ResChartAction();
 				action.execute(request, response);
 				url = "/WEB-INF/view/chart/res_chart.jsp";
 
-			} 
-			else if (path.equals("/likeMenuOk.likeMenu")) {
-				action = new LikeMenuOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/json/likeMenu_ok.jsp";
-				
-			} else {
+			}else {
 
 			}
 

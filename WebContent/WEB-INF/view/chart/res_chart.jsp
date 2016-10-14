@@ -1,13 +1,28 @@
+<%@page import="kr.co.pujimi.dto.ResChartDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%
 	request.setCharacterEncoding("utf-8");
 
-
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	
+	ResChartDTO rcDTO = (ResChartDTO)request.getAttribute("rcdto");
+	ResChartDTO rcDTO2 = (ResChartDTO)request.getAttribute("rcdto2");
+	
+	String res_grade = rcDTO.getRes_grade();
+	String res_revenue = rcDTO.getRes_revenue();
+	
+	String cp_udate = rcDTO2.getCp_udate();
+	
+	double dres_grade = Double.parseDouble(res_grade);
+	double dres_revenue = Double.parseDouble(res_revenue);
+	dres_grade = (Math.round(dres_grade * 100) / 100.0) * 20;
+	System.out.println("소수점 " + dres_grade);
+	
+	System.out.println(res_grade + "///" + res_revenue);
 %> 
 <!DOCTYPE html>
     <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -50,6 +65,7 @@
             <section id="content">
                 <div class="container">
                     <div class="block-header">
+                    <%=cp_udate %>
                         <h2>식당 매출 정보 <small>식당 관리자가 메출 정보를 보기 쉽게 시각화 시킨 페이지입니다.</small></h2>
                     <div class="mini-charts">
                         <div class="row">
@@ -59,7 +75,7 @@
                                         <div class="chart stats-bar"></div>
                                         <div class="count">
                                             총 매출액 
-                                            <h2>$987,459</h2>                                           
+                                            <h2><%=res_revenue %>원</h2>                                           
                                         </div>
                                     </div>
                                 </div>
@@ -133,8 +149,8 @@
                         
                         <div class="col-sm-3">
                             <div class="epc-item bgm-purple">
-                                <div class="easy-pie main-pie" data-percent="89">
-                                    <div class="percent">89</div>
+                                <div class="easy-pie main-pie" data-percent="<%=dres_grade%>">
+                                    <div class="percent"><%=dres_grade %></div>
                                     <div class="pie-title">전체 평점</div>
                                 </div>
                             </div>
