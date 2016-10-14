@@ -18,7 +18,7 @@ public class ResManageModifyAction implements Action {
 		resTo.setRes_seq(Integer.parseInt(request.getParameter("res_seq")));
 
 		ResDAO resDao = new ResDAO();
-		resTo = resDao.resModify(resTo);
+		resTo = resDao.adminResModify(resTo);
 		
 		request.setAttribute("resTo", resTo);
 	}

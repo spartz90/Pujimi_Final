@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="kr.co.pujimi.dao.LikeDAO"%>
 <%@ page import="kr.co.pujimi.dto.ResTO"%>
 <%@ page import="java.util.ArrayList"%>
 
@@ -8,6 +9,63 @@
 
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
+	
+	ArrayList<ResTO> recom_lists = (ArrayList)request.getAttribute("recom_lists");
+	
+	StringBuffer recom_result = new StringBuffer();
+
+	for (ResTO resTo : recom_lists) {
+
+		int res_seq = resTo.getRes_seq();
+		
+		ResTO resTo2 = new ResTO();
+		resTo2.setUser_seq(Integer.parseInt(member_seq));
+		resTo2.setRes_seq(res_seq);
+		
+		LikeDAO lDao = new LikeDAO();
+		int chk = lDao.checkOk(resTo2);
+		
+		
+		String res_name = resTo.getRes_name();
+		String res_addr = resTo.getRes_addr();
+		String res_phone = resTo.getRes_phone();
+		String res_octime = resTo.getRes_octime();
+		String otime = res_octime.substring(0, 8);
+		String ctime = res_octime.substring(9);
+		String res_content = resTo.getRes_content();
+		String res_photo = resTo.getRes_photo();
+		String res_price = Integer.toString(resTo.getRes_price());
+		String res_grade = Double.toString(resTo.getRes_grade());
+		String res_sells = Integer.toString(resTo.getRes_sells());
+		String res_likes = Integer.toString(resTo.getRes_likes());
+		
+		recom_result.append("		<div class='recommend_cooperate'>");
+		recom_result.append("		<div class='recommend_cooperate_main'>");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "' style='padding: 0px; position:relative; overflow:hidden; padding-top:52%'><img src='upload/" + res_photo + "' alt=''></a>'");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "'><h2>" + res_name + "</h2></a>");
+		recom_result.append("		</div>");
+		recom_result.append("		<div class='recommend_cooperate_detail'>");
+		recom_result.append("			<ul>");
+		recom_result.append("				<li><i class='md md-room'></i>" +  res_addr + "</li>");
+		recom_result.append("				<li><i class='md md-aspect-ratio'></i>" +  res_price + "</li>	");
+		recom_result.append("				<li><i class='md md-schedule'></i>" + otime +  "-"  + ctime + "</li>");
+		recom_result.append("			</ul>");
+		recom_result.append("			<ul class='recommend_cooperate_detail_follow'>");
+		recom_result.append("				<li>구매 : " + res_sells + "</li>");
+		recom_result.append("				<li idx='lcR"+res_seq+"'>좋아요 : " + res_likes +"</li>");
+		recom_result.append("			</ul>");
+		recom_result.append("			<ul class='recommend_cooperate_detail_follow_click'>");
+		recom_result.append("				<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "'>구  매</a></li>");
+		if (chk == 0) {
+			recom_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		} else {
+			recom_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+		}
+		recom_result.append("			</ul>");
+		recom_result.append("		</div>");
+		recom_result.append("	</div>");
+
+	}
 	
 	ArrayList<ResTO> lists = (ArrayList)request.getAttribute("inter_lists");	
 
@@ -18,15 +76,25 @@
 	for (ResTO resTo : lists) {
 
 		int res_seq = resTo.getRes_seq();
+		
+		ResTO resTo2 = new ResTO();
+		resTo2.setUser_seq(Integer.parseInt(member_seq));
+		resTo2.setRes_seq(res_seq);
+		
+		LikeDAO lDao = new LikeDAO();
+		int chk = lDao.checkOk(resTo2);
 
 		String res_name = resTo.getRes_name();
 		String res_addr = resTo.getRes_addr();
-		String res_phone = resTo.getRes_phone();
-		String res_octime = resTo.getRes_octime();
-		String otime = res_octime.substring(0, 8);
-		String ctime = res_octime.substring(9);
-		String res_content = resTo.getRes_content();
+		
+		if(res_addr.length() > 9) {
+			res_addr = res_addr.substring(0, 9)+"...";
+		}
+		
 		String res_photo = resTo.getRes_photo();
+		String res_price = Integer.toString(resTo.getRes_price());
+		String res_sells = Integer.toString(resTo.getRes_sells());
+		String res_likes = Integer.toString(resTo.getRes_likes());
 
 		result.append("<div class='general_cooperate'>");
 		result.append("	<div class='general_cooperate_main'>");
@@ -35,16 +103,20 @@
 		result.append("	</div>");
 		result.append("	<div class='general_cooperate_detail'>");
 		result.append("		<ul class='general_cooperate_detail_info'>");						
-		result.append("			<li><i class='md md-room'></i> 서울 강남구 </li>");
-		result.append("			<li><i class='md md-aspect-ratio'></i> 5000원 </li>");
+		result.append("			<li><i class='md md-room'></i>" +  res_addr + "</li>");
+		result.append("			<li><i class='md md-aspect-ratio'></i>" +  res_price + "</li>");
 		result.append("		</ul>");
 		result.append("		<ul class='general_cooperate_detail_follow'>");
-		result.append("			<li>589 구 매</li>");
-		result.append("			<li>8545 좋아요</li>");
+		result.append("			<li>구매 : " + res_sells + "</li>");
+		result.append("			<li idx='lcG"+res_seq+"'>좋아요 : " + res_likes +"</li>");
 		result.append("		</ul>");
 		result.append("		<ul class='general_cooperate_detail_follow_click'>");
-		result.append("			<li><a href=''>구  매</a></li>");
-		result.append("			<li><button id='"+res_seq+"'>좋아요</button></li>");
+		result.append("			<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "'>구  매</a></li>");
+		if (chk == 0) {
+			result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
+		} else {
+			result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+		}
 		result.append("		</ul>");
 		result.append("	</div>");
 		result.append("</div>");
@@ -99,69 +171,7 @@
 			<div class="row">
 				<div id="slidebox">
 					<div id="slider">
-						<div class="recommend_cooperate">
-							<div class="recommend_cooperate_main">
-								<a href="" style="padding: 0px;"><img src="img/widgets/preview.jpg" alt=""></a>
-								<a href=""><h2>삿포로</h2></a>
-							</div>
-							<div class="recommend_cooperate_detail">
-								<ul>						
-									<li><i class="md md-room"></i> 서울 강남구 역삼동 818</li>
-									<li><i class="md md-aspect-ratio"></i> 5000원 </li>										
-									<li><i class="md md-schedule"></i> 10:00AM - 10:00PM</li>
-								</ul>
-								<ul class="recommend_cooperate_detail_follow">
-									<li>589 구매</li>
-									<li>8545 좋아요</li>
-								</ul>
-								<ul class="recommend_cooperate_detail_follow_click">
-									<li><a href="">구  매</a></li>
-									<li><a href="">좋아요</a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="recommend_cooperate">
-							<div class="recommend_cooperate_main">
-								<a href="" style="padding: 0px;"><img src="img/widgets/preview.jpg" alt=""></a>
-								<a href=""><h2>삿포로12</h2></a>
-							</div>
-							<div class="recommend_cooperate_detail">
-								<ul>						
-									<li><i class="md md-room"></i> 서울 강남구 역삼동 818</li>
-									<li><i class="md md-aspect-ratio"></i> 5000원 </li>										
-									<li><i class="md md-schedule"></i> 10:00AM - 10:00PM</li>
-								</ul>
-								<ul class="recommend_cooperate_detail_follow">
-									<li>589 구매</li>
-									<li>8545 좋아요</li>
-								</ul>
-								<ul class="recommend_cooperate_detail_follow_click">
-									<li><a href="">구  매</a></li>
-									<li><a href="">좋아요</a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="recommend_cooperate">
-							<div class="recommend_cooperate_main">
-								<a href="" style="padding: 0px;"><img src="img/widgets/preview.jpg" alt=""></a>
-								<a href=""><h2>삿포로123</h2></a>
-							</div>
-							<div class="recommend_cooperate_detail">
-								<ul>						
-									<li><i class="md md-room"></i> 서울 강남구 역삼동 818</li>
-									<li><i class="md md-aspect-ratio"></i> 5000원 </li>										
-									<li><i class="md md-schedule"></i> 10:00AM - 10:00PM</li>
-								</ul>
-								<ul class="recommend_cooperate_detail_follow">
-									<li>589 구매</li>
-									<li>8545 좋아요</li>
-								</ul>
-								<ul class="recommend_cooperate_detail_follow_click">
-									<li><a href="">구  매</a></li>
-									<li><a href="">좋아요</a></li>
-								</ul>
-							</div>
-						</div>
+						<%=recom_result %>
 					</div>
 				</div>
 				
@@ -301,63 +311,60 @@
 				})();
 				
 				// 좋아요 기능 //
-				
 				$('button').on('click', function() {
 					var user_seq = <%=member_seq %>;
-					var res_seq = $(this).attr('id');
+					var res_seq = $(this).attr('idx');
+					if (user_seq == -1) {
+						alert("로그인이 필요합니다.")
+						return false;
+					}
 					$.ajax({
 						url: './checkOk.like',
 						type: 'post',
 						data: {
 							user_seq: user_seq,
-							res_seq: $(this).attr('id'),
+							res_seq: $(this).attr('idx'),
 						},
 						dataType: 'json',
 						success: function(json) {
 							if(json.flag == 0) {
-								alert("좋아요 했습니다.");
-								document.getElementById(res_seq).style.backgroundColor = "red";
+								//alert("좋아요 했습니다.");
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff0000');
+								$('button[idx="' + res_seq +'"]').css('background-color','#ff0000');
+								
+								
+								//좋아요 숫자 1증가
+								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])+1;
+								$("li[idx='lcR"+res_seq+"']").text("좋아요 : " + likeNum);
+								
+								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])+1;
+								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								setTimeout("location.reload()", 1000);
+								
 							} else {
-								alert("좋아요를 해제했습니다.")
-								document.getElementById(res_seq).style.backgroundColor = "#01B0F0";
+								//alert("좋아요를 해제했습니다.")
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#01B0F0');
+								$('button[idx="' + res_seq +'"]').css('background-color','#01B0F0');
+								
+								//좋아요 숫자 1감소
+								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])-1;
+								$("li[idx='lcR"+res_seq+"']").text("좋아요 : " + likeNum);
+								
+								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
+								var likeNum = Number(likeText[1])-1;
+								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								setTimeout("location.reload()", 1000);
 							}
 						},
 						error : function(xhr, status, error) {
 							alert('에러:' + status + '\n\n' + error);
 						}
-					})
+					});
 				});
-				/*
-				var deleteServer = function() {
-					$.ajax({
-						url: './delete_ok.do',
-						type: 'post',
-						data: {
-							seq: $('#d_seq').val(),
-							password: $('#d_password').val(),
-						},
-						dataType: 'json',
-						success: function(json) {
-							if(json.flag == 0) {
-								alert("글삭제 성공");
-								$('#d_password').val("");
-								$('#deleteDialog').dialog('close');
-								readServer();
-							} else {
-								alert("글쓰기 실패");
-							}
-						},
-						error : function(xhr, status, error) {
-							alert('에러:' + status + '\n\n' + error);
-						}
-					})
-				};*/
-			
 			});
         </script>
-
-
-
-
 </body>
 </html>

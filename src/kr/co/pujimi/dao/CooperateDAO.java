@@ -26,7 +26,7 @@ public class CooperateDAO {
 		String toEmail = "hjpark99@naver.com";
 		String fromName = cdto.getName();
 		String subject = cdto.getRes_name() + "제휴 부탁합니다!";
-		String content = "상호명 : " + cdto.getRes_name() + "\r\n" + "주소 : " + cdto.getRes_addr() + "\r\n" + "\r\n" + cdto.getRes_content() + "\r\n"
+		String content = "상호명 : " + cdto.getRes_name() + "\r\n" + "주소 : " + cdto.getRes_addr() + "\r\n" + "위치(위도,경도) : " + cdto.getLatlng() + "\r\n" + "\r\n" + cdto.getRes_content() + "\r\n"
 						+ "보낸이 : " + cdto.getName() + "(" + cdto.getEmail() + ")";  
 		System.out.println(toEmail + fromName + subject + content);
 		int check = 1;

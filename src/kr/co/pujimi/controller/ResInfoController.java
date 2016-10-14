@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.pujimi.action.restaurant.InterResAction;
 import kr.co.pujimi.action.restaurant.ModifyResInfoAction;
 import kr.co.pujimi.action.restaurant.ModifyResInfoOkAction;
+import kr.co.pujimi.action.restaurant.MyResViewAction;
 import kr.co.pujimi.action.restaurant.ResInfoAction;
 import kr.co.pujimi.action.restaurant.ResViewAction;
 import kr.co.pujimi.core.Action;
@@ -49,6 +50,11 @@ public class ResInfoController extends HttpServlet {
 				action = new ResViewAction();
 				action.execute(request, response);
 				url = "/WEB-INF/view/restaurant/res_view.jsp";
+				
+			}else if (path.equals("/my_res_view.restaurant")) {
+				action = new MyResViewAction();
+				action.execute(request, response);
+				url = "/WEB-INF/view/restaurant/my_res_view.jsp";
 				
 			}else if (path.equals("/res_management.restaurant")) {
 				action = new ModifyResInfoAction();

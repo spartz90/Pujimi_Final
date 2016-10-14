@@ -4,6 +4,7 @@ public class LikeMenuDTO {
 	
 	private int user_seq;
 	private String menu_name;
+	private String[] likeMenus;
 	private String like_date;
 	
 	public int getUser_seq() {
@@ -17,6 +18,12 @@ public class LikeMenuDTO {
 	}
 	public void setMenu_name(String menu_name) {
 		this.menu_name = menu_name;
+	}
+	public String[] getLikeMenus() {
+		return likeMenus;
+	}
+	public void setLikeMenus(String[] likeMenus) {
+		this.likeMenus = likeMenus;
 	}
 	public String getLike_date() {
 		return like_date;

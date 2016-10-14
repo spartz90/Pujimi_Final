@@ -42,14 +42,14 @@ public class LikeMenuController extends HttpServlet {
 				action.execute(request, response);
 				url = "/WEB-INF/view/chart/user_chart.jsp";
 
-			} 
-			else if (path.equals("/likeMenuOk.likeMenu")) {
+			} else if (path.equals("/likeMenuOk.likeMenu")) {
 				action = new LikeMenuOkAction();
 				action.execute(request, response);
+				url = "/WEB-INF/json/check_ok.jsp";
+			} else if (path.equals("/likeMenuList.likeMenu")) {
+				action = new LikeMenuAction();
+				action.execute(request, response);
 				url = "/WEB-INF/json/likeMenu_ok.jsp";
-				
-			} else {
-
 			}
 
 			if (!url.equals("")) {

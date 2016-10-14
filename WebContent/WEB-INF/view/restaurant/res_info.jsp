@@ -1,6 +1,6 @@
-<%@page import="kr.co.pujimi.dao.LikeDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="kr.co.pujimi.dao.LikeDAO"%>
 <%@ page import="kr.co.pujimi.dto.ResTO"%>
 <%@ page import="java.util.ArrayList"%>
 
@@ -117,7 +117,6 @@
 		} else {
 			res_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
 		}
-		
 		res_result.append("		</ul>");
 		res_result.append("	</div>");
 		res_result.append("</div>");
@@ -335,6 +334,7 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])+1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								setTimeout("location.reload()", 1000);
 								
 							} else {
 								//alert("좋아요를 해제했습니다.")
@@ -349,6 +349,7 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])-1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
+								setTimeout("location.reload()", 1000);
 							}
 						},
 						error : function(xhr, status, error) {
@@ -356,9 +357,6 @@
 						}
 					})
 				});
-				
-				
-				
 			});
         </script>
 </body>

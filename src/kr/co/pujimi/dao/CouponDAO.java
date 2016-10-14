@@ -178,4 +178,183 @@ public ArrayList<CouponTO> myCoupon(int user_seq){
 		}
 		return result;
 	}
+	
+	public ArrayList<CouponTO> ResCoupon(int res_seq){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<CouponTO> result = new ArrayList<>();
+		
+		try {
+			conn = this.dataSource.getConnection();
+			String sql = "select u.user_email, u.user_nickname, c.cp_serial, c.user_seq  from user u, coupon c where u.user_seq = c.user_seq and c.res_seq = ? and c.cp_udate is null";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				CouponTO cpTo = new CouponTO();
+				cpTo.setUser_email(rs.getString("user_email"));
+				cpTo.setUser_nickname(rs.getString("user_nickname"));
+				cpTo.setCp_serial(rs.getString("cp_serial"));
+				cpTo.setUser_seq(rs.getInt("user_seq"));
+				result.add(cpTo);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return result;
+	}
+	
+	public int couponUse(CouponTO cTo){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		
+		int flag = 0;
+		String cp_serial = cTo.getCp_serial();
+		try {
+			conn = this.dataSource.getConnection();
+
+			String sql = "update coupon set cp_udate = now() where cp_serial = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cp_serial);
+			
+			int result = pstmt.executeUpdate();
+			
+			CouponDAO cpDao = new CouponDAO();
+			int res_seq = cpDao.getResSeq(cp_serial);
+			int check = cpDao.updateResSales(res_seq);
+			
+			if (result == 1 && check == 1) {
+				flag = 1; // 정상
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
+	}
+	
+	
+	public int getResSeq(String cp_serial){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int res_seq = 0;
+		
+		try {
+			conn = this.dataSource.getConnection();
+
+			String sql = "select res_seq from coupon where cp_serial = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cp_serial);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				res_seq = rs.getInt("res_seq");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return res_seq;
+	}
+	
+	public int updateResSales(int res_seq){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		
+		try {
+			conn = this.dataSource.getConnection();
+
+			String sql = "update restaurant set res_point=(res_point + res_price), res_revenue=(res_revenue + res_price) where res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);
+			
+			int result = pstmt.executeUpdate();
+			
+			if (result == 1) {
+				flag = 1; // 정상
+			}
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
+	}
 }
