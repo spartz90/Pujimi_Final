@@ -41,7 +41,7 @@ public class ResViewAction implements Action {
 			String reply_photo = dto.getRe_photo();
 			String reply_content = dto.getRe_content();
 			int reply_grade = (int) dto.getRe_grade();
-			int reply_user = dto.getUser_seq();
+			
 			
 			result.append("<div class='card w-item'>");
 			result.append("		<div class='card-header'>");

@@ -98,7 +98,7 @@ public class ResDAO {
 		try {
 			conn = this.dataSource.getConnection();
 			
-			String sql = "SELECT res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade FROM restaurant WHERE res_seq = ?";
+			String sql = "SELECT res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade, res_latlng FROM restaurant WHERE res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, rdto.getRes_seq());
 			rs = pstmt.executeQuery();
@@ -111,7 +111,8 @@ public class ResDAO {
 				rdto.setRes_content(rs.getString("res_content"));
 				rdto.setRes_photo(rs.getString("res_photo"));
 				rdto.setRes_price(rs.getInt("res_price"));
-				rdto.setRes_grade(rs.getDouble("res_grade"));				
+				rdto.setRes_grade(rs.getDouble("res_grade"));
+				rdto.setRes_latlng(rs.getString("res_latlng"));
 			}
 			pstmt.close();
 			rs.close();
@@ -187,7 +188,7 @@ public class ResDAO {
 		try {
 			conn = this.dataSource.getConnection();
 			
-			String sql = "SELECT res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade FROM restaurant WHERE user_seq = ?";
+			String sql = "SELECT res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade, res_latlng FROM restaurant WHERE user_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user_seq);
 			rs = pstmt.executeQuery();
@@ -202,7 +203,8 @@ public class ResDAO {
 				rdto.setRes_content(rs.getString("res_content"));
 				rdto.setRes_photo(rs.getString("res_photo"));
 				rdto.setRes_price(rs.getInt("res_price"));
-				rdto.setRes_grade(rs.getDouble("res_grade"));				
+				rdto.setRes_grade(rs.getDouble("res_grade"));
+				rdto.setRes_latlng(rs.getString("res_latlng"));
 			}
 			pstmt.close();
 			rs.close();
