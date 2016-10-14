@@ -573,6 +573,7 @@ public class ResDAO {
 			conn = this.dataSource.getConnection();				
 			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where user_seq = ?";
 			pstmt = conn.prepareStatement(sql);
+			System.out.println(rdto.getUser_seq());
 			pstmt.setInt(1, rdto.getUser_seq());
 			rs = pstmt.executeQuery();
 			
@@ -587,6 +588,57 @@ public class ResDAO {
 				rdto.setRes_photo(rs.getString("res_photo"));
 			}
 
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return rdto;
+	}
+	
+	public ResTO adminResModify(ResTO rdto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = this.dataSource.getConnection();				
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where res_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rdto.getRes_seq());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				rdto.setUser_seq(rs.getInt("user_seq"));
+				rdto.setRes_seq(rs.getInt("res_seq"));
+				rdto.setRes_name(rs.getString("res_name"));
+				rdto.setRes_addr(rs.getString("res_addr"));
+				rdto.setRes_phone(rs.getString("res_phone"));
+				rdto.setRes_octime(rs.getString("res_octime"));
+				rdto.setRes_content(rs.getString("res_content"));
+				rdto.setRes_photo(rs.getString("res_photo"));
+			}
+			
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e.getMessage());
 		} finally {
