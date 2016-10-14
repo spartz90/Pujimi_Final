@@ -6,6 +6,8 @@ public class CooperateDTO {
 	private String res_name;
 	private String res_addr;
 	private String res_content;
+	private String latlng;
+
 	
 	public String getName() {
 		return name;
@@ -37,6 +39,13 @@ public class CooperateDTO {
 	public void setRes_content(String res_content) {
 		this.res_content = res_content;
 	}
+	public String getLatlng() {
+		return latlng;
+	}
+	public void setLatlng(String latlng) {
+		this.latlng = latlng;
+	}
+
 	
 	
 }

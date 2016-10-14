@@ -8,6 +8,8 @@
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	
+	/* String default_Latlng = "(37.49794199999999, 127.027621)"; */
+	
 	ResTO resTo = (ResTO)request.getAttribute("resTo");
 	
 	int user_seq = resTo.getUser_seq();
@@ -21,6 +23,8 @@
 	String ctime = res_octime.substring(9);
 	String res_content = resTo.getRes_content();
 	String res_photo = resTo.getRes_photo();
+	
+	/* String res_latlng = resTo. */
 	
 %>   
 

@@ -19,7 +19,9 @@ public class CooperateOkAction implements Action {
 		cdto.setRes_name(request.getParameter("res_name"));
 		cdto.setRes_addr(request.getParameter("res_addr"));
 		cdto.setRes_content(request.getParameter("res_content"));
+		cdto.setLatlng(request.getParameter("latlng"));
 		
+
 		CooperateDAO cdao = new CooperateDAO();
 		
 		int flag = cdao.cooperateOk(cdto);
