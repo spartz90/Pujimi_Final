@@ -16549,6 +16549,11 @@ a.thumbnail.active {
 	font-size: 12px;
 	cursor: pointer;
 }
+.general_cooperate .general_cooperate_main > a > h2 {
+	color: #ffffff;
+	margin: 0;
+	font-size: 14px;
+}
 
 .general_cooperate .general_cooperate_detail {
 	width: calc(100% - 180px);

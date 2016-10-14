@@ -27,6 +27,9 @@
 		
 		
 		String res_name = resTo.getRes_name();
+		if(res_name.length() > 11 ){
+			res_name = res_name.substring(0, 11)+"...";
+		}
 		String res_addr = resTo.getRes_addr();
 		String res_phone = resTo.getRes_phone();
 		String res_octime = resTo.getRes_octime();
@@ -35,14 +38,16 @@
 		String res_content = resTo.getRes_content();
 		String res_photo = resTo.getRes_photo();
 		String res_price = Integer.toString(resTo.getRes_price());
-		String res_grade = Double.toString(resTo.getRes_grade());
+		String res_grade = Double.toString(Math.round(resTo.getRes_grade()*100)/100.0);
+
+		
 		String res_sells = Integer.toString(resTo.getRes_sells());
 		String res_likes = Integer.toString(resTo.getRes_likes());
 		
-		recom_result.append("		<div class='recommend_cooperate'>");
+		recom_result.append("	<div class='recommend_cooperate'>");
 		recom_result.append("		<div class='recommend_cooperate_main'>");
 		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "' style='padding: 0px; position:relative; overflow:hidden; padding-top:52%'><img src='upload/" + res_photo + "' alt=''></a>'");
-		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "'><h2>" + res_name + "</h2></a>");
+		recom_result.append("			<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "' style='float:right'><h2 style='float:left'>" + res_name + "</h2><h2 style='float: right;'><i class='md md-star' style='color: #ff9800;'></i>"+res_grade+"</h2></a>");
 		recom_result.append("		</div>");
 		recom_result.append("		<div class='recommend_cooperate_detail'>");
 		recom_result.append("			<ul>");
@@ -64,7 +69,7 @@
 		recom_result.append("			</ul>");
 		recom_result.append("		</div>");
 		recom_result.append("	</div>");
-
+		
 	}
 	
 	
@@ -84,6 +89,10 @@
 		int chk = lDao.checkOk(resTo2);
 		
 		String res_name = resTo.getRes_name();
+		if(res_name.length() > 8 ) {
+			res_name = res_name.substring(0, 8)+"...";
+		}
+		
 		String res_addr = resTo.getRes_addr();
 		
 		if(res_addr.length() > 9) {
@@ -94,12 +103,13 @@
 		String res_price = Integer.toString(resTo.getRes_price());
 		String res_sells = Integer.toString(resTo.getRes_sells());
 		String res_likes = Integer.toString(resTo.getRes_likes());
+		String res_grade = Double.toString(Math.round(resTo.getRes_grade()*100)/100.0);
 
 		
 		res_result.append("<div class='general_cooperate'>");
 		res_result.append("	<div class='general_cooperate_main'>");
 		res_result.append("		<a style='padding:0px; margin-top:10px; background-color:#ffffff;' href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "'><img src='" + "./upload/" + res_photo + "' alt=''></a>");
-		res_result.append("		<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "'>"+res_name+"</a>");
+		res_result.append("		<a href='res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin + "' style='float:right;'><h2 style='float:left'>"+res_name+"</h2><h2 style='float: right;''><i class='md md-star' style='color: #ff9800;''></i>" + res_grade + "</h2></a>");
 		res_result.append("	</div>");
 		res_result.append("	<div class='general_cooperate_detail'>");
 		res_result.append("		<ul class='general_cooperate_detail_info'>");						
@@ -270,7 +280,7 @@
 						
 						container.css('margin-left', -100+'%');
 						container.prepend(container.children()[max-1]);
-						//interval = setInterval(next, 5000);
+						interval = setInterval(next, 5000);
 					}
 					function events() {
 						jQuery('#previous').on('click', prev);
@@ -287,8 +297,8 @@
 						animate('next');	
 					}
 					function animate( $direction ) {
-						//clearInterval(interval);
-						//interval = setInterval(next, 5000);
+						clearInterval(interval);
+						interval = setInterval(next, 5000);
 						
 						if ($direction == "next") {
 							container.append(container.children()[0]);
@@ -334,7 +344,6 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])+1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
-								setTimeout("location.reload()", 1000);
 								
 							} else {
 								//alert("좋아요를 해제했습니다.")
@@ -349,7 +358,6 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])-1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
-								setTimeout("location.reload()", 1000);
 							}
 						},
 						error : function(xhr, status, error) {

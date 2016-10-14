@@ -236,8 +236,9 @@
 										<ul class="list-group" id="likeList">								
 										</ul>
 										<button id="insertMenu"><i class='md md-add-shopping-cart'></i>추가</button>
-									</div>
-									<div class="col-sm-6 m-b-20">
+									</div>							
+								</div>
+								<div class="col-sm-6 m-b-20">
 										<p class="f-500 m-b-20 c-black">예전에 좋아한 음식들</p>
 								<div class="table-responsive">
 									<table class="table table-hover" id="likeMenuList">
@@ -254,11 +255,10 @@
 										</tbody>
 									</table>
 								</div>
-							</div>
-																
-								</div>			
+							</div>		
 						
-					</div>                       		                      	     
+					</div> 
+					                      		                      	     
                    </div>
                   </div>           
                         
