@@ -89,11 +89,10 @@ public class LikeMenuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user_seq);
 			rs = pstmt.executeQuery();
-			
 			while(rs.next()){
 				
 				LikeMenuDTO lmdto = new LikeMenuDTO();
-				
+	
 				lmdto.setMenu_name(rs.getString("menu_name"));
 				lmdto.setLike_date(rs.getString("like_date"));
 				

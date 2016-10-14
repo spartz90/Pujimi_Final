@@ -126,7 +126,7 @@
                  </div>                   
                     
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="padding-right: 0;">
                             <div class="card">
                                 <div class="card-header">
                                     <h2>요일별 포인트 충전 정보</h2>                        
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="padding-right: 0;">
                             <div class="card">
                                 <div class="card-header">
                                     <h2>요일별 쿠폰 사용 정보</h2>                               
@@ -156,7 +156,7 @@
                         </div>
                                         
                         
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="padding-right: 0;">
                             <div class="card">
                                 <div class="card-header">
                                     <h2>식품군별 메뉴 정보</h2>                                    
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="padding-right: 0;">
                             <div class="card">
                                 <div class="card-header">
                                     <h2>식품군 구성 정보</h2>   
@@ -191,7 +191,7 @@
                         
                         
                         <div class="col-md-12">
-                            <div class="card" style="position: absolute; width : 100%;">
+                            <div class="card" style="position: absolute; width : 100%; padding: 10px;">
                             	<div class="card-header">
                             		<h2>음식 선호도</h2>
                         		</div> 		
@@ -235,11 +235,12 @@
 										<p class="f-500 m-b-20 c-black">지금 좋아한 음식들</p>
 										<ul class="list-group" id="likeList">								
 										</ul>
+										<button id="insertMenu"><i class='md md-add-shopping-cart'></i>추가</button>
 									</div>
 									<div class="col-sm-6 m-b-20">
 										<p class="f-500 m-b-20 c-black">예전에 좋아한 음식들</p>
 								<div class="table-responsive">
-									<table class="table table-hover">
+									<table class="table table-hover" id="likeMenuList">
 										<thead>
 											<tr>
 												<th
@@ -661,6 +662,9 @@
     		    
     		    var user_seq = <%=member_seq%>
     		    var $foods = $('#food');
+    		    
+    		    $("#food-like").attr('disabled',true);
+	        	$("#food-dislike").attr('disabled', true);
     		    $('#food_group').change(function () {
     		        var food_group = $(this).val(), lcns = foods[food_group] || [];
     		        
@@ -668,15 +672,22 @@
     		            return '<option value="' + lcn + '">' + lcn + '</option>'
     		        }).join('');
     		        $foods.html(html)
+    		        if ($('#food option:selected').val() == null) {
+    		        	$("#food-like").attr('disabled',true);
+    		        	$("#food-dislike").attr('disabled', true);
+    				} else {
+    					$("#food-like").attr('disabled',false);
+   		        	 	$("#food-dislike").attr('disabled', false);
+					}
     		    });    	
     		    
     		    // 리스트 추가 및 중복제거      		    
     		    $("#food-like").click(function(){
-    		    	
     		    	var likeFood = $('#food option:selected').val();     		    	
     		    	console.log(likeFood);    		    	
-    		    	   		    	
-    		    	var li = "<li class='list-group-item'>" + likeFood + "<button id='like-menu-confirm'><i class='md md-add-shopping-cart'></i>추가</button>" + "</li>";
+    		    	
+    		    	//console.log($('#likeFood').children().length);
+    		    	var li = "<li class='list-group-item'>" + likeFood + "<button class='' style='float:right; display:none;'><i class='md md-add-shopping-cart'></i>//</button>" + "</li>";
     		    	$("#likeList").append(li);
     		    	
     		    	var map = {};
@@ -690,26 +701,75 @@
     		    		}    		    			
     		    	});
     		    	
-    		    	$('#likeList').each(function(i, e){
-    		    		$(this).append('<span class="arr"></span>');
-    		    	});  
+    		    	//$('#likeList').each(function(i, e){
+    		    	//	$(this).append('<span class="arr"></span>');
+    		    	//});  
+    		    	 
+        		    $(".like-menu-confirm").on('click',function(){
+    	 		    	var index = $("#likeList > li > button").index($(this));
+    	 		    	//$("li:eq(" + index + ")").attr("data-val", "hello");
+    	 		    	console.log(index);
+    	 		    });
+    		    });
+
+    		    $('#insertMenu').on('click',function(){
+    		    	console.log($('#likeList > li').text());
+    		    	var likeMenus = $('#likeList > li').text().split("//");
+    		    	console.log(likeMenus);
     		    	
-    		    	//호준아여기야아아아아
-    		    	
-    		    	$("#like-menu-confirm").click(function(){
-    	 		    	   var index = $("#like-menu-confirm").index(this);
-    	 		    	   //$("li:eq(" + index + ")").attr("data-val", "hello");
-    	 		    	   console.log(index);
-    	 		    	});
+    		    	jQuery.ajaxSettings.traditional = true;
+    		    	$.ajax({
+    		    		url : './likeMenuOk.likeMenu',
+    		    		type : 'post',
+    		    		data : {
+    		    			likeMenus : likeMenus,
+    		    			user_seq : user_seq
+    		    		},
+    		    		dataType : 'json',
+    		    		success : function(json){
+    		    			if(json.flag == 0){
+    		    				likeMenuLoad();
+    		    			}else{
+    		    				alert("좋아하는 메뉴 추가에 실패하였습니다.");
+    		    			}
+    		    		},
+    		    		error : function(xhr, status, error){
+    		    			alert('에러 : ' + status + '\n\n' + error);
+    		    		}
+    		    	});
     		    });
     		    
+    		    function likeMenuLoad() {
+    		    	$.ajax({
+    		    		url : './likeMenuList.likeMenu',
+    		    		type : 'post',
+    		    		data : {
+    		    			user_seq : user_seq,
+    		    			menu_name : "널"
+    		    		},
+    		    		dataType : 'json',
+    		    		success : function(json){
+    		    			//alert("성공");
+    		    			$("#likeMenuList > tbody").empty();
+    		    			$.each(json, function (index, value) {
+    		    				$('#likeMenuList > tbody').append("<tr><td>" + value.like_date +"</td><td>" + value.menu_name + "</td></tr>" );
+    		    				$('#likeList').empty();
+							})
+    		    			
+    		    		},
+    		    		error : function(xhr, status, error){
+    		    			alert("좋아하는 메뉴 추가에 실패하였습니다.");
+    		    		}
+    		    	});
+				}
 
     		    //리스트 아래에서부터 삭제
     		    $("#food-dislike").click(function(){
     		    	$('#likeList li').eq(-1).remove();    		    	
     		    });
     		    
-    		    $('#like-menu-confirm').click(function(){
+    		    /*
+    		    $('.like-menu-confirm').click(function(){
     		    	
     		    	var likeMenu = $('#likeList').text();
     		    	
@@ -733,7 +793,7 @@
     		    			alert('에러 : ' + status + '\n\n' + error);
     		    		}
     		    	});
-    		    });
+    		    });*/
     		    
     		});
     		

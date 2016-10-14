@@ -15,10 +15,12 @@ public class LikeMenuAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		int user_seq = Integer.parseInt(request.getParameter("user_seq"));
+		System.out.println(user_seq);
 		
 		LikeMenuDAO lmdao = new LikeMenuDAO();
 		
 		ArrayList<LikeMenuDTO> likeMenu_lists = lmdao.likeMenuView(user_seq);
+		
 		
 		request.setAttribute("likeMenu_lists", likeMenu_lists);
 		
