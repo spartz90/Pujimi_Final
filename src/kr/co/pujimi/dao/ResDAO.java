@@ -870,5 +870,53 @@ public class ResDAO {
 		return rato;
 		
 	}
-	
+	public int getResSeq(int user_seq){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int res_seq = 0;
+		
+		try {
+			conn = this.dataSource.getConnection();
+			
+			String sql = "select res_seq from restaurant where user_seq = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_seq);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				res_seq = rs.getInt("res_seq");
+			}		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		
+		return res_seq;
+		
+	}
 }
