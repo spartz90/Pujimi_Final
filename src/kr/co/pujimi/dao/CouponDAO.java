@@ -12,7 +12,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.co.pujimi.dto.CouponTO;
-import kr.co.pujimi.dto.ResTO;
 
 public class CouponDAO {
 

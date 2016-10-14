@@ -5,9 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.core.Action;
 import kr.co.pujimi.dao.CouponDAO;
-import kr.co.pujimi.dao.LikeDAO;
 import kr.co.pujimi.dto.CouponTO;
-import kr.co.pujimi.dto.ResTO;
 
 public class CouponBuyAction implements Action {
 

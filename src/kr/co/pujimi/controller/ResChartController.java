@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.pujimi.action.likeMenu.LikeMenuAction;
-import kr.co.pujimi.action.likeMenu.LikeMenuOkAction;
 import kr.co.pujimi.action.resChart.ResChartAction;
 import kr.co.pujimi.core.Action;
 

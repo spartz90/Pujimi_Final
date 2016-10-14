@@ -118,8 +118,8 @@
             <section id="content">
 			<div class="container">
 				<div class="block-header">
-					<h2>쿠폰 구매</h2>
-					쿠폰을 구매합니다.
+					<h2>쿠폰 사용</h2>
+					쿠폰을 사용합니다.
 				</div>
 				<div class="row">
 				<div class="buy_coupon">
@@ -135,20 +135,21 @@
 								<div class="coupondetail_resinfo">
 									<h3>쿠폰 입력</h3>
 									<div>
-										쿠폰 번호는<br/>
-										구매 후 <br/>
-										확인 하세요										
+										쿠폰 번호<br/>
+										12자리를 <br/>
+										입력해 주세요										
 									</div>
 								</div>
-								<div class="coupondetail_num"></div>
+								<div class="coupondetail_num">
+									<input class="serial" id="serial" name="serial" type="text" maxlength="12">
+								</div>
 							</div>
 						</div>
-						<hr color="#D5D5D5"/>
-						
-							<hr color="#D5D5D5"/>
 						<form action="coupon_buy_ok.coupon" method="post" name="coupon_buy_info">
+						<hr color="#D5D5D5"/>
+							<hr color="#D5D5D5"/>
 							<input type="hidden" id="user_seq" value="<%=member_seq %>" name="user_seq"/>
-							<input type="hidden" id="user_point" value="" name="user_point"/>
+							<input type="hidden" id="cp_serial" value="" name="cp_serial" />
 							<div class="cancle_submit">
 								<a id="cancle">취소</a>
 								<button type="submit" id="submit">구매</button>
@@ -220,12 +221,19 @@
         
         <script type="text/javascript">
             $(document).ready(function() {
-            	$(function(){   
-                	$( "#accordion" ).accordion({
-                		collapsible: true,
-                		heightStyle: "content"
-                	});	
+            	$(function(){
+            		
+        			$("#serial").keyup(function (event) {
+                        regexp = /[^0-9]/gi;
+                        v = $(this).val();
+                        if (regexp.test(v)) {
+                        	$(this).val(v.replace(regexp, ''));
+                        }
+                        
+                       	couponAllPrice();
+                    });
                 	
+        			/*
         			$('.couponUse').on('click', function() {
 						var cp_serial = $(this).attr('idx');
 						$.ajax({
@@ -249,6 +257,7 @@
 							}
 						});
 					});
+        			*/
             	});
             });
         </script>
