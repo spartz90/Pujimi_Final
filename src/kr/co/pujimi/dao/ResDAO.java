@@ -279,7 +279,7 @@ public class ResDAO {
 			
 			// DB에서 꺼내올때 날짜 포맷 지정
 			String sql = "select res_seq, res_name, res_addr, res_phone, "
-					+ "res_octime, res_content, res_photo, res_price from restaurant order by res_revenue desc";
+					+ "res_octime, res_content, res_photo, res_price, res_grade from restaurant order by res_revenue desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -296,6 +296,7 @@ public class ResDAO {
 				rdto.setRes_content(rs.getString("res_content"));
 				rdto.setRes_photo(rs.getString("res_photo"));
 				rdto.setRes_price(Integer.parseInt(rs.getString("res_price")));
+				rdto.setRes_grade(rs.getDouble("res_grade"));
 				rdto.setRes_sells(resDao.sellsCount(res_seq));
 				rdto.setRes_likes(resDao.likeCount(res_seq));
 		
