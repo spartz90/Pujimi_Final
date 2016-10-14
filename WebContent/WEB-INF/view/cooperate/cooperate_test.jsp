@@ -37,6 +37,7 @@
         <link href="css/app.min.1_test.css" rel="stylesheet">
         <link href="css/app.min.2_test.css" rel="stylesheet">
       
+      	<!-- MAP -->
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAgtZyE1FpTlWMOhg9VaIcqdAo-Qxtlpnk"></script>
 
         
@@ -63,6 +64,7 @@
                     <div class="card">
                         <div class="card-body card-padding">
 							<form action="cooperateOk.coop" method="post">
+							<input type="hidden" id="latlng" name="latlng" value="(37.49794199999999, 127.027621)"/>
 							<div class="col-sm-6">
 								<div class="input-group m-b-20">
 									<span class="input-group-addon"><i class="md md-person"></i></span>
@@ -91,8 +93,6 @@
 							</div>
 							<div class="col-sm-6">
 								<div id="map_canvas" style="width: 300px; height: 300px;"></div>
-								<input type="hidden" id="latlng" name="latlng" value="(37.49794199999999, 127.027621)"/>
-								<div id="result"></div>
 	                        </div>
 							
 							<div class="clearfix"></div>
@@ -187,7 +187,7 @@
         <script src="js/charts.js"></script>
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>
-        		<script type="text/javascript">
+        <script type="text/javascript">
 			var map;
 			var latlng = '';
 			function initialize() {

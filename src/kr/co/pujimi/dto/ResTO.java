@@ -16,6 +16,7 @@ public class ResTO {
 	private double res_grade;
 	private int res_sells;
 	private int res_likes;
+	private String res_latlng;
 	
 	public int getRes_sells() {
 		return res_sells;
@@ -111,4 +112,12 @@ public class ResTO {
 	public void setUser_seq(int user_seq) {
 		this.user_seq = user_seq;
 	}
+	public String getRes_latlng() {
+		return res_latlng;
+	}
+	public void setRes_latlng(String res_latlng) {
+		this.res_latlng = res_latlng;
+	}
+	
+	
 }

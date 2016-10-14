@@ -45,7 +45,7 @@ public class ResDAO {
 			conn = this.dataSource.getConnection();
 			// res_seq, res_name, res_addr, res_phone, res_octime, res_content,
 			// res_point, res_revenue, user_seq
-			String sql = "insert into restaurant values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into restaurant values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, resdto.getRes_name());
 			pstmt.setString(2, resdto.getRes_addr());
@@ -59,6 +59,7 @@ public class ResDAO {
 			pstmt.setInt(10, 0); // 최초 가게정보 추가시 총 매출액 0
 			pstmt.setDouble(11, 0.0); // 최초 가게정보 추가시 평점 0
 			pstmt.setInt(12, 0); // 최초 가게정보 추가시 추천제휴점 0;
+			pstmt.setString(13, "(37.49794199999999, 127.027621)");
 
 			// return int 값은 DML이 수행된 후의 정상실행은 1 false는 0
 			int result = pstmt.executeUpdate();
@@ -571,7 +572,7 @@ public class ResDAO {
 				
 		try {
 			conn = this.dataSource.getConnection();				
-			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where user_seq = ?";
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_latlng from restaurant where user_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 			System.out.println(rdto.getUser_seq());
 			pstmt.setInt(1, rdto.getUser_seq());
@@ -586,6 +587,7 @@ public class ResDAO {
 				rdto.setRes_octime(rs.getString("res_octime"));
 				rdto.setRes_content(rs.getString("res_content"));
 				rdto.setRes_photo(rs.getString("res_photo"));
+				rdto.setRes_latlng(rs.getString("res_latlng"));
 			}
 
 		} catch (SQLException e) {
@@ -623,7 +625,7 @@ public class ResDAO {
 		
 		try {
 			conn = this.dataSource.getConnection();				
-			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo from restaurant where res_seq = ?";
+			String sql = "select user_seq, res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_latlng from restaurant where res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, rdto.getRes_seq());
 			rs = pstmt.executeQuery();
@@ -637,6 +639,7 @@ public class ResDAO {
 				rdto.setRes_octime(rs.getString("res_octime"));
 				rdto.setRes_content(rs.getString("res_content"));
 				rdto.setRes_photo(rs.getString("res_photo"));
+				rdto.setRes_latlng(rs.getString("res_latlng"));
 			}
 			
 		} catch (SQLException e) {
@@ -677,7 +680,7 @@ public class ResDAO {
 		try {
 
 			conn = this.dataSource.getConnection();
-			String sql = "update restaurant set res_name = ?, res_addr = ?, res_phone = ?, res_octime = ?, res_content = ?, res_photo = ? where res_seq = ?";
+			String sql = "update restaurant set res_name = ?, res_addr = ?, res_phone = ?, res_octime = ?, res_content = ?, res_photo = ?, res_latlng = ? where res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, rdto.getRes_name());
@@ -686,7 +689,7 @@ public class ResDAO {
 			pstmt.setString(4, rdto.getRes_octime());
 			pstmt.setString(5, rdto.getRes_content());
 			pstmt.setString(6, rdto.getRes_photo());
-			pstmt.setInt(7, rdto.getUser_seq());
+			pstmt.setString(7, rdto.getRes_latlng());
 			pstmt.setInt(8, rdto.getRes_seq());
 
 			//return int 값은 DML이 수행된 후의 정상실행은 1 false는 0
