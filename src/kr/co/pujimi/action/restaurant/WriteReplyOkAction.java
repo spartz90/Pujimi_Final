@@ -10,9 +10,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kr.co.pujimi.core.Action;
 import kr.co.pujimi.dao.ReplyDAO;
-import kr.co.pujimi.dao.ResDAO;
 import kr.co.pujimi.dto.ReplyTO;
-import kr.co.pujimi.dto.ResTO;
 
 public class WriteReplyOkAction implements Action {
 
@@ -20,8 +18,8 @@ public class WriteReplyOkAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		try {
-			//String uploadPath = "/home/hosting_users/tigger90/tomcat/webapps/ROOT/upload";
-			String uploadPath = "C:/WorkSpace/Pujimi_final/WebContent/upload";
+			String uploadPath = "/home/hosting_users/tigger90/tomcat/webapps/ROOT/upload";
+			//String uploadPath = "C:/WorkSpace/Pujimi_final/WebContent/upload";
 			int maxFileSize = 1024 * 1024 * 5;
 			String encoding = "utf-8";
 			

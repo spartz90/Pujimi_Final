@@ -5,9 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 import kr.co.pujimi.core.Action;
 import kr.co.pujimi.dao.ResDAO;
 import kr.co.pujimi.dto.ResTO;
