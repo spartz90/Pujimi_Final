@@ -15,7 +15,7 @@
 		out.println("alert('댓글 수정에 성공했습니다.')");
 		out.println("location.href = 'res_view.restaurant?res_seq=" + res_seq + "&user_seq=" + user_seq + "&user_admin=" + user_admin + "';");
 	}else{
-		out.println("alert('댓글 수정에 실패했습니다.')");		
+		out.println("alert('수정 권한이 없습니다.')");		
 		out.println("history.back();");
 	}
 	out.println("</script>");

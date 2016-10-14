@@ -41,13 +41,14 @@ public class ResViewAction implements Action {
 			String reply_photo = dto.getRe_photo();
 			String reply_content = dto.getRe_content();
 			int reply_grade = (int) dto.getRe_grade();
+			int reply_user = dto.getUser_seq();
 			
 			result.append("<div class='card w-item'>");
 			result.append("		<div class='card-header'>");
 			result.append("			<div class='media'>");
 			result.append("				<div class='media-body'>");
 			result.append("					<button class='btn btn-primary btn-sm pull-right waves-effect waves-button waves-float' id='modifybtn' onclick='javascript:location.href=\"modify.reply?user_seq="+ member_seq +"&res_seq="+ res_seq + "&re_seq="+ re_seq + "&user_admin="+ member_admin +"\"'>수정</button>");			
-			result.append("					<button class='btn btn-danger btn-sm pull-right waves-effect waves-button waves-float' id='modifybtn' onclick='javascript:location.href=\"delete.reply?user_seq="+ member_seq +"&res_seq="+ res_seq + "&re_seq="+ re_seq + "&user_admin="+ member_admin +"\"'>삭제</button>");			
+			// result.append("					<button class='btn btn-danger btn-sm pull-right waves-effect waves-button waves-float' id='modifybtn' onclick='javascript:location.href=\"delete.reply?user_seq="+ member_seq +"&res_seq="+ res_seq + "&re_seq="+ re_seq + "&user_admin="+ member_admin +"\"'>삭제</button>");			
 			result.append("					<h2>"+ reply_user_nickname + "<small>작성일 : " + reply_date + "</small></h2>");
 			result.append("				</div>");
 			result.append("			</div>");
