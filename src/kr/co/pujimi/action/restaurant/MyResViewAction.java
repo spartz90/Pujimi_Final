@@ -12,20 +12,22 @@ import kr.co.pujimi.dto.RatingTO;
 import kr.co.pujimi.dto.ReplyTO;
 import kr.co.pujimi.dto.ResTO;
 
-public class ResViewAction implements Action {
+public class MyResViewAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		// res 정보 가져오기
-		int res_seq = Integer.parseInt(request.getParameter("res_seq"));
+		int user_seq = Integer.parseInt(request.getParameter("user_seq"));
+		
 		ResTO resTo = new ResTO();
-		resTo.setRes_seq(res_seq);
-		
 		ResDAO resdao = new ResDAO();
-		resTo = resdao.resView(resTo);	
 		
-		request.setAttribute("resTo", resTo);		
+		resTo = resdao.resView(user_seq);	
+		int res_seq = resTo.getRes_seq();
+		
+		request.setAttribute("resTo", resTo);
+		request.setAttribute("res_seq", res_seq);
 		
 		ReplyDAO rdao = new ReplyDAO();	
 		ArrayList<ReplyTO> lists = rdao.replyList(res_seq);	

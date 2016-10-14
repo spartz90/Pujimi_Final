@@ -10,16 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.pujimi.action.coupon.CouponBuyAction;
-import kr.co.pujimi.action.coupon.CouponBuyOkAction;
-import kr.co.pujimi.action.coupon.CouponUseOkAction;
-import kr.co.pujimi.action.coupon.ResCouponAction;
-import kr.co.pujimi.action.coupon.MyCouponAction;
+import kr.co.pujimi.action.likeMenu.LikeMenuAction;
+import kr.co.pujimi.action.likeMenu.LikeMenuOkAction;
 import kr.co.pujimi.core.Action;
 
 
-@WebServlet("*.coupon")
-public class CouponController extends HttpServlet {
+@WebServlet("*.sales")
+public class SalesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,29 +37,19 @@ public class CouponController extends HttpServlet {
 			String url = "";
 			Action action = null;
 
-			if (path.equals("/mycoupon.coupon")) {
-				action = new MyCouponAction();
+			if (path.equals("/resChart.sales")) {
+				action = new LikeMenuAction();
 				action.execute(request, response);
-				url = "/WEB-INF/view/coupon/mycoupon.jsp";
+				url = "/WEB-INF/view/chart/res_chart.jsp";
+
+			} 
+			else if (path.equals("/likeMenuOk.likeMenu")) {
+				action = new LikeMenuOkAction();
+				action.execute(request, response);
+				url = "/WEB-INF/json/likeMenu_ok.jsp";
 				
-			}else if (path.equals("/coupon_buy.coupon")) {
-				action = new CouponBuyAction();
-				action.execute(request, response);
-				url = "/WEB-INF/view/coupon/coupon_buy.jsp";
-				
-			}else if (path.equals("/coupon_buy_ok.coupon")) {
-				action = new CouponBuyOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/view/coupon/coupon_buy_ok.jsp";	
-				
-			}else if (path.equals("/res_coupon.coupon")) {
-				action = new ResCouponAction();
-				action.execute(request, response);
-				url = "/WEB-INF/view/coupon/res_coupon.jsp";	
-			}else if (path.equals("/coupon_use.coupon")) {
-				action = new CouponUseOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/json/coupon_use.jsp";	
+			} else {
+
 			}
 
 			if (!url.equals("")) {

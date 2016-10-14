@@ -10,11 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.pujimi.action.restaurant.InterResAction;
-import kr.co.pujimi.action.restaurant.ModifyResInfoAction;
-import kr.co.pujimi.action.restaurant.ModifyResInfoOkAction;
-import kr.co.pujimi.action.restaurant.ResInfoAction;
-import kr.co.pujimi.action.restaurant.ResViewAction;
+import kr.co.pujimi.action.restaurant.ModifyReplyAction;
 import kr.co.pujimi.action.restaurant.WriteReplyOkAction;
 import kr.co.pujimi.core.Action;
 
@@ -50,13 +46,15 @@ public class ReplyController extends HttpServlet {
 			String url = "";
 			Action action = null;
 
-			if (path.equals("/replyOk.reply")) {
+			if (path.equals("/writeOk.reply")) {
 				action = new WriteReplyOkAction();
 				action.execute(request, response);
 				url = "/WEB-INF/view/reply/replyWriteOk.jsp";
 
-			}else {
-
+			}else if (path.equals("/modify.reply")){
+				action = new ModifyReplyAction();
+				action.execute(request, response);
+				url = "/WEB-INF/view/reply/reply_modify.jsp";
 			}
 
 			if (!url.equals("")) {
