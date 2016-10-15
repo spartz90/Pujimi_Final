@@ -83,6 +83,7 @@
 	                        <li><a href="res_coupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">쿠폰 사용 관리</a></li>
 	                        <li><a href="res_add_menu.addMenu?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 메뉴 관리</a></li>
 	                        <li><a href="res_management.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 정보 관리</a></li>
+	                        <li><a href="mycoupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">내쿠폰</a></li>
 						</ul>
 					</li>
 					<%
@@ -135,6 +136,7 @@
 	                        <li><a href="res_coupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">쿠폰 사용 관리</a></li>
 	                        <li><a href="res_add_menu.addMenu?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 메뉴 관리</a></li>
 	                        <li><a href="res_management.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 정보 관리</a></li>
+	                        <li><a href="mycoupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">내쿠폰</a></li>
        	 			<%
 						}
 						if(user_admin.equals("2")){

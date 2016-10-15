@@ -292,12 +292,14 @@ public class CouponDAO {
 		
 		int flag = 0;
 		String cp_serial = cTo.getCp_serial();
+		int res_check = cTo.getRes_seq();
 		try {
 			conn = this.dataSource.getConnection();
 
-			String sql = "update coupon set cp_udate = now() where cp_serial = ?";
+			String sql = "update coupon set cp_udate = now() where cp_serial = ? and res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, cp_serial);
+			pstmt.setInt(2, res_check);
 			
 			int result = pstmt.executeUpdate();
 			

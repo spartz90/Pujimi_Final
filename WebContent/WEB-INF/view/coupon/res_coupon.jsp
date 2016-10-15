@@ -79,7 +79,7 @@
 								</div>
 							</div>
 						</div>
-						<form action="coupon_use_ok.coupon" method="post" name="coupon_buy_info">
+						<form action="coupon_use_ok.coupon" method="get" name="coupon_buy_info">
 						<hr color="#D5D5D5"/>
 							<hr color="#D5D5D5"/>
 							<input type="hidden" id="cp_serial" value="" name="cp_serial" />
@@ -87,7 +87,7 @@
 							<input type="hidden" id="user_seq" value="<%=member_seq %>" name="user_seq" />
 							<div class="cancle_submit">
 								<a id="cancle">취소</a>
-								<button type="submit" id="submit">구매</button>
+								<button type="submit" id="submit">사용하기</button>
 							</div>
 						</form>
 					</div>
