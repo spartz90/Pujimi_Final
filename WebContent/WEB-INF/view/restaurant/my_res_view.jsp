@@ -29,6 +29,7 @@
 	int num_star = (int)Math.round(res_grade);
 	int res_sells = resTo.getRes_sells();
 	int res_likes = resTo.getRes_likes();
+	String latlng = resTo.getRes_latlng();
 	
 	StringBuffer result	= (StringBuffer)request.getAttribute("result");	
 		
@@ -45,7 +46,14 @@
 	double prog_two = Math.round(two / sum * 100);
 	double prog_three = Math.round(three / sum * 100);
 	double prog_four = Math.round(four / sum * 100);
-	double prog_five = Math.round(five / sum * 100);   	
+	double prog_five = Math.round(five / sum * 100);
+	
+	String default_Latlng = "(37.49794199999999, 127.027621)";
+	
+	if(latlng.equals("") || latlng == default_Latlng) {
+		latlng = default_Latlng;
+		//check = "'<b>가게의 위치을 클릭</b>해주십시요'";
+	} 
 	
 %>
 <!DOCTYPE html>
@@ -69,8 +77,11 @@
 <link href="css/app.min.2_test.css" rel="stylesheet">
 <link href="css/wall.css" rel="stylesheet">
 
+<!-- MAP -->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAgtZyE1FpTlWMOhg9VaIcqdAo-Qxtlpnk"></script>
+
 </head>
-<body class="toggled sw-toggled">
+<body class="toggled sw-toggled" onload="initialize();">
 	<div class="gongbak"></div>
     	<div>
     		<jsp:include page="../template/top_side.jsp" >
@@ -260,6 +271,10 @@
 
 
 				<div class="container">
+				
+					<div class="col-md-12">					
+						<div id="map_canvas" style="width: 904px; height: 300px;"></div><br/>
+				
 					<div class="col-md-12">
 						<div class="block-header">
 							<h2>
@@ -449,5 +464,33 @@
 	
 	<script src="js/functions.js"></script>
 	<script src="js/demo.js"></script>
+	<script type="text/javascript">
+		var map;
+		var latlng = '';
+		function initialize(latlng) {
+			var myLatlng = new google.maps.LatLng<%=latlng %>
+			var myOptions = {
+				zoom : 17,
+				center : myLatlng,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				
+			}
+			var map = new google.maps.Map(document.getElementById("map_canvas"),
+					myOptions);
+			
+			var marker = new google.maps.Marker({
+				position : myLatlng,
+				map : map
+			});
+
+			var content = "<%=res_name%>";
+			
+			var infowindow = new google.maps.InfoWindow({ content: content});
+			 
+	        google.maps.event.addListener(marker, "click", function() {
+	            infowindow.open(map,marker);
+	        });
+		} 
+		</script>
 </body>
 </html>
