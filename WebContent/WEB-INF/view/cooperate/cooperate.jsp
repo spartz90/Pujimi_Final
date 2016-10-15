@@ -14,6 +14,8 @@
 	
 	String user_email = userTo.getUser_email()==null ? "비회원":userTo.getUser_email();
 	String user_nickname = userTo.getUser_nickname()==null ? "비회원":userTo.getUser_nickname();
+	
+	System.out.println("테스트맞음");
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -34,29 +36,36 @@
         <!-- CSS -->
         <link href="css/app.min.1_test.css" rel="stylesheet">
         <link href="css/app.min.2_test.css" rel="stylesheet">
+      
+      	<!-- MAP -->
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAgtZyE1FpTlWMOhg9VaIcqdAo-Qxtlpnk"></script>
+
         
+ 
+      
     </head>
-    <body class="toggled sw-toggled">
+    <body class="toggled sw-toggled" onload="initialize();">
     	<div class="gongbak"></div>
     	<div>
     		<jsp:include page="../template/top_side.jsp" >
     		<jsp:param name="user_seq" value="<%=member_seq %>" />
     		<jsp:param name="user_admin" value="<%=member_admin %>" />
     		</jsp:include>
-    	</div>        
+    	</div> 
+
         <section id="main">
             <section id="content">
                 <div class="container">
                     <div class="block-header">
                         <h2>제휴 조르기</h2> <br/>
                         <small>여러분만의 식당을 알려주세요!!</small>
-
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-body card-padding">
 							<form action="cooperateOk.coop" method="post">
-							<div class="col-sm-5">
+							<input type="hidden" id="latlng" name="latlng" value="(37.49794199999999, 127.027621)"/>
+							<div class="col-sm-6">
 								<div class="input-group m-b-20">
 									<span class="input-group-addon"><i class="md md-person"></i></span>
 									<div class="fg-line">
@@ -70,7 +79,7 @@
 									</div>
 								</div>
 								<div class="input-group m-b-20">
-									<span class="input-group-addon"><i class="md md-local-restaurant"></i></span>
+	         								<span class="input-group-addon"><i class="md md-local-restaurant"></i></span>
 									<div class="fg-line">
 										<input type="text" class="form-control" id="res_name" name="res_name" placeholder="상호명">
 									</div>
@@ -82,20 +91,27 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-sm-6">
+								<div id="map_canvas" style="width: 300px; height: 300px;"></div>
+	                        </div>
 							
 							<div class="clearfix"></div>
-							
+							<br />
 							<div class="input-group" style="width: 100%;">
 								<span class="input-group-addon"><i class="md md-info-outline"></i></span>
 								
 	                            <div class="fg-line">
 	                               	<textarea class="form-control" id="res_content" name="res_content" placeholder="가게 설명" style="height: 100px;"></textarea>
 	                            </div>
-	                        </div>
+	                            <div>
+    						</div>
+    						<!-- <div class="col-sm-6">
+								<div id="map_canvas" style="width: 300px; height: 300px;"></div>
+								<div id="result"></div>
+	                        </div> -->
 	                        
 	                        <div class="pull-right m-r-30">
 	                        	<button type="submit" class="btn btn-primary btn-sm m-t-30">Submit</button>
-                        	</div>
                         	<div class="clearfix"></div>
 							</form>
                         </div>
@@ -171,8 +187,51 @@
         <script src="js/charts.js"></script>
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>
-        
-
-        
+        <script type="text/javascript">
+			var map;
+			var latlng = '';
+			function initialize() {
+				var myLatlng = new google.maps.LatLng(37.49794199999999, 127.027621);
+				var myOptions = {
+					zoom : 17,
+					center : myLatlng,
+					mapTypeId : google.maps.MapTypeId.ROADMAP
+				}
+				map = new google.maps.Map(document.getElementById("map_canvas"),
+						myOptions);
+				//클릭했을 때 이벤트
+				google.maps.event.addListener(map, 'click', function(event) {
+					placeMarker(event.latLng);
+					/* infowindow.setContent("여기여기 latLng: " + event.latLng); */ // 인포윈도우 안에 클릭한 곳위 좌표값을 넣는다.
+					infowindow.setContent("Here!");
+					infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
+					latlng = '';
+					latlng += event.latLng;
+					
+					document.getElementById('latlng').value = '';
+					document.getElementById("latlng").value += latlng;
+					
+				});
+				//클릭 했을때 이벤트 끝
+				//인포윈도우의 생성
+				var infowindow = new google.maps.InfoWindow(
+						{
+							content : '<b>가게의 위치을 클릭</b>하십시요',
+							size : new google.maps.Size(50, 50),
+							position : myLatlng
+						});
+				infowindow.open(map);
+			} // function initialize() 함수 끝
+		
+			// 마커 생성 합수
+			function placeMarker(location) {
+				var clickedLocation = new google.maps.LatLng(location);
+				var marker = new google.maps.Marker({
+					position : location,
+					map : map
+				});
+				map.setCenter(location);
+			}
+		</script>
     </body>
   </html>
