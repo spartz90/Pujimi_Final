@@ -333,8 +333,8 @@
 						success: function(json) {
 							if(json.flag == 0) {
 								//alert("좋아요 했습니다.");
-								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff6f6f');
-								$('button[idx="' + res_seq +'"]').css('background-color','#ff6f6f');
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff5b5b');
+								$('button[idx="' + res_seq +'"]').css('background-color','#ff5b5b');
 								
 								//좋아요 숫자 1증가
 								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");

@@ -129,19 +129,35 @@
 						 최근 가장 핫한 점심 뷔페를 추천해드립니다.
 					</div>
 					<div class="row">
-				<div id="slidebox">
-					<div id="slider">
-						<%=recom_result %>
-					</div>
-				</div>
+						<div id="slidebox">
+							<div id="slider">
+								<%=recom_result %>
+							</div>
+						</div>
 						<div class="clearfix"></div>
 						<div align="center">
 							<ul class="fw-footer pagination wizard">
 								<li class="previous" id="previous"><a class="a-prevent" href=""><i
-											class="md md-chevron-left"></i></a></li>
+													class="md md-chevron-left"></i></a></li>
 								<li class="next" id="next"><a class="a-prevent" href=""><i
-										class="md md-chevron-right"></i></a></li>
+													class="md md-chevron-right"></i></a></li>
 							</ul>
+						</div>
+					</div>
+					<div class="block-header">
+						<h2>제휴점 정보</h2>
+						다양한 메뉴, 저렴한 가격과 정확한 위치를 참고하세요.<br /> 
+						관심매장을 설정해보세요.
+					</div>
+					<div class="row">
+						<div class='general_cooperate'>
+							dfdf
+						</div>
+						<div class='general_cooperate'>
+							dfdf
+						</div>
+						<div class='general_cooperate'>
+							dfdf
 						</div>
 					</div>
 				</div>
@@ -297,8 +313,8 @@
 						success: function(json) {
 							if(json.flag == 0) {
 								//alert("좋아요 했습니다.");
-								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff0000');
-								$('button[idx="' + res_seq +'"]').css('background-color','#ff0000');
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff5b5b');
+								$('button[idx="' + res_seq +'"]').css('background-color','#ff5b5b');
 								
 								//좋아요 숫자 1증가
 								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
@@ -308,7 +324,6 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])+1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
-								setTimeout("location.reload()", 1000);
 								
 							} else {
 								//alert("좋아요를 해제했습니다.")
@@ -323,7 +338,6 @@
 								likeText = $("li[idx='lcG"+res_seq+"']").text().split(" : ");
 								var likeNum = Number(likeText[1])-1;
 								$("li[idx='lcG"+res_seq+"']").text("좋아요 : " + likeNum);
-								setTimeout("location.reload()", 1000);
 							}
 						},
 						error : function(xhr, status, error) {
