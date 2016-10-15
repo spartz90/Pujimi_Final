@@ -14,8 +14,6 @@
 	
 	String user_email = userTo.getUser_email()==null ? "":userTo.getUser_email();
 	String user_nickname = userTo.getUser_nickname()==null ? "":userTo.getUser_nickname();
-	
-	System.out.println("테스트맞음");
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -40,9 +38,6 @@
       	<!-- MAP -->
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAgtZyE1FpTlWMOhg9VaIcqdAo-Qxtlpnk"></script>
 
-        
- 
-      
     </head>
     <body class="toggled sw-toggled" onload="initialize();">
     	<div class="gongbak"></div>
@@ -187,10 +182,12 @@
         <script src="js/charts.js"></script>
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>
-        <script type="text/javascript">
-			var map;
+                <script type="text/javascript">
 			var latlng = '';
-			function initialize() {
+			var map;
+		    var markers = []; // 배열선언	
+		   
+		    function initialize() {
 				var myLatlng = new google.maps.LatLng(37.49794199999999, 127.027621);
 				var myOptions = {
 					zoom : 17,
@@ -199,39 +196,69 @@
 				}
 				map = new google.maps.Map(document.getElementById("map_canvas"),
 						myOptions);
+				
 				//클릭했을 때 이벤트
 				google.maps.event.addListener(map, 'click', function(event) {
-					placeMarker(event.latLng);
-					/* infowindow.setContent("여기여기 latLng: " + event.latLng); */ // 인포윈도우 안에 클릭한 곳위 좌표값을 넣는다.
-					infowindow.setContent("Here!");
+					deleteMarkers();//이전마커 삭제
+			        addMarker(event.latLng); //새로운 마커 등록
+			        //placeMarker(event.latLng);
+			         
+			        infowindow.open(map);
+			        infowindow.setContent("Here!");
 					infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
+	
 					latlng = '';
 					latlng += event.latLng;
+					
 					
 					document.getElementById('latlng').value = '';
 					document.getElementById("latlng").value += latlng;
 					
-				});
+			        });
 				//클릭 했을때 이벤트 끝
-				//인포윈도우의 생성
+				
+				//인포윈도우(지도에 클릭 시 생성되는 창)의 생성
 				var infowindow = new google.maps.InfoWindow(
 						{
-							content : '<b>가게의 위치을 클릭</b>하십시요',
+							content : '<b>가게의 위치를 지도에 표시해주세요</b>',
 							size : new google.maps.Size(50, 50),
 							position : myLatlng
 						});
 				infowindow.open(map);
 			} // function initialize() 함수 끝
 		
-			// 마커 생성 합수
-			function placeMarker(location) {
-				var clickedLocation = new google.maps.LatLng(location);
-				var marker = new google.maps.Marker({
-					position : location,
-					map : map
-				});
-				map.setCenter(location);
-			}
+			// 마커 생성 함수
+			function addMarker(location) {
+		        var marker = new google.maps.Marker({
+		            position: location,
+		            map: map
+		        });
+		        markers.push(marker);
+		    }
+		     
+		    // Sets the map on all markers in the array.
+		    function setMapOnAll(map) {
+		        for (var i = 0; i < markers.length; i++) {
+		            markers[i].setMap(map);
+		        }
+		    }
+		     
+		    // Removes the markers from the map, but keeps them in the array.
+		    function clearMarkers() {
+		        setMapOnAll(null);
+		    }
+		     
+		    // Shows any markers currently in the array.
+		    function showMarkers() { // 전체 마커 보여주기
+		        setMapOnAll(map);
+		    }
+		     
+		    // Deletes all markers in the array by removing references to them.
+		    function deleteMarkers() {//마커삭제
+		        clearMarkers();
+		        markers = [];
+		    }
+	
 		</script>
     </body>
   </html>
