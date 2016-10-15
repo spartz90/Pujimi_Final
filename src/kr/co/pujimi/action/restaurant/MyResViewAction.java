@@ -74,6 +74,7 @@ public class MyResViewAction implements Action {
 		
 		RatingTO rato = resdao.ratView(res_seq);
 		request.setAttribute("rato", rato);	
+		request.setAttribute("res_seq", res_seq);
 		
 	}
 }

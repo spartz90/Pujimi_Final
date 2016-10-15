@@ -1,3 +1,4 @@
+<%@page import="kr.co.pujimi.dao.LikeDAO"%>
 <%@page import="kr.co.pujimi.dto.RatingTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -14,7 +15,9 @@
 	ResTO resTo	= (ResTO)request.getAttribute("resTo");
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
-	String res_seq = request.getParameter("res_seq");
+	String res_seq = request.getAttribute("res_seq").toString();
+	
+	System.out.print(member_seq + "//"+ res_seq);
 	
 	String res_name = resTo.getRes_name();
 	String res_addr = resTo.getRes_addr();
@@ -55,6 +58,14 @@
 		//check = "'<b>가게의 위치을 클릭</b>해주십시요'";
 	} 
 	
+	ResTO resTo2 = new ResTO();
+	resTo2.setUser_seq(Integer.parseInt(member_seq));
+	resTo2.setRes_seq(Integer.parseInt(res_seq));
+	
+	LikeDAO lDao = new LikeDAO();
+	int chk = lDao.checkOk(resTo2);
+	
+
 %>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -101,24 +112,10 @@
 						제휴점 상세 정보 <small>제휴점의 자세한 정보를 확인할 수 있습니다. </small>
 					</h2>
 
-					<ul class="actions">
-						<li><a href=""> <i class="zmdi zmdi-trending-up"></i>
-						</a></li>
-						<li><a href=""> <i class="zmdi zmdi-check-all"></i>
-						</a></li>
-						<li class="dropdown"><a href=""> <i
-								class="zmdi zmdi-more-vert"></i>
-						</a>
-
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li><a href="">Refresh</a></li>
-								<li><a href="">Manage Widgets</a></li>
-								<li><a href="">Widgets Settings</a></li>
-							</ul></li>
-					</ul>
+					
 				</div>
 
-				<div class="container">
+				<div class="container"  style="padding: 0;">
 					<div class="card blog-post">
 						<div class="bp-header">
 							<div class="resImg"><img src="./upload/<%=res_photo%>" alt="" ></div> 
@@ -128,10 +125,10 @@
 							</a>
 						</div>
 
-						<div class="col-md-8">
+						<div class="col-md-8" style="padding: 0;">
 							<div class="card profile-view">
 
-								<div class="pv-body" style="margin-top: 10px;">
+								<div class="pv-body" style="margin-top: 0px;">
 
 									<ul class="pv-contact">
 										<br />
@@ -145,24 +142,23 @@
 									<ul class="pv-follow">
 										<li><%=res_price %> 원</li>
 										<li>구매 : <%=res_sells %></li>
-										<li>좋아요 : <%=res_likes %> </li>
+										<li id="likeCount">좋아요 : <%=res_likes %> </li>
 									</ul>
 
-									<a href="coupon_buy.coupon?res_seq=<%=res_seq %>&user_seq=<%=member_seq %>%user_admin=<%=member_admin %>" class="pv-follow-btn" style="background-color: #01B0F0">구매 하기</a><br /> 
-									<a href="" class="pv-follow-btn" style="background-color: #01B0F0">좋아요</a>
+									<a href="coupon_buy.coupon?res_seq=<%=res_seq %>&user_seq=<%=member_seq %>&user_admin=<%=member_admin %>" class="pv-follow-btn" style="background-color: #01B0F0">구매 하기</a><br /> 
+									<!-- <a href="" class="pv-follow-btn" style="background-color: #01B0F0">좋아요</a> -->
+									<button id="likebtn" class="resLikebtn">좋아요</button>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-md-4 hidden-sm hidden-xs" style="margin-top: 10px;">
-							<div class="card rating-list">
+						<div class="col-md-4 " style="padding: 0;">
+							<div class="card rating-list" style="padding: 0;">
 								<div class="listview">
 									<div class="lv-header">
-										<div class="m-t-5">평점 평균 <%=res_grade %></div>
+										<div class="m-t-5" style="float: left; margin-top: 0">평점 평균 <%=res_grade %></div>
 
-										<div class="clearfix"></div>
-
-										<div class="rl-star">
+										<div class="rl-star" style="margin-top: 3px;">
 										
 										<% 
 											for(int i = 0; i<num_star; i++){
@@ -178,7 +174,7 @@
 									</div>
 
 									<div class="lv-body">
-										<div class="p-15">
+										<div style="padding: 12px;">
 											<div class="lv-item">
 												<div class="media">
 													<div class="pull-left">
@@ -264,35 +260,15 @@
 							</div>
 						</div>
 					</div>
+					<div id="map_canvas" style="width: 100%; height: 300px;"></div><br/>
 				</div>
-			</div>
-			
-
-
-
-				<div class="container">
-				
-					<div class="col-md-12">					
-						<div id="map_canvas" style="width: 904px; height: 300px;"></div><br/>
-				
-					<div class="col-md-12">
-						<div class="block-header">
-							<h2>
-								후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
-							</h2>
-							<!-- <ul class="actions">									
-								<li class="dropdown"><i	class="md md-more-vert"></i>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li><a href="">Refresh</a></li>
-										<li><a href="">Manage Widgets</a></li>
-										<li><a href="">Widgets Settings</a></li>
-									</ul>
-								</li>
-							</ul> -->
-						</div>
-						<!-- replyOk.reply -->
-						<!-- 히든으로 member_seq, member_admin, res_seq -->
-						<form action="writeOk.reply" method="post" enctype="multipart/form-data" >
+				<div class="block-header">
+					<h2>
+						후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
+					</h2>
+				</div>
+				<div class="container"  style="padding: 0;">
+					<form action="writeOk.reply" method="post" enctype="multipart/form-data" >
 						<input type="hidden" name="user_seq" value="<%=member_seq%>"/>
 						<input type="hidden" name="user_admin" value="<%=member_admin%>"/>
 						<input type="hidden" name="res_seq" value="<%=res_seq%>"/>
@@ -352,16 +328,15 @@
 								</div>
 							</div>
 						</form>
-					<div class="block-header">
-					<br/>
-						<h2>후기 보기<small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small></h2>
-					</div>	
-					<!-- result 들어갈부분 -->
-					<%=result %>
+						<div class="block-header">
+							<br/>
+							<h2>후기 보기<small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small></h2>
+						</div>	
+						<!-- result 들어갈부분 -->
+						<%=result %>
+						</div>
 					</div>
 				</div>
-			</div>
-			
 		</section>
 
 <!--  
@@ -490,7 +465,63 @@
 	        google.maps.event.addListener(marker, "click", function() {
 	            infowindow.open(map,marker);
 	        });
-		} 
+		}
+		
+		if (<%=chk %> == 1) {
+			$('#likebtn').css({
+				background : "#ff5b5b",
+				border : "1px solid #ff5b5b"
+			});
+		}
+		
+		// 좋아요 기능 //
+		$('#likebtn').on('click', function() {
+			var user_seq = <%=member_seq %>;
+			var res_seq = <%=res_seq %>;
+			if (user_seq == -1) {
+				alert("로그인이 필요합니다.")
+				return false;
+			}
+			$.ajax({
+				url: './checkOk.like',
+				type: 'post',
+				data: {
+					user_seq: user_seq,
+					res_seq: res_seq
+				},
+				dataType: 'json',
+				success: function(json) {
+					if(json.flag == 0) {
+						//alert("좋아요 했습니다.");
+						$('#likebtn').css({
+							background : "#ff5b5b",
+							border : "1px solid #ff5b5b"
+						});
+						
+						//좋아요 숫자 1증가
+						var likeText = $("#likeCount").text().split(" : ");
+						var likeNum = Number(likeText[1])+1;
+						$("#likeCount").text("좋아요 : " + likeNum);
+						
+						
+					} else {
+						//alert("좋아요를 해제했습니다.")
+						$('#likebtn').css({
+							background : "#01b0f0",
+							border : "1px solid #01b0f0"
+						});
+						
+						//좋아요 숫자 1감소
+						var likeText = $("#likeCount").text().split(" : ");
+						var likeNum = Number(likeText[1])-1;
+						$("#likeCount").text("좋아요 : " + likeNum);
+					}
+				},
+				error : function(xhr, status, error) {
+					alert('에러:' + status + '\n\n' + error);
+				}
+			})
+		});
 		</script>
 </body>
 </html>

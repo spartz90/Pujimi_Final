@@ -109,24 +109,10 @@
 						제휴점 상세 정보 <small>제휴점의 자세한 정보를 확인할 수 있습니다. </small>
 					</h2>
 
-					<ul class="actions">
-						<li><a href=""> <i class="zmdi zmdi-trending-up"></i>
-						</a></li>
-						<li><a href=""> <i class="zmdi zmdi-check-all"></i>
-						</a></li>
-						<li class="dropdown"><a href=""> <i
-								class="zmdi zmdi-more-vert"></i>
-						</a>
-
-							<ul class="dropdown-menu dropdown-menu-right">
-								<li><a href="">Refresh</a></li>
-								<li><a href="">Manage Widgets</a></li>
-								<li><a href="">Widgets Settings</a></li>
-							</ul></li>
-					</ul>
+					
 				</div>
 
-				<div class="container">
+				<div class="container"  style="padding: 0;">
 					<div class="card blog-post">
 						<div class="bp-header">
 							<div class="resImg"><img src="./upload/<%=res_photo%>" alt="" ></div> 
@@ -136,10 +122,10 @@
 							</a>
 						</div>
 
-						<div class="col-md-8">
+						<div class="col-md-8" style="padding: 0;">
 							<div class="card profile-view">
 
-								<div class="pv-body" style="margin-top: 10px;">
+								<div class="pv-body" style="margin-top: 0px;">
 
 									<ul class="pv-contact">
 										<br />
@@ -163,15 +149,13 @@
 							</div>
 						</div>
 
-						<div class="col-md-4 hidden-sm hidden-xs" style="margin-top: 10px;">
-							<div class="card rating-list">
+						<div class="col-md-4 " style="padding: 0;">
+							<div class="card rating-list" style="padding: 0;">
 								<div class="listview">
 									<div class="lv-header">
-										<div class="m-t-5">평점 평균 <%=res_grade %></div>
+										<div class="m-t-5" style="float: left; margin-top: 0">평점 평균 <%=res_grade %></div>
 
-										<div class="clearfix"></div>
-
-										<div class="rl-star">
+										<div class="rl-star" style="margin-top: 3px;">
 										
 										<% 
 											for(int i = 0; i<num_star; i++){
@@ -187,7 +171,7 @@
 									</div>
 
 									<div class="lv-body">
-										<div class="p-15">
+										<div style="padding: 12px;">
 											<div class="lv-item">
 												<div class="media">
 													<div class="pull-left">
@@ -273,33 +257,15 @@
 							</div>
 						</div>
 					</div>
+					<div id="map_canvas" style="width: 100%; height: 300px;"></div><br/>
 				</div>
-			</div>
-			
-
-
-
-				<div class="container">
-					<div class="col-md-12">					
-						<div id="map_canvas" style="width: 904px; height: 300px;"></div><br/>
-			                    
-						<div class="block-header">
-							<h2>
-								후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
-							</h2>
-							<!-- <ul class="actions">									
-								<li class="dropdown"><i	class="md md-more-vert"></i>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li><a href="">Refresh</a></li>
-										<li><a href="">Manage Widgets</a></li>
-										<li><a href="">Widgets Settings</a></li>
-									</ul>
-								</li>
-							</ul> -->
-						</div>
-						<!-- replyOk.reply -->
-						<!-- 히든으로 member_seq, member_admin, res_seq -->
-						<form action="writeOk.reply" method="post" enctype="multipart/form-data" >
+				<div class="block-header">
+					<h2>
+						후기 작성하기 <small>제휴점의 후기를 자유롭게 작성해보세요. </small>
+					</h2>
+				</div>
+				<div class="container"  style="padding: 0;">
+					<form action="writeOk.reply" method="post" enctype="multipart/form-data" >
 						<input type="hidden" name="user_seq" value="<%=member_seq%>"/>
 						<input type="hidden" name="user_admin" value="<%=member_admin%>"/>
 						<input type="hidden" name="res_seq" value="<%=res_seq%>"/>
@@ -359,16 +325,15 @@
 								</div>
 							</div>
 						</form>
-					<div class="block-header">
-					<br/>
-						<h2>후기 보기<small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small></h2>
-					</div>	
-					<!-- result 들어갈부분 -->
-					<%=result %>
+						<div class="block-header">
+							<br/>
+							<h2>후기 보기<small>실제 식권 사용 고객들의 실시간 후기와 사진들을 확인해보세요. </small></h2>
+						</div>	
+						<!-- result 들어갈부분 -->
+						<%=result %>
+						</div>
 					</div>
 				</div>
-			</div>
-			
 		</section>
 
 <!--  
