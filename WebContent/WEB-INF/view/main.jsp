@@ -150,15 +150,97 @@
 						관심매장을 설정해보세요.
 					</div>
 					<div class="row">
-						<div class='general_cooperate'>
-							dfdf
-						</div>
-						<div class='general_cooperate'>
-							dfdf
-						</div>
-						<div class='general_cooperate'>
-							dfdf
-						</div>
+				         <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('all')"><div
+				                  class="category-title">
+				                  <strong style="color: black;">전체보기</strong><br>
+				                  <span>View All</span>
+				               </div>
+				               <img src="upload/123.jpg" ></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('치킨')"><div
+				                  class="category-title">
+				                  <strong>치킨</strong><br>
+				                  <span>Chicken</span>
+				               </div>
+				               <img src="img/pujimi_main_kor.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('피자양식')"><div
+				                  class="category-title">
+				                  <strong>피자/양식</strong><br>
+				                  <span>Pizza/Western Food</span>
+				               </div>
+				               <img src="img/pujimi_main_kor.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('중식')"><div
+				                  class="category-title">
+				                  <strong>중국집</strong><br>
+				                  <span>Chinese Food</span>
+				               </div>
+				               <img src="img/pujimi_main_kor.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('한식')"><div
+				                  class="category-title">
+				                  <strong>한식</strong><br>
+				                  <span>Korean Food</span>
+				               </div>
+				               <img src="image/category-05.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail"
+				               ng-click="select_home_category('일식돈까스')"><div
+				                  class="category-title">
+				                  <strong>일식/돈까스</strong><br>
+				                  <span>Japanese Food</span>
+				               </div>
+				               <img src="image/category-06.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('족발보쌈')"><div
+				                  class="category-title">
+				                  <strong>족발/보쌈</strong><br>
+				                  <span>Jokbal/Bossam</span>
+				               </div>
+				               <img src="image/category-07.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('야식')"><div
+				                  class="category-title">
+				                  <strong>야식</strong><br>
+				                  <span>Late Night Snack</span>
+				               </div>
+				               <img src="image/category-08.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail" ng-click="select_home_category('분식')"><div
+				                  class="category-title">
+				                  <strong>분식</strong><br>
+				                  <span>Flour Based Food</span>
+				               </div>
+				               <img src="image/category-09.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail"
+				               ng-click="select_home_category('프랜차이즈')"><div
+				                  class="category-title">
+				                  <strong>프랜차이즈</strong><br>
+				                  <span>Franchise</span>
+				               </div>
+				               <img src="image/category-10.png"></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3 category-banner"
+				            ng-repeat='banner in banner_list' style="display: none"
+				            on-finish-render="completeBannerListRender()">
+				            <a href="" class="thumbnail" ng-click="setEvent($index, banner)"
+				               style="background: {{banner.background_color"><img
+				               ng-src="{{banner.event_image_url}}" alt="{{banner.event_name}}"><i
+				               class="icon-move"></i></a>
+				         </div>
+
 					</div>
 				</div>
             </section>
