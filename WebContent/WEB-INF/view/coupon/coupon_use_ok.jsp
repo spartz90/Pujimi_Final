@@ -13,7 +13,7 @@
 		out.println("</script>");
 	} else {
 		out.println("<script type='text/javascript'>");
-		out.println("alert('쿠폰 사용에 실패했습니다.')");
+		out.println("alert('쿠폰 사용에 실패했습니다.\\n쿠폰번호가 틀렸거나\\n올바른 가맹점에서 사용한 경우가 아닙니다.\\n다시 확인해주세요.')");
 		out.println("history.back()");
 		out.println("</script>");
 	}

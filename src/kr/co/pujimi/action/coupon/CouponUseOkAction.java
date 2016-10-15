@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.core.Action;
 import kr.co.pujimi.dao.CouponDAO;
+import kr.co.pujimi.dao.ResDAO;
 import kr.co.pujimi.dto.CouponTO;
 
 public class CouponUseOkAction implements Action {
@@ -14,10 +15,16 @@ public class CouponUseOkAction implements Action {
 		
 		int user_admin = Integer.parseInt(request.getParameter("user_admin"));
 		int user_seq = Integer.parseInt(request.getParameter("user_seq"));
+		
+		ResDAO rdao = new ResDAO();
+		int res_seq = rdao.getResSeq(user_seq);
 		String cp_serial = request.getParameter("cp_serial");
+		
+		System.out.println(res_seq + "호잇");
 		
 		CouponTO cTo = new CouponTO();
 		cTo.setCp_serial(cp_serial);
+		cTo.setRes_seq(res_seq);
 		
 		CouponDAO couponDao = new CouponDAO();
 		int flag = couponDao.couponUse(cTo);

@@ -25,10 +25,10 @@
 		coupon_result.append("		</div>");
 		coupon_result.append("		<div class='coupondetail'>");
 		coupon_result.append("			<div class='coupondetail_resinfo'>");
-		coupon_result.append("				<h3>" + "푸지미푸지미푸지미 "+ "</h3>");
+		coupon_result.append("				<h3>" + "보유 쿠폰이 없습니다 "+ "</h3>");
 		coupon_result.append("				<div>");
-		coupon_result.append("					쿠폰 번호<br/>");
-		coupon_result.append("					마지막 두 자리를<br/>");
+		coupon_result.append("					쿠폰을 구매한 후<br/>");
+		coupon_result.append("					쿠폰 번호를<br/>");
 		coupon_result.append("					확인 하세요");									
 		coupon_result.append("				</div>");
 		coupon_result.append("			</div>");

@@ -72,7 +72,7 @@
 		if (chk == 0) {
 			recom_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		} else {
-			recom_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+			recom_result.append("			<li style='background-color:#ff5b5b'><button idx='"+res_seq+"' style='background-color:#ff5b5b; border:none;'>좋아요</button></li>");
 		}
 		recom_result.append("			</ul>");
 		recom_result.append("		</div>");
