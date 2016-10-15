@@ -48,15 +48,13 @@ public class AdminController extends HttpServlet {
 			if (path.equals("/manage_user.admin")) {
 				action = new UserManageAction();
 				action.execute(request, response);
-				/*url = "/WEB-INF/view/admin/manage_user.jsp";*/
-				url = "/WEB-INF/view/admin/manage_user_test.jsp";
+				url = "/WEB-INF/view/admin/manage_user.jsp";
 
 			} 
 			else if (path.equals("/manage_rest.admin")) {
 				action = new ResManageAction();
 				action.execute(request, response);
-				/*url = "/WEB-INF/view/admin/manage_rest.jsp";*/
-				url = "/WEB-INF/view/admin/manage_rest_test.jsp";
+				url = "/WEB-INF/view/admin/manage_rest.jsp";
 				
 			}
 			else if (path.equals("/manage_rest_modify.admin")) {

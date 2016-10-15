@@ -442,5 +442,64 @@ public int userModifyOk(UserTO userTo) {
 			}
 		}
 		return flag;
-	} 
+	}
+	
+	public int forgetPass(String newPass, String id) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		int flag = 2;
+		try {
+
+			conn = this.dataSource.getConnection();
+			String sql = "update user set user_password = ? where user_email =?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, newPass);
+			pstmt.setString(2, id);
+			int result = pstmt.executeUpdate();
+			if (result == 0) {
+				flag = 1;
+				// 이메일 없음
+			} else if (result == 1) {
+				flag = 0;
+				// 정상
+			}
+			/*
+			if(rs.next()){
+				userTo.setUser_seq(rs.getInt("user_seq"));
+				userTo.setUser_nickname(rs.getString("user_nickname"));
+				userTo.setUser_admin(Integer.parseInt(rs.getString("user_admin")));
+				db_Password = rs.getString("user_password");		
+				if(db_Password.equals(password)){
+					check = 1; // 비밀번호 인증성공
+				}else{
+					check = 0; // 비밀번호 인증실패					
+				}
+			}else{
+				check = -1; // 해당 아이디 없음
+			}*/
+
+
+		}catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return flag;
+	}
 }

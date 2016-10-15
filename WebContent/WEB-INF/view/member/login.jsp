@@ -116,27 +116,25 @@
         
         <!-- Forget Password -->
         <div class="lc-block" id="l-forget-password">
-            <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.</p>
-            
+            <p class="text-left">비밀번호를 잊으셨습니까?<br/> 이메일을 입력해주시면 비밀번호를 초기화 하여 알려드립니다!</p>
+            <form action="forgetPass.member" method="post" name='forgetPass_frm' >
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="md md-email"></i></span>
                 <div class="fg-line">
-                    <input type="text" class="form-control" placeholder="Email Address">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email Address">
                 </div>
             </div>
-            
-            <a href="" class="btn btn-login btn-danger btn-float"><i class="md md-arrow-forward"></i></a>
-            
             <div class="clearfix">
              	<hr/>
-            </div>
-            
+            </div>        
             <ul class="forget-navigation">
                 <li data-block="#l-login" class="bgm-green"><a>로그인</a></li>
                 <li class="bgm-red"><a href="join.member">회원가입</a></li>
-            </ul>
+            </ul> 
+            <button type="submit" class="btn btn-login btn-danger btn-float"><i class="md md-arrow-forward"></i></button>
+            </form>
         </div>
-        
+         
         <!-- Older IE warning message -->
         <!--[if lt IE 9]>
             <div class="ie-warning">

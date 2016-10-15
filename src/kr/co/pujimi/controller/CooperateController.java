@@ -47,15 +47,13 @@ public class CooperateController extends HttpServlet {
 			if (path.equals("/cooperate.coop")) {
 				action = new CooperateAction();
 				action.execute(request, response);
-				/*url = "/WEB-INF/view/cooperate/cooperate.jsp";*/
-				url = "/WEB-INF/view/cooperate/cooperate_test.jsp";
+				url = "/WEB-INF/view/cooperate/cooperate.jsp";
 
 			} 
 			else if (path.equals("/cooperateOk.coop")) {
 				action = new CooperateOkAction();
 				action.execute(request, response);
-				/*url = "/WEB-INF/view/cooperate/cooperate_ok.jsp";*/
-				url = "/WEB-INF/view/cooperate/cooperate_ok_test.jsp";
+				url = "/WEB-INF/view/cooperate/cooperate_ok.jsp";
 				
 			} else {
 

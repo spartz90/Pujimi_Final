@@ -22,6 +22,42 @@
         <link href="css/app.min.1_test.css" rel="stylesheet">
         <link href="css/app.min.2_test.css" rel="stylesheet">
         
+        <style type="text/css">
+	        @font-face {
+			  font-family: 'BMHANNA_11yrs';
+			  src: 
+			  		url('../fonts/BMHANNA_11yrs_eot.eot'),
+			  		/* url('../fonts/BMHANNA_11yrs_eot.eot?#iefix') format('embedded-opentype'),
+			  		url('../fonts/BMHANNA_11yrs_ttf.ttf') format('woff'),
+			  		url('../fonts/BMHANNA_11yrs_woff.woff') format('truetype'); */
+			}
+			
+			#btn1 {
+			font-family: 'BMHANNA_11yrs';
+			}
+        	#btn1 {
+				display: inline-block;
+				padding: 5px 11px;
+				font-size: 12px;
+				cursor: pointer;
+				text-align: center;
+				text-decoration: none;
+				outline: none;
+				color: #fff;
+				background-color: #008CBA;
+				border: none;
+				border-radius: 10px;
+			}
+			
+			#btn1:hover {background-color: #3DB7CC;}
+			
+			#btn1:active {
+			  	background-color: #3DB7CC;
+			  	/* box-shadow: 0 3px #666; */
+			  	transform: translateY(4px);
+			}
+        </style>
+        
 <%
 		request.setCharacterEncoding("utf-8");
 
@@ -52,7 +88,8 @@
 			result.append("<td>" + user_gender + "</td>");
 			result.append("<td>" + user_age + "</td>");
 			result.append("<td>" + user_admin + "</td>");
-			result.append("<td>" + "<button>수정</button>" + "&nbsp;" + "<button>삭제</button>" + "</td>");			
+			result.append("<td>" + "<input type='button' id='btn1' value='수정' onclick='javascript:location.href=\"manage_user_modify.admin?user_seq="+ user_seq + "&user_admin="+ member_admin + "&member_seq="+ member_seq +"\"'/>" 
+					+ "&nbsp;"+ "&nbsp;" + "<input type='button' id='btn1' value='삭제' onclick='javascript:location.href=\"manage_user_delete.admin?user_seq="+ user_seq + "&user_admin="+ member_admin + "&member_seq="+ member_seq +"\"'/>" + "</td>");			
 			result.append("</tr>");
 
 		}
