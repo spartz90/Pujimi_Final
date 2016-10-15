@@ -149,17 +149,17 @@
 						다양한 메뉴, 저렴한 가격과 정확한 위치를 참고하세요.<br /> 
 						관심매장을 설정해보세요.
 					</div>
-					<div class="row">
-				         <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('all')"><div
+					<div class="row" id="mainList">
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="" class="thumbnail"><div
 				                  class="category-title">
-				                  <strong style="color: black;">전체보기</strong><br>
+				                  <strong>전체보기</strong><br>
 				                  <span>View All</span>
 				               </div>
 				               <img src="upload/123.jpg" ></a>
 				         </div>
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('치킨')"><div
+				            <a href="" class="thumbnail"><div
 				                  class="category-title">
 				                  <strong>치킨</strong><br>
 				                  <span>Chicken</span>
@@ -167,7 +167,7 @@
 				               <img src="img/pujimi_main_kor.png"></a>
 				         </div>
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('피자양식')"><div
+				            <a href="" class="thumbnail"><div
 				                  class="category-title">
 				                  <strong>피자/양식</strong><br>
 				                  <span>Pizza/Western Food</span>
@@ -175,7 +175,7 @@
 				               <img src="img/pujimi_main_kor.png"></a>
 				         </div>
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('중식')"><div
+				            <a href="" class="thumbnail"><div
 				                  class="category-title">
 				                  <strong>중국집</strong><br>
 				                  <span>Chinese Food</span>

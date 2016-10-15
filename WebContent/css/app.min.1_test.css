@@ -16977,3 +16977,11 @@ a.ui-button:active,
 	border: 1px solid #01b0f0;
 	color: #ffffff;
 }
+#mainList > div > a > div > strong{
+	color: #000000;
+	font-size: 15px;
+}
+#mainList > div > a > div > span{
+	color: #000000;
+	font-size: 14px;
+}
