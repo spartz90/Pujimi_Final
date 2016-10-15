@@ -64,7 +64,7 @@
 		if (chk == 0) {
 			recom_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		} else {
-			recom_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+			recom_result.append("			<li style='background-color:#ff5b5b'><button idx='"+res_seq+"' style='background-color:#ff5b5b; border:none;'>좋아요</button></li>");
 		}
 		recom_result.append("			</ul>");
 		recom_result.append("		</div>");
@@ -125,7 +125,7 @@
 		if (chk == 0) {
 			res_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		} else {
-			res_result.append("			<li style='background-color:#ff0000'><button idx='"+res_seq+"' style='background-color:#ff0000; border:none;'>좋아요</button></li>");
+			res_result.append("			<li style='background-color:#ff5b5b'><button idx='"+res_seq+"' style='background-color:#ff5b5b; border:none;'>좋아요</button></li>");
 		}
 		res_result.append("		</ul>");
 		res_result.append("	</div>");
@@ -333,8 +333,8 @@
 						success: function(json) {
 							if(json.flag == 0) {
 								//alert("좋아요 했습니다.");
-								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff0000');
-								$('button[idx="' + res_seq +'"]').css('background-color','#ff0000');
+								$('button[idx="' + res_seq +'"]').parent().css('background-color','#ff6f6f');
+								$('button[idx="' + res_seq +'"]').css('background-color','#ff6f6f');
 								
 								//좋아요 숫자 1증가
 								var likeText = $("li[idx='lcR"+res_seq+"']").text().split(" : ");
