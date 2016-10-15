@@ -482,13 +482,14 @@
 				position : myLatlng,
 				map : map
 			});
-			var infowindow = new google.maps.InfoWindow(
-					{
-						content : '<%=res_name%>',
-						size : new google.maps.Size(50, 50),
-						position : myLatlng
-					});
-			infowindow.open(map);
+
+			var content = "<%=res_name%>";
+			
+			var infowindow = new google.maps.InfoWindow({ content: content});
+			 
+	        google.maps.event.addListener(marker, "click", function() {
+	            infowindow.open(map,marker);
+	        });
 		} 
 		</script>
 </body>
