@@ -929,8 +929,75 @@ public class ResDAO {
 				}
 			}
 		}
-		
 		return res_seq;
+	}
+	
+	public ArrayList<ResTO> interRecomList(ResTO resTO) {
 		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<ResTO> result = new ArrayList<>();
+		ResDAO resDao = new ResDAO();
+		
+		try{
+			
+			conn = this.dataSource.getConnection();
+			
+			//String sql = "select res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade from restaurant where res_recom = 1 order by res_revenue desc";
+			String sql = "select r.res_seq, r.res_name, r.res_addr, r.res_phone, r.res_octime, r.res_content, r.res_photo, r.res_price, r.res_grade from restaurant r "
+					+ "where r.res_seq not in (select res_seq from like_restaurant where user_seq = ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, resTO.getUser_seq());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				ResTO resTo = new ResTO();
+				
+				resTo.setRes_seq(rs.getInt("r.res_seq"));
+				int res_seq = rs.getInt("r.res_seq");
+				resTo.setRes_name(rs.getString("r.res_name"));
+				resTo.setRes_addr(rs.getString("r.res_addr"));
+				resTo.setRes_phone(rs.getString("r.res_phone"));
+				resTo.setRes_octime(rs.getString("r.res_octime"));
+				resTo.setRes_content(rs.getString("r.res_content"));
+				resTo.setRes_photo(rs.getString("r.res_photo"));
+				resTo.setRes_price(rs.getInt("r.res_price"));
+				resTo.setRes_grade(rs.getDouble("r.res_grade"));
+				resTo.setRes_sells(resDao.sellsCount(res_seq));
+				resTo.setRes_likes(resDao.likeCount(res_seq));
+
+				result.add(resTo);
+			}
+			pstmt.close();
+			rs.close();
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return result;
 	}
 }

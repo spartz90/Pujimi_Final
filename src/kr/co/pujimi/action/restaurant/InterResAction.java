@@ -22,7 +22,7 @@ public class InterResAction implements Action {
 		
 		ResDAO resDao = new ResDAO();
 		
-		ArrayList<ResTO> recom_lists = resDao.viewRecomList();
+		ArrayList<ResTO> recom_lists = resDao.interRecomList(resTo);
 		ArrayList<ResTO> inter_lists = resDao.interList(resTo);
 		
 		request.setAttribute("inter_lists", inter_lists);
