@@ -9,6 +9,33 @@ public class CouponTO {
 	private String cp_serial;
 	private String user_email;
 	private String user_nickname;
+	private String cp_cdate;
+	private String cp_udate;
+	private String cp_edate;
+
+	public String getCp_cdate() {
+		return cp_cdate;
+	}
+
+	public void setCp_cdate(String cp_cdate) {
+		this.cp_cdate = cp_cdate;
+	}
+
+	public String getCp_udate() {
+		return cp_udate;
+	}
+
+	public void setCp_udate(String cp_udate) {
+		this.cp_udate = cp_udate;
+	}
+
+	public String getCp_edate() {
+		return cp_edate;
+	}
+
+	public void setCp_edate(String cp_edate) {
+		this.cp_edate = cp_edate;
+	}
 
 	public String getUser_email() {
 		return user_email;

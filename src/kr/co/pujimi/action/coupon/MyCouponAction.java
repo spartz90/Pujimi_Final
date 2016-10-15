@@ -20,9 +20,10 @@ public class MyCouponAction implements Action {
 		
 		CouponDAO couponDao = new CouponDAO();
 		ArrayList<CouponTO> couponList = couponDao.myCoupon(user_seq);
-		
+		ArrayList<CouponTO> usedCpList = couponDao.usdCpList(user_seq);
 		
 		request.setAttribute("couponList", couponList);
+		request.setAttribute("usedCpList", usedCpList);
 	}
 
 }

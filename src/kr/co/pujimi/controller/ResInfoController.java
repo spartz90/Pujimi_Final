@@ -14,6 +14,7 @@ import kr.co.pujimi.action.restaurant.InterResAction;
 import kr.co.pujimi.action.restaurant.ModifyResInfoAction;
 import kr.co.pujimi.action.restaurant.ModifyResInfoOkAction;
 import kr.co.pujimi.action.restaurant.MyResViewAction;
+import kr.co.pujimi.action.restaurant.ResAddMenuAction;
 import kr.co.pujimi.action.restaurant.ResInfoAction;
 import kr.co.pujimi.action.restaurant.ResViewAction;
 import kr.co.pujimi.core.Action;

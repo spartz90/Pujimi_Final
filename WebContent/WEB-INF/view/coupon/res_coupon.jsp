@@ -8,73 +8,7 @@
 
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
-	
-	ArrayList<CouponTO> resCouponList = (ArrayList)request.getAttribute("resCouponList");
-	
-	StringBuffer coupon_result = new StringBuffer();
-
-	if(resCouponList.size()==0){
-		coupon_result.append("<h3>" + "보유 쿠폰이 없습니다." + "</h3>");
-		coupon_result.append("<div align='center'>");
-		coupon_result.append("	<div class='coupon'>");
-		coupon_result.append("		<div class='couponmain'>");
-		coupon_result.append("			<div class='couponmain_img'>");
-		coupon_result.append("				<h3>푸지미</h3>");
-		coupon_result.append("				<h2>모바일 식권</h2>");
-		coupon_result.append("			</div>");
-		coupon_result.append("		</div>");
-		coupon_result.append("		<div class='coupondetail'>");
-		coupon_result.append("			<div class='coupondetail_resinfo'>");
-		coupon_result.append("				<h3>" + "푸지미푸지미푸지미 "+ "</h3>");
-		coupon_result.append("				<div>");
-		coupon_result.append("					쿠폰 번호<br/>");
-		coupon_result.append("					마지막 두 자리를<br/>");
-		coupon_result.append("					확인 하세요");									
-		coupon_result.append("				</div>");
-		coupon_result.append("			</div>");
-		coupon_result.append("			<div class='coupondetail_num'>" + "0000-0000-0000" + "</div>");
-		coupon_result.append("		</div>");
-		coupon_result.append("	</div>");
-		coupon_result.append("</div>");
-	} else {
-		for (CouponTO couponTo : resCouponList) {
-			
-			int user_seq = couponTo.getUser_seq();
-			String cp_serial = couponTo.getCp_serial();
-			String user_email = couponTo.getUser_email();
-			String user_nickname = couponTo.getUser_nickname();
-
-			String cp_serial_stepOne = cp_serial.substring(0, 4);
-			String cp_serial_stepTwo = cp_serial.substring(4, 8);
-			String cp_serial_stepThree = cp_serial.substring(8, 10);
-			String cp_serial_check = cp_serial.substring(10, 12);
-			
-			coupon_result.append("<h3>" + user_email + "</h3>");
-			coupon_result.append("<div align='center'>");
-			coupon_result.append("	<div class='coupon'>");
-			coupon_result.append("		<div class='couponmain'>");
-			coupon_result.append("			<div class='couponmain_img'>");
-			coupon_result.append("				<h3>푸지미</h3>");
-			coupon_result.append("				<h2>모바일 식권</h2>");
-			coupon_result.append("			</div>");
-			coupon_result.append("		</div>");
-			coupon_result.append("		<div class='coupondetail'>");
-			coupon_result.append("			<div class='coupondetail_resinfo'>");
-			coupon_result.append("				<h3>" + user_nickname + "</h3>");
-			coupon_result.append("				<div>");
-			coupon_result.append("					쿠폰 번호<br/>");
-			coupon_result.append("					마지막 두 자리를<br/>");
-			coupon_result.append("					확인 하세요<br />");									
-			coupon_result.append("					<button idx='"+cp_serial+"' class='couponUse' style='color: black; width: 100px; height: 25px; font-size: 13px;'>사용하기</button>");									
-			coupon_result.append("				</div>");
-			coupon_result.append("			</div>");
-			coupon_result.append("			<div class='coupondetail_num'>" + cp_serial_stepOne + "-" + cp_serial_stepTwo + "-" + cp_serial_stepThree +"-" + "XX" + "</div>");
-			coupon_result.append("		</div>");
-			coupon_result.append("	</div>");
-			coupon_result.append("</div>");
-		}
-	}
-	
+	String res_seq = request.getParameter("res_seq");
 	
 %>
 	
@@ -141,15 +75,16 @@
 									</div>
 								</div>
 								<div class="coupondetail_num">
-									<input class="serial" id="serial" name="serial" type="text" maxlength="12">
+									<input class="serial" id="serial" name="serial" type="text" maxlength="12" style="color: black;">
 								</div>
 							</div>
 						</div>
-						<form action="coupon_buy_ok.coupon" method="post" name="coupon_buy_info">
+						<form action="coupon_use_ok.coupon" method="post" name="coupon_buy_info">
 						<hr color="#D5D5D5"/>
 							<hr color="#D5D5D5"/>
-							<input type="hidden" id="user_seq" value="<%=member_seq %>" name="user_seq"/>
 							<input type="hidden" id="cp_serial" value="" name="cp_serial" />
+							<input type="hidden" id="user_admin" value="<%=member_admin %>" name="user_admin" />
+							<input type="hidden" id="user_seq" value="<%=member_seq %>" name="user_seq" />
 							<div class="cancle_submit">
 								<a id="cancle">취소</a>
 								<button type="submit" id="submit">구매</button>
@@ -224,40 +159,19 @@
             	$(function(){
             		
         			$("#serial").keyup(function (event) {
-                        regexp = /[^0-9]/gi;
+                       //한글을 제외한 영어 대/소문자, 숫자 입력가능 하게 하는 정규표현식
+                       regexp = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
                         v = $(this).val();
                         if (regexp.test(v)) {
                         	$(this).val(v.replace(regexp, ''));
                         }
-                        
-                       	couponAllPrice();
+                        	couponUse();
                     });
-                	
-        			/*
-        			$('.couponUse').on('click', function() {
-						var cp_serial = $(this).attr('idx');
-						$.ajax({
-							url: './coupon_use.coupon',
-							type: 'post',
-							data: {
-								cp_serial: $(this).attr('idx'),
-							},
-							dataType: 'json',
-							success: function(json) {
-								if(json.flag == 1) {
-									alert("쿠폰번호 : " + cp_serial + "\n쿠폰을 사용했습니다.");
-									setTimeout("location.reload()", 1000);
-								} else {
-									alert("쿠폰 사용에 실패했습니다.")
-									setTimeout("location.reload()", 1000);
-								}
-							},
-							error : function(xhr, status, error) {
-								alert('에러:' + status + '\n\n' + error);
-							}
-						});
-					});
-        			*/
+        			
+        			//쿠폰 번호 넘겨주기위해 input hidden value값 넣기
+        			function couponUse() {
+        				$('#cp_serial').val($('#serial').val());
+        			}
             	});
             });
         </script>

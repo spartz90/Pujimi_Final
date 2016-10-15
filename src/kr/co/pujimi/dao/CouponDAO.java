@@ -93,7 +93,7 @@ public class CouponDAO {
 		try {
 			conn = this.dataSource.getConnection();
 
-			String sql = "INSERT INTO coupon VALUES(0, ?, now(), null,date_add(now(),INTERVAL 1 year), ?, ?)";
+			String sql = "INSERT INTO coupon VALUES(0, ?, now(), null, date_add(now(),INTERVAL 1 year), ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, cp_serial);
 			pstmt.setInt(2, cTo.getUser_seq());
@@ -125,7 +125,59 @@ public class CouponDAO {
 		return flag;
 	}
 	
-public ArrayList<CouponTO> myCoupon(int user_seq){
+	public ArrayList<CouponTO> myCoupon(int user_seq){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			ArrayList<CouponTO> result = new ArrayList<>();
+			
+			try {
+				conn = this.dataSource.getConnection();
+	
+				String sql = "SELECT c.cp_serial, r.res_name FROM coupon c, restaurant r WHERE c.user_seq = ? AND c.res_seq = r.res_seq AND c.cp_udate IS NULL";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, user_seq);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					
+					CouponTO cTo = new CouponTO();
+					cTo.setCp_serial((rs.getString("c.cp_serial")));
+					cTo.setRes_name(rs.getString("r.res_name"));
+					
+					result.add(cTo);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("에러 : " + e.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						System.out.println("에러 : " + e.getMessage());
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException e) {
+						System.out.println("에러 : " + e.getMessage());
+					}
+				}
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						System.out.println("에러 : " + e.getMessage());
+					}
+				}
+			}
+			return result;
+		}
+	public ArrayList<CouponTO> usdCpList(int user_seq){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -135,8 +187,8 @@ public ArrayList<CouponTO> myCoupon(int user_seq){
 		
 		try {
 			conn = this.dataSource.getConnection();
-
-			String sql = "SELECT c.cp_serial, r.res_name FROM coupon c, restaurant r WHERE c.user_seq = ? AND c.res_seq = r.res_seq AND c.cp_udate IS NULL";
+			
+			String sql = "select c.cp_serial, c.cp_cdate, c.cp_udate, c.cp_edate, r.res_name from coupon c, restaurant r where c.user_seq = ? and c.res_seq = r.res_seq and cp_udate is not null;";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, user_seq);
 			rs = pstmt.executeQuery();
@@ -145,8 +197,10 @@ public ArrayList<CouponTO> myCoupon(int user_seq){
 				
 				CouponTO cTo = new CouponTO();
 				cTo.setCp_serial((rs.getString("c.cp_serial")));
+				cTo.setCp_cdate(rs.getString("c.cp_cdate"));
+				cTo.setCp_udate(rs.getString("c.cp_udate"));
+				cTo.setCp_edate(rs.getString("c.cp_edate"));
 				cTo.setRes_name(rs.getString("r.res_name"));
-				
 				result.add(cTo);
 			}
 		} catch (SQLException e) {

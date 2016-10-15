@@ -1,8 +1,8 @@
-<%@page import="kr.co.pujimi.dto.CouponTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@page import="kr.co.pujimi.dto.CouponTO"%>
+<%@page import="kr.co.pujimi.dto.ResTO"%>    
 <%
 	request.setCharacterEncoding("utf-8");
 
@@ -71,6 +71,27 @@
 		}
 	}
 	
+	ArrayList<CouponTO> lists = (ArrayList)request.getAttribute("usedCpList");	
+	StringBuffer result = new StringBuffer();
+	
+	for(CouponTO cpTo : lists){
+		
+		String res_name = cpTo.getRes_name();
+		String cp_serial = cpTo.getCp_serial();
+		String cp_cdate = cpTo.getCp_cdate();
+		String cp_udate = cpTo.getCp_udate();
+		String cp_edate = cpTo.getCp_edate();
+		
+		result.append("<tr>");
+		result.append("<td>" + res_name + "</td>");
+		result.append("<td>" + cp_serial + "</td>");
+		result.append("<td>" + cp_cdate + "</td>");
+		result.append("<td>" + cp_udate + "</td>");
+		result.append("<td>" + cp_edate + "</td>");
+		result.append("</tr>");
+
+	}
+	
 	
 %>
 	
@@ -119,32 +140,31 @@
 				</div>
 				
 				<div id="accordion">
-					<!-- 
-					<h3>Section 1</h3>
-					<div align="center">
-						<div class="coupon">
-							<div class="couponmain">
-								<div class="couponmain_img">
-									<h3>푸지미</h3>
-									<h2>모바일 식권</h2>
-								</div>
-							</div>
-							<div class="coupondetail">
-								<div class="coupondetail_resinfo">
-									<h3>삿포로</h3>
-									<div>
-										쿠폰 번호<br/>
-										마지막 두 자리를<br/>
-										확인 하세요										
-									</div>
-								</div>
-								<div class="coupondetail_num">1234-5678-0000</div>
-							</div>
-						</div>
-					</div>
-					 -->
 					<%=coupon_result %>
 				</div>
+				 <div class="card-header">
+				 <br /><hr />
+                            <h2>사용된 쿠폰 목록</h2>
+                </div>
+                    <div class="table-responsive">
+                          <table class="table table-hover">
+                              <thead>
+                                  <tr>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">사용가맹점</th>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">쿠폰번호</th>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">쿠폰구매날짜</th>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">쿠폰사용날짜</th>
+                                      <th style="font-size: 20px; border-bottom: 2px solid #2196f3;">쿠폰만료기간</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+						<!-- 리스트시작 -->
+							<%=result %>
+						<!-- 리스트끝 -->
+                              </tbody>
+                          </table>
+                       </div>
+                       <br /><br /><br />
 			</div>
 		</section>
         </section>

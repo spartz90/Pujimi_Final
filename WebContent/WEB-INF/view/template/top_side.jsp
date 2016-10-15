@@ -76,19 +76,20 @@
                     	}
 						if(user_admin.equals("1")){
 					%>
-					<li><a href=""><i class="md md-perm-identity"></i>식당 관리자</a>
+					<li><a href=""><i class="md md-perm-identity"></i>식당관리자</a>
 						<ul>
-	                        <li><a href="res_coupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">쿠폰 사용 관리</a></li>
+	                        <li><a href="my_res_view.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">나의가게</a></li>
 							<li><a href="resChart.sales?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">매출 정보</a></li>
+	                        <li><a href="res_coupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">쿠폰 사용 관리</a></li>
+	                        <li><a href="res_add_menu.addMenu?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 메뉴 관리</a></li>
 	                        <li><a href="res_management.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 정보 관리</a></li>
-	                        <li><a href="my_res_view.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">댓글/후기</a></li>
 						</ul>
 					</li>
 					<%
 						}
 						if(user_admin.equals("2")){
 					%>
-					<li><a href=""><i class="md md-perm-identity"></i>푸지미 관리자</a>
+					<li><a href=""><i class="md md-perm-identity"></i>푸지미관리자</a>
 						<ul>
 	                        <li><a href="manage_user.admin?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">회원관리</a></li>
 	                        <li><a href="manage_rest.admin?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">제휴점관리</a></li>
@@ -125,19 +126,20 @@
                    		}
 						if(user_admin.equals("1")){
 					%>
-					<li class="m-m-d-m"><a>마이페이지</a></li>
+					<li class="m-m-d-m"><a>식당관리자</a></li>
        	 		</ul>
        	 		<div class="mobile-menu-drop-my">
        	 			<ul>
-    	 				<li><a href="res_coupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">쿠폰 사용 관리</a></li>
-       	 				<li><a href="resChart.sales?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">매출 정보</a></li>
-                        <li><a href="res_management.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 정보 관리</a></li>
-                        <li><a href="my_res_view.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">댓글, 후기 모아보기</a></li>
+	                        <li><a href="my_res_view.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">나의가게</a></li>
+							<li><a href="resChart.sales?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">매출 정보</a></li>
+	                        <li><a href="res_coupon.coupon?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">쿠폰 사용 관리</a></li>
+	                        <li><a href="res_add_menu.addMenu?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 메뉴 관리</a></li>
+	                        <li><a href="res_management.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>">가게 정보 관리</a></li>
        	 			<%
 						}
 						if(user_admin.equals("2")){
        	 			%>
-					<li class="m-m-d-m"><a>마이페이지</a></li>
+					<li class="m-m-d-m"><a>푸지미관리자</a></li>
        	 		</ul>
        	 		<div class="mobile-menu-drop-my">
        	 			<ul>
