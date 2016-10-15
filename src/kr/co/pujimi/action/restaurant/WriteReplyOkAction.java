@@ -20,6 +20,7 @@ public class WriteReplyOkAction implements Action {
 		try {
 			String uploadPath = "/home/hosting_users/tigger90/tomcat/webapps/ROOT/upload";
 			//String uploadPath = "C:/WorkSpace/Pujimi_final/WebContent/upload";
+			//String uploadPath = "C:/Java/pujimi/WebContent/upload";
 			int maxFileSize = 1024 * 1024 * 5;
 			String encoding = "utf-8";
 			

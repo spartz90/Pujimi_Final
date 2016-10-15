@@ -4,7 +4,7 @@
 <%
 	String res_seq = request.getAttribute("res_seq").toString();
 	String user_seq = request.getAttribute("user_seq").toString();
-	String user_admin = request.getAttribute("user_seq").toString();
+	String user_admin = request.getAttribute("user_admin").toString();
 	
 	int flag = (Integer)request.getAttribute("flag");
 	
