@@ -17,8 +17,6 @@
 	String member_admin = request.getParameter("user_admin");
 	String res_seq = request.getAttribute("res_seq").toString();
 	
-	System.out.print(member_seq + "//"+ res_seq);
-	
 	String res_name = resTo.getRes_name();
 	String res_addr = resTo.getRes_addr();
 	String res_phone = resTo.getRes_phone();
