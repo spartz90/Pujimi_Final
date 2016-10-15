@@ -1,3 +1,4 @@
+<%@page import="kr.co.pujimi.dao.LikeDAO"%>
 <%@page import="kr.co.pujimi.dto.RatingTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -15,7 +16,6 @@
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
 	String res_seq = request.getParameter("res_seq");
-	
 	String res_name = resTo.getRes_name();
 	String res_addr = resTo.getRes_addr();
 	String res_phone = resTo.getRes_phone();
@@ -55,6 +55,13 @@
 		latlng = default_Latlng;
 		//check = "'<b>가게의 위치을 클릭</b>해주십시요'";
 	} 
+	
+	ResTO resTo2 = new ResTO();
+	resTo2.setUser_seq(Integer.parseInt(member_seq));
+	resTo2.setRes_seq(Integer.parseInt(res_seq));
+	
+	LikeDAO lDao = new LikeDAO();
+	int chk = lDao.checkOk(resTo2);
 	
 %>
 <!DOCTYPE html>
@@ -146,11 +153,12 @@
 									<ul class="pv-follow">
 										<li><%=res_price %> 원</li>
 										<li>구매 : <%=res_sells %></li>
-										<li>좋아요 : <%=res_likes %> </li>
+										<li id="likeCount">좋아요 : <%=res_likes %> </li>
 									</ul>
 
 									<a href="coupon_buy.coupon?res_seq=<%=res_seq %>&user_seq=<%=member_seq %>&user_admin=<%=member_admin %>" class="pv-follow-btn" style="background-color: #01B0F0">구매 하기</a><br /> 
-									<a href="" class="pv-follow-btn" style="background-color: #01B0F0">좋아요</a>
+									<!-- <a href="" class="pv-follow-btn" style="background-color: #01B0F0">좋아요</a> -->
+									<button id="likebtn" class="resLikebtn">좋아요</button>
 								</div>
 							</div>
 						</div>
@@ -490,7 +498,63 @@
 	        google.maps.event.addListener(marker, "click", function() {
 	            infowindow.open(map,marker);
 	        });
-		} 
+		}
+
+		if (<%=chk %> == 1) {
+			$('#likebtn').css({
+				background : "#ff5b5b",
+				border : "1px solid #ff5b5b"
+			});
+		}
+		
+		// 좋아요 기능 //
+		$('#likebtn').on('click', function() {
+			var user_seq = <%=member_seq %>;
+			var res_seq = <%=res_seq %>;
+			if (user_seq == -1) {
+				alert("로그인이 필요합니다.")
+				return false;
+			}
+			$.ajax({
+				url: './checkOk.like',
+				type: 'post',
+				data: {
+					user_seq: user_seq,
+					res_seq: res_seq
+				},
+				dataType: 'json',
+				success: function(json) {
+					if(json.flag == 0) {
+						//alert("좋아요 했습니다.");
+						$('#likebtn').css({
+							background : "#ff5b5b",
+							border : "1px solid #ff5b5b"
+						});
+						
+						//좋아요 숫자 1증가
+						var likeText = $("#likeCount").text().split(" : ");
+						var likeNum = Number(likeText[1])+1;
+						$("#likeCount").text("좋아요 : " + likeNum);
+						
+						
+					} else {
+						//alert("좋아요를 해제했습니다.")
+						$('#likebtn').css({
+							background : "#01b0f0",
+							border : "1px solid #01b0f0"
+						});
+						
+						//좋아요 숫자 1감소
+						var likeText = $("#likeCount").text().split(" : ");
+						var likeNum = Number(likeText[1])-1;
+						$("#likeCount").text("좋아요 : " + likeNum);
+					}
+				},
+				error : function(xhr, status, error) {
+					alert('에러:' + status + '\n\n' + error);
+				}
+			})
+		});
 		</script>
 </body>
 </html>
