@@ -30,9 +30,7 @@
 	int res_sells = resTo.getRes_sells();
 	int res_likes = resTo.getRes_likes();
 	String latlng = resTo.getRes_latlng();
-	
-	System.out.print(latlng);
-	
+
 	StringBuffer result	= (StringBuffer)request.getAttribute("result");	
 		
 	RatingTO rato = (RatingTO)request.getAttribute("rato");
@@ -51,11 +49,11 @@
 	double prog_five = Math.round(five / sum * 100);   	
 	
 	String default_Latlng = "(37.49794199999999, 127.027621)";
-	String check = "'<b>가게의 위치를 변경하시려면</b> 지도에 표시해주십시요'";
+	String check = "'<b>here!</b>here'";
 	
 	if(latlng.equals("") || latlng == default_Latlng) {
 		latlng = default_Latlng;
-		check = "'<b>가게의 위치을 클릭</b>해주십시요'";
+		//check = "'<b>가게의 위치을 클릭</b>해주십시요'";
 	} 
 	
 %>
@@ -467,50 +465,32 @@
 	<script src="js/demo.js"></script>
 	
 	<script type="text/javascript">
-			var map;
-			var latlng = '';
-			function initialize() {
-				var myLatlng = new google.maps.LatLng<%=latlng%>;
-				var myOptions = {
-					zoom : 17,
-					center : myLatlng,
-					mapTypeId : google.maps.MapTypeId.ROADMAP
-				}
-				map = new google.maps.Map(document.getElementById("map_canvas"),
-						myOptions);
-				//클릭했을 때 이벤트
-				google.maps.event.addListener(map, 'click', function(event) {
-					placeMarker(event.latLng);
-					/* infowindow.setContent("여기여기 latLng: " + event.latLng); */ // 인포윈도우 안에 클릭한 곳위 좌표값을 넣는다.
-					infowindow.setContent("Here!");
-					infowindow.setPosition(event.latLng); // 인포윈도우의 위치를 클릭한 곳으로 변경한다.
-					latlng = '';
-					latlng += event.latLng;
-					
-					document.getElementById('latlng').value = '';
-					document.getElementById("latlng").value += latlng;
-					
-				});
-				//클릭 했을때 이벤트 끝
-				//인포윈도우의 생성
-				var infowindow = new google.maps.InfoWindow(
-						{
-							content : <%=check%>,
-							size : new google.maps.Size(50, 50),
-							position : myLatlng
-						});
-				infowindow.open(map);
-			} // function initialize() 함수 끝
-		
-			// 마커 생성 합수
-			function placeMarker(location) {
-				var clickedLocation = new google.maps.LatLng(location);
-				var marker = new google.maps.Marker({
-					position : location,
-					map : map
-				});
-				map.setCenter(location);
+		var map;
+		var latlng = '';
+		function initialize(latlng) {
+			var myLatlng = new google.maps.LatLng<%=latlng %>
+			var myOptions = {
+				zoom : 17,
+				center : myLatlng,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+				
 			}
+			var map = new google.maps.Map(document.getElementById("map_canvas"),
+					myOptions);
+			
+			var marker = new google.maps.Marker({
+				position : myLatlng,
+				map : map
+			});
+
+			var content = "<%=res_name%>";
+			
+			var infowindow = new google.maps.InfoWindow({ content: content});
+			 
+	        google.maps.event.addListener(marker, "click", function() {
+	            infowindow.open(map,marker);
+	        });
+		} 
 		</script>
 </body>
 </html>
