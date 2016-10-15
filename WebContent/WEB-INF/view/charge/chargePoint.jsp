@@ -59,8 +59,8 @@
     	</div>            
         <section id="main">
         <!-- 배경색 지정  -->
-            <section id="content" style="background-color: white;">
-                <div class="container" style="background-color: white;">
+            <section id="content">
+                <div class="container" style="padding: 0;">
             
                             
                  <!-- Recent Posts -->
@@ -209,11 +209,16 @@
           
            //charge Message
             $('#sa-charge').click(function(){
+              
+            	var price = "value1";
+              	var method = "value2";
+              	var user_seq = <%=member_seq%>
                
-               var price = "value1";
-              var method = "value2";
-              var user_seq = <%=member_seq%>
-               
+              	if (user_seq == '-1') {
+            		alert("로그인이 필요합니다.")
+					return false;
+				}
+              
                swal({
                     confirmButtonText: '다음 &rarr;',
                     cancelButtonText: '취소',

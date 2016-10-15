@@ -12,8 +12,8 @@
 	
 	UserTO userTo = (UserTO)request.getAttribute("userTo");
 	
-	String user_email = userTo.getUser_email()==null ? "비회원":userTo.getUser_email();
-	String user_nickname = userTo.getUser_nickname()==null ? "비회원":userTo.getUser_nickname();
+	String user_email = userTo.getUser_email()==null ? "":userTo.getUser_email();
+	String user_nickname = userTo.getUser_nickname()==null ? "":userTo.getUser_nickname();
 	
 	System.out.println("테스트맞음");
 
@@ -55,7 +55,7 @@
 
         <section id="main">
             <section id="content">
-                <div class="container">
+                <div class="container" style="padding: 0;">
                     <div class="block-header">
                         <h2>제휴 조르기</h2> <br/>
                         <small>여러분만의 식당을 알려주세요!!</small>
@@ -97,23 +97,23 @@
 							
 							<div class="clearfix"></div>
 							<br />
+							<hr/>
 							<div class="input-group" style="width: 100%;">
 								<span class="input-group-addon"><i class="md md-info-outline"></i></span>
 								
 	                            <div class="fg-line">
 	                               	<textarea class="form-control" id="res_content" name="res_content" placeholder="가게 설명" style="height: 100px;"></textarea>
 	                            </div>
-	                            <div>
     						</div>
+	                        <div align="right" class="m-r-30">
+	                        	<button type="submit" class="btn btn-primary btn-sm m-t-30" >제출</button>
+                        	</div>
+							</form>
     						<!-- <div class="col-sm-6">
 								<div id="map_canvas" style="width: 300px; height: 300px;"></div>
 								<div id="result"></div>
 	                        </div> -->
 	                        
-	                        <div class="pull-right m-r-30">
-	                        	<button type="submit" class="btn btn-primary btn-sm m-t-30">Submit</button>
-                        	<div class="clearfix"></div>
-							</form>
                         </div>
                     </div>
                 </div>
