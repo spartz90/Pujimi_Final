@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.action.main.MainAction;
+import kr.co.pujimi.action.member.ForgetPassOkAction;
 import kr.co.pujimi.action.member.LoginOkAction;
 import kr.co.pujimi.action.member.LogoutOkAction;
 import kr.co.pujimi.action.member.ManagerJoinOkAction;
@@ -88,6 +89,12 @@ public class MemberController extends HttpServlet {
 				action = new ModifyInfoOkAction();
 				action.execute(request, response);
 				url = "/WEB-INF/view/member/modify_info_ok.jsp";
+
+			}
+			else if (path.equals("/forgetPass.member")) {
+				action = new ForgetPassOkAction();
+				action.execute(request, response);
+				url = "/WEB-INF/view/member/forget_pass_ok.jsp";
 
 			} else {
 
