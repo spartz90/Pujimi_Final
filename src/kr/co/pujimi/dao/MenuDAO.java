@@ -81,5 +81,60 @@ public class MenuDAO {
 			}
 		}
 		return result;
-	}	
+	}
+	
+	public ArrayList<MenuDTO> menuViewtoday(int res_seq){
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<MenuDTO> result = new ArrayList<>();
+		
+		try {
+			conn = this.dataSource.getConnection();
+			
+			String sql = "SELECT a.menu_name, a.add_date, m.menu_serving, m.menu_kcal, m.menu_na FROM add_menu a, menu m WHERE res_seq = ? AND m.menu_name = a.menu_name AND a.add_date > DATE_SUB( NOW( ) , INTERVAL 1 DAY )";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, res_seq);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				MenuDTO mdto = new MenuDTO();				
+				mdto.setMenu_name(rs.getString("menu_name"));
+				mdto.setMenu_serving(rs.getInt("menu_serving"));
+				mdto.setMenu_na(rs.getDouble("menu_na"));
+				mdto.setMenu_kcal(rs.getInt("menu_kcal"));
+				mdto.setMenu_date(rs.getString("add_date"));
+				result.add(mdto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("에러 : " + e.getMessage());
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return result;
+	}
 }

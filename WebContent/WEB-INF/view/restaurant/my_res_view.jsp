@@ -32,7 +32,8 @@
 	int res_likes = resTo.getRes_likes();
 	String latlng = resTo.getRes_latlng();
 	
-	StringBuffer result	= (StringBuffer)request.getAttribute("result");	
+	StringBuffer result	= (StringBuffer)request.getAttribute("result");
+	StringBuffer menu_result = (StringBuffer)request.getAttribute("menu_result");
 		
 	RatingTO rato = (RatingTO)request.getAttribute("rato");
 	
@@ -80,6 +81,9 @@
 <link href="vendors/material-icons/material-design-iconic-font.min.css"
 	rel="stylesheet">
 <link href="vendors/socicon/socicon.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 
 <!-- CSS -->
 <link href="css/app.min.1_test.css" rel="stylesheet">
@@ -259,6 +263,26 @@
 						</div>
 					</div>
 					<div id="map_canvas" style="width: 100%; height: 300px;"></div><br/>
+					<div id="accordion">
+						<h3>오늘의 메뉴 보기</h3>
+						<div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>날짜</th>
+                                        <th>메뉴 이름</th>
+                                        <th>1인분 (g)</th>
+                                        <th>열량 (kcal)</th>
+                                        <th>나트륨(mg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+									<%=menu_result %>
+                                </tbody>
+                            </table>
+                        </div>
+					</div>
+					<br />					
 				</div>
 				<div class="block-header">
 					<h2>
@@ -413,6 +437,7 @@
 	<!-- Javascript Libraries -->
 	<script src="js/jquery-2.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<script src="vendors/flot/jquery.flot.min.js"></script>
 	<script src="vendors/flot/jquery.flot.resize.min.js"></script>
@@ -464,6 +489,11 @@
 	            infowindow.open(map,marker);
 	        });
 		}
+		
+		$( "#accordion" ).accordion({
+    		collapsible: true,
+    		heightStyle: "content"
+    	});
 		
 		if (<%=chk %> == 1) {
 			$('#likebtn').css({
