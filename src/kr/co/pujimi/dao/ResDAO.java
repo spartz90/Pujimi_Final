@@ -1000,4 +1000,71 @@ public class ResDAO {
 		}
 		return result;
 	}
+	
+public ArrayList<ResTO> menuViewList(String menu_type) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<ResTO> result = new ArrayList<>();
+		ResDAO resDao = new ResDAO();
+		
+		try{
+
+			conn = this.dataSource.getConnection();
+			
+			// DB에서 꺼내올때 날짜 포맷 지정
+			String sql = "select res_seq, res_name, res_addr, res_phone, res_octime, res_content, res_photo, res_price, res_grade from restaurant where res_seq = ANY(select distinct a.res_seq from add_menu a, menu m where a.menu_name = m.menu_name and m.menu_type = ? and add_date > date_sub(now(), interval 1 day))";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, menu_type);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				ResTO rdto = new ResTO();
+				
+				rdto.setRes_seq(rs.getInt("res_seq"));
+				int res_seq = rs.getInt("res_seq");
+				rdto.setRes_name(rs.getString("res_name"));
+				rdto.setRes_addr(rs.getString("res_addr"));
+				rdto.setRes_phone(rs.getString("res_phone"));
+				rdto.setRes_octime(rs.getString("res_octime"));
+				rdto.setRes_content(rs.getString("res_content"));
+				rdto.setRes_photo(rs.getString("res_photo"));
+				rdto.setRes_price(Integer.parseInt(rs.getString("res_price")));
+				rdto.setRes_grade(rs.getDouble("res_grade"));
+				rdto.setRes_sells(resDao.sellsCount(res_seq));
+				rdto.setRes_likes(resDao.likeCount(res_seq));
+		
+				result.add(rdto);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("에러 : " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e.getMessage());
+				}
+			}
+		}
+		return result;
+	}
 }
