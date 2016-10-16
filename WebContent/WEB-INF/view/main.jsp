@@ -151,72 +151,47 @@
 					</div>
 					<div class="row" id="mainList">
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail"><div
+				            <a href="res_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>" class="thumbnail"><div
 				                  class="category-title">
 				                  <strong>전체보기</strong><br>
 				                  <span>View All</span>
 				               </div>
-				               <img src="upload/123.jpg" ></a>
+				               <img src="image/category-01.png"" ></a>
 				         </div>
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail"><div
-				                  class="category-title">
-				                  <strong>치킨</strong><br>
-				                  <span>Chicken</span>
-				               </div>
-				               <img src="img/pujimi_main_kor.png"></a>
-				         </div>
-				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail"><div
-				                  class="category-title">
-				                  <strong>피자/양식</strong><br>
-				                  <span>Pizza/Western Food</span>
-				               </div>
-				               <img src="img/pujimi_main_kor.png"></a>
-				         </div>
-				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail"><div
-				                  class="category-title">
-				                  <strong>중국집</strong><br>
-				                  <span>Chinese Food</span>
-				               </div>
-				               <img src="img/pujimi_main_kor.png"></a>
-				         </div>
-				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('한식')"><div
+				            <a href="res_menu_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>&menu_type=한식" class="thumbnail"><div
 				                  class="category-title">
 				                  <strong>한식</strong><br>
 				                  <span>Korean Food</span>
 				               </div>
-				               <img src="image/category-05.png"></a>
+				               <img src="image/category-05.png""></a>
 				         </div>
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail"
-				               ng-click="select_home_category('일식돈까스')"><div
+				            <a href="res_menu_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>&menu_type=양식" class="thumbnail"><div
 				                  class="category-title">
-				                  <strong>일식/돈까스</strong><br>
+				                  <strong>양식</strong><br>
+				                  <span>Western Food</span>
+				               </div>
+				               <img src="image/category-03.png""></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="res_menu_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>&menu_type=중식" class="thumbnail"><div
+				                  class="category-title">
+				                  <strong>중식</strong><br>
+				                  <span>Chinese Food</span>
+				               </div>
+				               <img src="image/category-04.png""></a>
+				         </div>
+				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="res_menu_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>&menu_type=일식" class="thumbnail" ><div
+				                  class="category-title">
+				                  <strong>일식</strong><br>
 				                  <span>Japanese Food</span>
 				               </div>
 				               <img src="image/category-06.png"></a>
 				         </div>
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('족발보쌈')"><div
-				                  class="category-title">
-				                  <strong>족발/보쌈</strong><br>
-				                  <span>Jokbal/Bossam</span>
-				               </div>
-				               <img src="image/category-07.png"></a>
-				         </div>
-				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('야식')"><div
-				                  class="category-title">
-				                  <strong>야식</strong><br>
-				                  <span>Late Night Snack</span>
-				               </div>
-				               <img src="image/category-08.png"></a>
-				         </div>
-				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail" ng-click="select_home_category('분식')"><div
+				            <a href="res_menu_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>&menu_type=분식" class="thumbnail" ><div
 				                  class="category-title">
 				                  <strong>분식</strong><br>
 				                  <span>Flour Based Food</span>
@@ -224,23 +199,20 @@
 				               <img src="image/category-09.png"></a>
 				         </div>
 				         <div class="col-xs-6 col-sm-4 col-md-3">
-				            <a href="" class="thumbnail"
-				               ng-click="select_home_category('프랜차이즈')"><div
+				            <a href="res_menu_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>&menu_type=외식" class="thumbnail"><div
 				                  class="category-title">
-				                  <strong>프랜차이즈</strong><br>
-				                  <span>Franchise</span>
+				                  <strong>외식</strong><br>
+				                  <span>Eat Out Food</span>
+				               </div>
+				               <img src="image/category-07.png"></a>
+				         </div>				         <div class="col-xs-6 col-sm-4 col-md-3">
+				            <a href="res_menu_info.restaurant?user_seq=<%=user_seq %>&user_admin=<%=user_admin %>&menu_type=후식" class="thumbnail"><div
+				                  class="category-title">
+				                  <strong>후식</strong><br>
+				                  <span>Dessert</span>
 				               </div>
 				               <img src="image/category-10.png"></a>
 				         </div>
-				         <div class="col-xs-6 col-sm-4 col-md-3 category-banner"
-				            ng-repeat='banner in banner_list' style="display: none"
-				            on-finish-render="completeBannerListRender()">
-				            <a href="" class="thumbnail" ng-click="setEvent($index, banner)"
-				               style="background: {{banner.background_color"><img
-				               ng-src="{{banner.event_image_url}}" alt="{{banner.event_name}}"><i
-				               class="icon-move"></i></a>
-				         </div>
-
 					</div>
 				</div>
             </section>
@@ -288,7 +260,7 @@
         <![endif]-->
         
         <!-- Javascript Libraries -->
-  <script src="js/jquery-2.1.1.min.js"></script>
+  		<script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         
         <script src="vendors/flot/jquery.flot.min.js"></script>
