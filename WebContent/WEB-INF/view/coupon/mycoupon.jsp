@@ -19,6 +19,7 @@
 		coupon_result.append("	<div class='coupon'>");
 		coupon_result.append("		<div class='couponmain'>");
 		coupon_result.append("			<div class='couponmain_img'>");
+		coupon_result.append("			<img alt='' src='img/pujimicouponlogo96.png' style='margin-bottom: 10px;'>");
 		coupon_result.append("				<h3>푸지미</h3>");
 		coupon_result.append("				<h2>모바일 식권</h2>");
 		coupon_result.append("			</div>");
@@ -51,6 +52,7 @@
 			coupon_result.append("	<div class='coupon'>");
 			coupon_result.append("		<div class='couponmain'>");
 			coupon_result.append("			<div class='couponmain_img'>");
+			coupon_result.append("			<img alt='' src='img/pujimicouponlogo96.png' style='margin-bottom: 10px;'>");
 			coupon_result.append("				<h3>푸지미</h3>");
 			coupon_result.append("				<h2>모바일 식권</h2>");
 			coupon_result.append("			</div>");

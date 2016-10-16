@@ -63,7 +63,7 @@
 						<div class="coupon">
 							<div class="couponmain">
 								<div class="couponmain_img">
-								<img alt="" src="img/pujimicouponlogo112.png" style="margin-bottom: 10px;">
+								<img alt="" src="img/pujimicouponlogo96.png" style="margin-bottom: 10px;">
 									<h3>푸지미</h3>
 									<h2>모바일 식권</h2>
 								</div>
