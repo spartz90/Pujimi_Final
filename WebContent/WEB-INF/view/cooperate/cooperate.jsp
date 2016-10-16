@@ -7,8 +7,6 @@
 	
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
-	System.out.println("coop" + member_seq);
-	System.out.println("coop" + member_admin);
 	
 	UserTO userTo = (UserTO)request.getAttribute("userTo");
 	
@@ -260,5 +258,10 @@
 		    }
 	
 		</script>
+		   <footer>
+      <div>
+         <div class="pujimiFooter"> Copyright 2016, Pujimi All Rights Reserved</div>
+      </div>
+   </footer>
     </body>
   </html>

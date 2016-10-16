@@ -20,9 +20,6 @@
 	double dres_grade = Double.parseDouble(res_grade);
 	double dres_revenue = Double.parseDouble(res_revenue);
 	dres_grade = (Math.round(dres_grade * 100) / 100.0) * 20;
-	System.out.println("소수점 " + dres_grade);
-	
-	System.out.println(res_grade + "///" + res_revenue);
 %> 
 <!DOCTYPE html>
     <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -331,6 +328,10 @@
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>
         
-        
+           <footer>
+      <div>
+         <div class="pujimiFooter"> Copyright 2016, Pujimi All Rights Reserved</div>
+      </div>
+   </footer>
     </body>
 </html>

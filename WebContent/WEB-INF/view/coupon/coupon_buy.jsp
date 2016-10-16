@@ -11,13 +11,8 @@
 	int res_price = cTo.getRes_price();
 	int user_point =cTo.getUser_point();
 	
-	System.out.println(res_name + "///" + res_price + "///" + user_point);
-	
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
-	
-	
-	System.out.println(member_seq + "///" + member_admin + "///" + user_point);
 %>
 <!DOCTYPE html>
     <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -68,6 +63,7 @@
 						<div class="coupon">
 							<div class="couponmain">
 								<div class="couponmain_img">
+								<img alt="" src="img/pujimicouponlogo112.png" style="margin-bottom: 10px;">
 									<h3>푸지미</h3>
 									<h2>모바일 식권</h2>
 								</div>
@@ -291,7 +287,10 @@
         		});
 			});
         </script>
-       
-
+          <footer>
+      <div>
+         <div class="pujimiFooter"> Copyright 2016, Pujimi All Rights Reserved</div>
+      </div>
+   </footer>
     </body>
 </html>

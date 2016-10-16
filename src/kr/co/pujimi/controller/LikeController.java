@@ -11,12 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.action.like.CheckOkAction;
-import kr.co.pujimi.action.main.MainAction;
-import kr.co.pujimi.action.member.LoginOkAction;
-import kr.co.pujimi.action.member.LogoutOkAction;
 import kr.co.pujimi.action.member.ManagerJoinOkAction;
-import kr.co.pujimi.action.member.ModifyInfoAction;
-import kr.co.pujimi.action.member.ModifyInfoOkAction;
 import kr.co.pujimi.action.member.UserJoinOkAction;
 import kr.co.pujimi.core.Action;
 

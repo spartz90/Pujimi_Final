@@ -6,7 +6,6 @@
 	
 	out.println("<script type='text/javascript'>");
 	if(flag==0){
-		System.out.println(flag);
 		out.println("alert('가게정보 수정에 성공했습니다.')");
 		out.println("location.href = 'index.jsp';");
 	}else{

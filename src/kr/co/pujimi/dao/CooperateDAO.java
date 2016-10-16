@@ -1,18 +1,17 @@
 package kr.co.pujimi.dao;
 
 
-import javax.mail.Transport;
-import javax.mail.Message;
-import javax.mail.internet.InternetAddress;
+import java.util.Properties;
+
 import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import kr.co.pujimi.action.cooperate.MyAuth;
 import kr.co.pujimi.dto.CooperateDTO;
-
-import javax.mail.Session;
-import javax.mail.Authenticator;
-import java.util.Properties;
 
 public class CooperateDAO {
 	private String fromEmail;
@@ -28,7 +27,6 @@ public class CooperateDAO {
 		String subject = cdto.getRes_name() + "제휴 부탁합니다!";
 		String content = "상호명 : " + cdto.getRes_name() + "\r\n" + "주소 : " + cdto.getRes_addr() + "\r\n" + "위치(위도,경도) : " + cdto.getLatlng() + "\r\n" + "\r\n" + cdto.getRes_content() + "\r\n"
 						+ "보낸이 : " + cdto.getName() + "(" + cdto.getEmail() + ")";  
-		System.out.println(toEmail + fromName + subject + content);
 		int check = 1;
 		try {
 			// 정보를 담기 위한 객체

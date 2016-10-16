@@ -557,8 +557,11 @@
 				}
 			})
 		});
-
-		
 		</script>
+		   <footer>
+      <div>
+         <div class="pujimiFooter"> Copyright 2016, Pujimi All Rights Reserved</div>
+      </div>
+   </footer>
 </body>
 </html>

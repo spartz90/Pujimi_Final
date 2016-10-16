@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.core.Action;
 import kr.co.pujimi.dao.LikeMenuDAO;
-import kr.co.pujimi.dao.PaymentDAO;
 import kr.co.pujimi.dto.LikeMenuDTO;
 
 public class LikeMenuOkAction implements Action {

@@ -5,7 +5,6 @@
 <%
 	int flag = (Integer)request.getAttribute("flag");
 	String newPass = request.getAttribute("newPass").toString();
-	System.out.print(newPass + "//" + flag);
 	
 	out.println("<script type='text/javascript'>");
 	if (flag == 0) {

@@ -37,7 +37,6 @@ public class ResChartDAO {
 		
 		try {
 			conn = this.dataSource.getConnection();
-			System.out.println("db부분" + res_seq);
 			String sql = "select res_revenue, res_grade from restaurant where res_seq = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, res_seq);
@@ -89,7 +88,6 @@ public class ResChartDAO {
 		
 		try {
 			conn = this.dataSource.getConnection();
-			System.out.println("db부분" + res_seq);
 			String sql = "select cp_udate from coupon where cp_udate > date_sub(now(), interval 7 day) and res_seq = ?"; 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, res_seq);

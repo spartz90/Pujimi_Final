@@ -334,6 +334,5 @@
         
         <script src="js/functions.js"></script>
         <script src="js/demo.js"></script>
-    
     </body>
 </html>

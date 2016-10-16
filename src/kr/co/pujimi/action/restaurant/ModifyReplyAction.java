@@ -1,7 +1,5 @@
 package kr.co.pujimi.action.restaurant;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

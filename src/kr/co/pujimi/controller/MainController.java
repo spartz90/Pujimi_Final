@@ -41,44 +41,7 @@ public class MainController extends HttpServlet {
 				action.execute(request, response);
 				url = "/WEB-INF/view/main.jsp";
 
-			} 
-			/*else if (path.equals("/view.do")) {
-				action = new ViewAction();
-				action.execute(request, response);
-				url = "/WEB-INF/model2/board_view1.jsp";
-
-			} else if (path.equals("/write.do")) {
-				action = new JoinWriteAction();
-				action.execute(request, response);
-				url = "/WEB-INF/model2/board_write1.jsp";
-
-			} else if (path.equals("/write_ok.do")) {
-				action = new WriteOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/model2/board_write1_ok.jsp";
-
-			} else if (path.equals("/modify.do")) {
-				action = new ModifyAction();
-				action.execute(request, response);
-				url = "/WEB-INF/model2/board_modify1.jsp";
-
-			} else if (path.equals("/modify_ok.do")) {
-				action = new ModifyOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/model2/board_modify1_ok.jsp";
-
-			} else if (path.equals("/delete.do")) {
-				action = new DeleteAction();
-				action.execute(request, response);
-				url = "/WEB-INF/model2/board_delete1.jsp";
-
-			} else if (path.equals("/delete_ok.do")) {
-				action = new DeleteOkAction();
-				action.execute(request, response);
-				url = "/WEB-INF/model2/board_delete1_ok.jsp";
-
-			}
-			*/ else {
+			}else {
 
 			}
 

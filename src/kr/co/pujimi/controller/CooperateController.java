@@ -10,15 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.pujimi.action.admin.ResManageAction;
-import kr.co.pujimi.action.admin.UserManageAction;
 import kr.co.pujimi.action.cooperate.CooperateAction;
 import kr.co.pujimi.action.cooperate.CooperateOkAction;
-import kr.co.pujimi.action.main.MainAction;
-import kr.co.pujimi.action.member.LoginOkAction;
-import kr.co.pujimi.action.member.LogoutOkAction;
-import kr.co.pujimi.action.member.ManagerJoinOkAction;
-import kr.co.pujimi.action.member.UserJoinOkAction;
 import kr.co.pujimi.core.Action;
 
 

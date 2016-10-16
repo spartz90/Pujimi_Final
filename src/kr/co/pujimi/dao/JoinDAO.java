@@ -466,21 +466,6 @@ public int userModifyOk(UserTO userTo) {
 				flag = 0;
 				// 정상
 			}
-			/*
-			if(rs.next()){
-				userTo.setUser_seq(rs.getInt("user_seq"));
-				userTo.setUser_nickname(rs.getString("user_nickname"));
-				userTo.setUser_admin(Integer.parseInt(rs.getString("user_admin")));
-				db_Password = rs.getString("user_password");		
-				if(db_Password.equals(password)){
-					check = 1; // 비밀번호 인증성공
-				}else{
-					check = 0; // 비밀번호 인증실패					
-				}
-			}else{
-				check = -1; // 해당 아이디 없음
-			}*/
-
 
 		}catch (SQLException e) {
 			System.out.println("에러 : " + e.getMessage());

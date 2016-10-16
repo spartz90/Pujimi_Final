@@ -22,13 +22,5 @@ public class LikeMenuAction implements Action {
 		ArrayList<LikeMenuDTO> likeMenu_lists = lmdao.likeMenuView(user_seq);
 		
 		request.setAttribute("likeMenu_lists", likeMenu_lists);
-		
-		/*
-		JoinDAO joinDao = new JoinDAO();
-		
-		int price = joinDao.checkPrice(user_seq);
-		
-		request.setAttribute("price", price);
-		*/
 	}
 }

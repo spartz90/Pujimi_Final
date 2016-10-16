@@ -256,15 +256,11 @@
 									</table>
 								</div>
 							</div>		
-						
 					</div> 
-					                      		                      	     
                    </div>
                   </div>           
-                        
                 </div>
             </section>
-        
 
         <!-- Older IE warning message -->
         <!--[if lt IE 9]>
@@ -796,8 +792,6 @@
     		    });*/
     		    
     		});
-    		
-    		
-        </script>        
+        </script>   
     </body>
 </html>

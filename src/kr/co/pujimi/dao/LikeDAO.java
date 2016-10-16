@@ -4,17 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.mysql.jdbc.Statement;
-
 import kr.co.pujimi.dto.ResTO;
-import kr.co.pujimi.dto.UserTO;
 
 public class LikeDAO {
 

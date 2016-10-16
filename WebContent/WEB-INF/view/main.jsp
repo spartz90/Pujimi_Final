@@ -12,12 +12,10 @@
 	String user_nickname = "비회원";
 
    if(session.getAttribute("user_seq")==null){
-	   System.out.println("로그아웃상태");
    }else{
 	  user_seq = session.getAttribute("user_seq").toString();
 	  user_admin = session.getAttribute("user_admin").toString();
 	  user_nickname = session.getAttribute("user_nickname").toString();
-	  System.out.println("유저 : " + user_seq + " / 로그인상태");	 
    }
    
 	ArrayList<ResTO> recom_lists = (ArrayList)request.getAttribute("recom_lists");
@@ -401,5 +399,10 @@
 				});
 			});
         </script>
+        <footer>
+      <div>
+         <div class="pujimiFooter"> Copyright 2016, Pujimi All Rights Reserved</div>
+      </div>
+   </footer>
     </body>
   </html>

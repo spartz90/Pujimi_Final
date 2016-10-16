@@ -20,7 +20,5 @@ public class MainAction implements Action {
 		
 		request.setAttribute("res_lists", res_lists);
 		request.setAttribute("recom_lists", recom_lists);
-
 	}
-
 }

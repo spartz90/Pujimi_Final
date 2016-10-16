@@ -25,7 +25,6 @@ public class CouponBuyOkAction implements Action {
 		
 		CouponDAO couponDao = new CouponDAO();
 		
-		System.out.println(amount);
 		int flag = 0;
 		int checkCoupon = 0;
 		for(int i=1;i<=amount;i++){

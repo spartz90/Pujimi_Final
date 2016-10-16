@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.action.addMenu.AddMenuAction;
 import kr.co.pujimi.action.addMenu.AddMenuOkAction;
-import kr.co.pujimi.action.restaurant.ResAddMenuAction;
 import kr.co.pujimi.core.Action;
 
 

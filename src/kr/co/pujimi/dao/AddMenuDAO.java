@@ -12,9 +12,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import kr.co.pujimi.dto.AddMenuDTO;
-import kr.co.pujimi.dto.LikeMenuDTO;
-import kr.co.pujimi.dto.MenuDTO;
-import kr.co.pujimi.dto.PaymentTO;
 
 
 public class AddMenuDAO {

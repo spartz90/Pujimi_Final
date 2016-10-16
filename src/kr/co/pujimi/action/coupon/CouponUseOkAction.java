@@ -20,8 +20,6 @@ public class CouponUseOkAction implements Action {
 		int res_seq = rdao.getResSeq(user_seq);
 		String cp_serial = request.getParameter("cp_serial");
 		
-		System.out.println(res_seq + "호잇");
-		
 		CouponTO cTo = new CouponTO();
 		cTo.setCp_serial(cp_serial);
 		cTo.setRes_seq(res_seq);

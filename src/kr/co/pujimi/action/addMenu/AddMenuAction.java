@@ -7,10 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.pujimi.core.Action;
 import kr.co.pujimi.dao.AddMenuDAO;
-import kr.co.pujimi.dao.LikeMenuDAO;
 import kr.co.pujimi.dao.ResDAO;
 import kr.co.pujimi.dto.AddMenuDTO;
-import kr.co.pujimi.dto.LikeMenuDTO;
 
 public class AddMenuAction implements Action {
 
