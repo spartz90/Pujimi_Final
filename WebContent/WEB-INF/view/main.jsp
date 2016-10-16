@@ -145,9 +145,9 @@
 						</div>
 					</div>
 					<div class="block-header">
-						<h2>제휴점 정보</h2>
-						다양한 메뉴, 저렴한 가격과 정확한 위치를 참고하세요.<br /> 
-						관심매장을 설정해보세요.
+						<h2>오늘의 메뉴</h2>
+						오늘의 메뉴를 선택해 보세요.<br />
+						오늘의 메뉴를 등록한 가맹점을 추천해드립니다. 
 					</div>
 					<div class="row" id="mainList">
 				         <div class="col-xs-6 col-sm-4 col-md-3">
