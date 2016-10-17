@@ -19,17 +19,17 @@
 		coupon_result.append("	<div class='coupon'>");
 		coupon_result.append("		<div class='couponmain'>");
 		coupon_result.append("			<div class='couponmain_img'>");
-		coupon_result.append("			<img alt='' src='img/pujimicouponlogo96.png' style='margin-bottom: 10px;'>");
+		coupon_result.append("			<img alt='' src='img/pujimicouponlogo96.png'>");
 		coupon_result.append("				<h3>푸지미</h3>");
 		coupon_result.append("				<h2>모바일 식권</h2>");
 		coupon_result.append("			</div>");
 		coupon_result.append("		</div>");
 		coupon_result.append("		<div class='coupondetail'>");
 		coupon_result.append("			<div class='coupondetail_resinfo'>");
-		coupon_result.append("				<h3>" + "보유 쿠폰이 없습니다 "+ "</h3>");
+		coupon_result.append("				<h3>" + "쿠폰이 없습니다"+ "</h3>");
 		coupon_result.append("				<div>");
-		coupon_result.append("					쿠폰을 구매한 후<br/>");
-		coupon_result.append("					쿠폰 번호를<br/>");
+		coupon_result.append("					쿠펀 번호는<br/>");
+		coupon_result.append("					구매 후<br/>");
 		coupon_result.append("					확인 하세요");									
 		coupon_result.append("				</div>");
 		coupon_result.append("			</div>");
@@ -41,7 +41,9 @@
 		for (CouponTO couponTo : couponList) {
 			String cp_serial = couponTo.getCp_serial();
 			String res_name = couponTo.getRes_name();
-			
+			if (res_name.length() > 8) {
+				res_name = res_name.substring(0, 8) + "...";
+			}
 			
 			String cp_serial_stepOne = cp_serial.substring(0, 4);
 			String cp_serial_stepTwo = cp_serial.substring(4, 8);
@@ -52,7 +54,7 @@
 			coupon_result.append("	<div class='coupon'>");
 			coupon_result.append("		<div class='couponmain'>");
 			coupon_result.append("			<div class='couponmain_img'>");
-			coupon_result.append("			<img alt='' src='img/pujimicouponlogo96.png' style='margin-bottom: 10px;'>");
+			coupon_result.append("			<img alt='' src='img/pujimicouponlogo96.png'");
 			coupon_result.append("				<h3>푸지미</h3>");
 			coupon_result.append("				<h2>모바일 식권</h2>");
 			coupon_result.append("			</div>");

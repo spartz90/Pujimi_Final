@@ -8,6 +8,9 @@
 	
 	int res_seq = cTo.getRes_seq();
 	String res_name = cTo.getRes_name();
+	if (res_name.length() > 8) {
+		res_name = res_name.substring(0, 8) + "...";
+	}
 	int res_price = cTo.getRes_price();
 	int user_point =cTo.getUser_point();
 	
@@ -63,7 +66,7 @@
 						<div class="coupon">
 							<div class="couponmain">
 								<div class="couponmain_img">
-								<img alt="" src="img/pujimicouponlogo96.png" style="margin-bottom: 10px;">
+								<img alt="" src="img/pujimicouponlogo96.png"">
 									<h3>푸지미</h3>
 									<h2>모바일 식권</h2>
 								</div>
@@ -110,7 +113,7 @@
 							<input type="hidden" id="res_seq" value="<%=res_seq %>" name="res_seq"/>
 							<input type="hidden" id="coupon_amount" value="" name="coupon_amount"/>
 							<div class="cancle_submit">
-								<a id="cancle">취소</a>
+								<a id="cancle" href="javascript:history.back()">취소</a>
 								<button type="submit" id="submit">구매</button>
 							</div>
 						</form>

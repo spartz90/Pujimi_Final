@@ -61,7 +61,7 @@
 						<div class="coupon">
 							<div class="couponmain">
 								<div class="couponmain_img">
-								<img alt='' src='img/pujimicouponlogo96.png' style='margin-bottom: 10px;'>
+								<img alt='' src='img/pujimicouponlogo96.png'>
 									<h3>푸지미</h3>
 									<h2>모바일 식권</h2>
 								</div>
@@ -75,19 +75,18 @@
 										입력해 주세요										
 									</div>
 								</div>
-								<div class="coupondetail_num">
-									<input class="serial" id="serial" name="serial" type="text" maxlength="12" style="color: black;">
+								<div class="coupondetail_numInput">
+									<input class="serial" id="serial" name="serial" type="text" maxlength="12" placeholder="쿠폰 번호 입력">
 								</div>
 							</div>
 						</div>
 						<form action="coupon_use_ok.coupon" method="get" name="coupon_buy_info">
-						<hr color="#D5D5D5"/>
 							<hr color="#D5D5D5"/>
 							<input type="hidden" id="cp_serial" value="" name="cp_serial" />
 							<input type="hidden" id="user_admin" value="<%=member_admin %>" name="user_admin" />
 							<input type="hidden" id="user_seq" value="<%=member_seq %>" name="user_seq" />
 							<div class="cancle_submit">
-								<a id="cancle">취소</a>
+								<a id="cancle" href="javascript:history.back()">취소</a>
 								<button type="submit" id="submit">사용하기</button>
 							</div>
 						</form>
