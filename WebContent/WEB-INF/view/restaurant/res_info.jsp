@@ -121,7 +121,7 @@
 		res_result.append("			<li idx='lcG"+res_seq+"'>좋아요 : " + res_likes +"</li>");
 		res_result.append("		</ul>");
 		res_result.append("		<ul class='general_cooperate_detail_follow_click'>");
-		res_result.append("			<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "'>구  매</a></li>");
+		res_result.append("			<li><a href='coupon_buy.coupon?res_seq=" + res_seq + "&user_seq=" + member_seq + "&user_admin=" + member_admin+ "' idx="+res_seq+">구  매</a></li>");
 		if (chk == 0) {
 			res_result.append("			<li><button idx='"+res_seq+"'>좋아요</button></li>");
 		} else {
@@ -313,6 +313,8 @@
 					
 					jQuery(document).ready(init);
 				})();
+				// 구매
+
 				
 				// 좋아요 기능 //
 				$('button').on('click', function() {

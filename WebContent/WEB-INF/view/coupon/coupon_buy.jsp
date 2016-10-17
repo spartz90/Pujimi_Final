@@ -8,14 +8,17 @@
 	
 	int res_seq = cTo.getRes_seq();
 	String res_name = cTo.getRes_name();
-	if (res_name.length() > 8) {
-		res_name = res_name.substring(0, 8) + "...";
-	}
 	int res_price = cTo.getRes_price();
 	int user_point =cTo.getUser_point();
 	
 	String member_seq = request.getParameter("user_seq");
 	String member_admin = request.getParameter("user_admin");
+	
+	if (!member_seq.equals("-1")) {
+		if(res_name.length() > 8) {
+			res_name = res_name.substring(0, 8) + "...";
+		}
+	}
 %>
 <!DOCTYPE html>
     <!--[if IE 9 ]><html class="ie9"><![endif]-->
