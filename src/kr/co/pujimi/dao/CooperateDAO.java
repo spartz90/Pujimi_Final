@@ -19,7 +19,7 @@ public class CooperateDAO {
 	
 	public CooperateDAO() {
 		this.fromEmail = "hjpark2020@gmail.com";
-		this.password = "p5879132~";
+		this.password = "###########";
 	}
 	public int cooperateOk(CooperateDTO cdto){
 		String toEmail = "hjpark99@naver.com";
